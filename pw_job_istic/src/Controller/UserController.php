@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Society;
+use App\Entity\Developer;
 use App\Form\UserType;
 use App\Form\UserTypeSociety;
 use App\Repository\UserRepository;
@@ -11,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[Route('/user')]
 final class UserController extends AbstractController
@@ -22,17 +25,29 @@ final class UserController extends AbstractController
             'users' => $userRepository->findAll(),
         ]);
     }
+    
 
-    #[Route('/dev', name: 'app_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/sign-in-dev', name: 'app_user_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager,  UserPasswordHasherInterface $passwordHasher): Response
     {
+        
         $user = new User();
         //Les devs
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $hashedPassword = $passwordHasher->hashPassword($user, $user->getPassword());
+            $user->setPassword($hashedPassword);
+            $user->setRoles(['ROLE_DEV']);
+
             $entityManager->persist($user);
+            $entityManager->flush();
+
+            $developer = new Developer();
+            $developer->setUser($user);
+            $entityManager->persist($developer);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
@@ -44,8 +59,8 @@ final class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/society', name: 'app_user_new_society', methods: ['GET', 'POST'])]
-    public function new_society(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/sign-in-society', name: 'app_user_new_society', methods: ['GET', 'POST'])]
+    public function new_society(Request $request, EntityManagerInterface $entityManager,  UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
         //Les devs
@@ -53,8 +68,20 @@ final class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $hashedPassword = $passwordHasher->hashPassword($user, $user->getPassword());
+            $user->setPassword($hashedPassword);
+            $user->setRoles(['ROLE_SOCIETY']);
             $entityManager->persist($user);
             $entityManager->flush();
+
+
+            // Associer un utilisateur à une société
+            $society = new Society();
+            $society->setUser($user);
+            $entityManager->persist($society);
+            $entityManager->flush();
+
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }

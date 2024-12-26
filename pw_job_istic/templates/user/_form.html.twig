@@ -22,14 +22,14 @@
                         <div class="col-xl-4 col-lg-6 col-md-7">
                             <div class="twm-log-reg-form-wrap">
                                 <div class="twm-log-reg-logo-head">
-                                    <a href="index-2.html">
+                                    <a href="{{path('app_user_index')}}">
                                         <img src="{{asset('images/logo-dark.png')}}" alt="" class="logo">
                                     </a> 
                                 </div>
                                 <div class="twm-log-reg-inner">
                                     <div class="twm-log-reg-head">
                                         <div class="twm-log-reg-logo">
-                                            <span class="log-reg-form-title">S'inscrire</span>
+                                            <span class="log-reg-form-title">Inscription Développeur</span>
                                         </div>
                                     </div>
                                     <div class="twm-tabs-style-2">
@@ -71,7 +71,7 @@
                                                         <!-- Type d'utilisateur -->
                                                         <div class="col-lg-12">
                                                             <div class="form-group mb-3">
-                                                                {{ form_widget(form.type_user, {'attr': {'class': 'form-control', 'value': 'society'}}) }}
+                                                                {{ form_widget(form.type_user, {'attr': {'class': 'form-control', 'value': 'dev'}}) }}
                                                                 {{ form_errors(form.type_user) }}
                                                             </div>
                                                         </div>
@@ -88,66 +88,11 @@
 
                                             </div>
 
-                                            <!--Login Employer Content--> 
-                                            <div class="tab-pane fade" id="twm-login-Employer">
-                                                <div class="row">
-
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group mb-3">
-                                                            <input name="username" type="text" required="" class="form-control" placeholder="Usearname*">
-                                                        </div>
+                                            <div class="col-md-12 text-center">
+                                                    <div class="form-group">
+                                                        <a href="{{path('app_login')}}" class="site-text-primary">J'ai un compte, me connecter</a>
                                                     </div>
-                                                    
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group mb-3">
-                                                            <input name="email" type="text" class="form-control" required="" placeholder="Password*">
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="col-lg-12">
-                                                        <div class="twm-forgot-wrap">
-                                                            <div class="form-group mb-3">
-                                                                <div class="form-check">
-                                                                    <input type="checkbox" class="form-check-input" id="Password4">
-                                                                    <label class="form-check-label rem-forgot" for="Password4">Remember me <a href="javascript:;" class="site-text-primary">Forgot Password</a></label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <button type="submit" class="site-button">Log in</button>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <span class="center-text-or">Or</span>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <button type="submit" class="log_with_facebook">
-                                                                <i class="fab fa-facebook"></i>
-                                                                Continue with Facebook
-                                                            </button>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <button type="submit" class="log_with_google">
-                                                                <img src="images/google-icon.png" alt="">
-                                                                Continue with Google
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    
                                                 </div>
-                                            </div>
                                         
                                         </div>
                                     </div>

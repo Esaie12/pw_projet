@@ -20,7 +20,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 5)]
+    #[ORM\Column(length: 10)]
     private ?string $type_user = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -37,6 +37,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Society $society = null;
+
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Developer $developper = null;
+
 
     public function getId(): ?int
     {
@@ -135,5 +142,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getSociety(): ?Society
+    {
+        return $this->society;
+    }
+
+    public function setSociety(Society $society): static
+    {
+        // set the owning side of the relation if necessary
+        if ($society->getUserId() !== $this) {
+            $society->setUserId($this);
+        }
+
+        $this->society = $society;
+
+        return $this;
+    }
+
+
+    public function getDeveloper(): ?Developer
+    {
+        return $this->developper;
+    }
+
+    public function setDeveloper(Developer $developper): static
+    {
+        // set the owning side of the relation if necessary
+        if ($developper->getUserId() !== $this) {
+            $developper->setUserId($this);
+        }
+
+        $this->developper = $developper;
+
+        return $this;
     }
 }

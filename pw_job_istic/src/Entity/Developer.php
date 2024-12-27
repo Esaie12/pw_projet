@@ -22,7 +22,7 @@ class Developer
     #[ORM\Column(nullable: true)]
     private ?int $niveau_experience = null;
 
-    #[ORM\OneToOne(inversedBy: 'society', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'developer', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
     

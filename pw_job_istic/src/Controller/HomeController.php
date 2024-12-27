@@ -13,26 +13,34 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
+        $user = $this->getUser();
+        if($user){
+            return $this->redirectDash();
+        }
         return $this->render('home.html.twig',[]);
     }
 
-    
-    #[Route('/dev/dashboard', name: 'app_dev_dash')]
-    #[IsGranted('ROLE_DEV')]
-    public function dashboard_developper(): Response
+
+    #[Route('/redirect-after-login', name: 'app_redirect')]
+    public function redirectDash(): Response
     {
-        dd("Dash dev");
-        return $this->render('home.html.twig',[]);
+        $user = $this->getUser();
+        if ($user) {
+            if ($user->getTypeUser() === 'dev') {
+                return $this->redirectToRoute('app_dev_dash');
+            } elseif ($user->getTypeUser() === 'society') {
+                return $this->redirectToRoute('app_society_dash');
+            }
+        } else {
+            return $this->redirectToRoute('app_login');
+        }
     }
 
     
-    #[Route('/society/dashboard', name: 'app_society_dash')]
-    #[IsGranted('ROLE_SOCIETY')]
-    public function dashboard_society(): Response
-    {
-        dd("Dash sociét");
-        return $this->render('home.html.twig',[]);
-    }
+    
+
+    
+    
 
 
 }

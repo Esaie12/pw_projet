@@ -48,17 +48,10 @@ class AppCustomAuthentificatorAuthenticator extends AbstractLoginFormAuthenticat
             return new RedirectResponse($targetPath);
         }
 
+        return new RedirectResponse($this->urlGenerator->generate('app_redirect'));
         
-        $user = $token->getUser();
-        
-        if ($user->getTypeUser() === 'dev') {
-            return new RedirectResponse($this->urlGenerator->generate('app_dev_dash'));
-        } elseif ($user->getTypeUser() === 'society') {
-            return new RedirectResponse($this->urlGenerator->generate('app_society_dash'));
-        }
-
         // For example:
-        return new RedirectResponse($this->urlGenerator->generate('app_user_index'));
+        return new RedirectResponse($this->urlGenerator->generate('app_redirect'));
         throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 

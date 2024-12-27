@@ -68,14 +68,14 @@
 <body>
 
     <!-- LOADING AREA START ===== -->
-    <div class="loading-area">
+    <!--div class="loading-area">
         <div class="loading-box"></div>
         <div class="loading-pic">
             <div class="wrapper">
                 <div class="cssload-loader"></div>
             </div>
         </div>
-    </div>
+    </div-->
     <!-- LOADING AREA  END ====== -->
 
     <div class="page-wraper">
@@ -108,6 +108,89 @@
         </div>
 
         <!-- HEADER START -->
+        
+        <!-- HEADER END -->
+
+        {% if app.user %}
+        <header class="site-header header-style-3 mobile-sider-drawer-menu">
+
+            <div class="sticky-wrapper" style="height: 90px;"><div class="sticky-header main-bar-wraper navbar-expand-lg is-fixed">
+                <div class="main-bar">  
+                    <div class="container-fluid clearfix"> 
+                
+                        <div class="logo-header">
+                            <div class="logo-header-inner logo-header-one">
+                                <a href="index-2.html">
+                                <img src="{{asset('images/logo-dark.png')}}" alt="">
+                                </a>
+                            </div>
+                        </div>  
+                        
+                        <!-- NAV Toggle Button -->
+                        <button id="mobile-side-drawer" data-target=".header-nav" data-toggle="collapse" type="button" class="navbar-toggler collapsed">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar icon-bar-first"></span>
+                            <span class="icon-bar icon-bar-two"></span>
+                            <span class="icon-bar icon-bar-three"></span>
+                        </button> 
+
+                        <div class="nav-animation header-nav navbar-collapse collapse d-flex justify-content-center">
+
+                            <ul class=" nav navbar-nav">
+                                <li>
+                                    <a href="{{path('app_home')}}" >Acceuil </a>
+                                </li>
+                                
+                                <li>
+                                    <a href="" >Developpeurs </a>
+                                </li>
+                                <li>
+                                    <a href="" >Entreprise </a>
+                                </li>
+                                <li class="has-child">
+                                    <a href="javascript:;">Notre site</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="about-1.html">A propos de nous</a></li>
+                                        <li><a href="pricing.html">Contact</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                        </div>
+
+                        <!-- Header Right Section-->
+                        <div class="extra-nav header-2-nav">
+                            <div class="extra-cell">
+                                <div class="header-nav-btn-section">
+                                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                    <div class="twm-nav-btn-left">
+                                        <a class="twm-nav-sign-up"  href="{{path('app_logout')}}"
+                                            role="button">
+                                            <i class="feather-log-in"></i>
+                                        </a>
+                                    </div>
+                                    {% else %}
+                                    <div class="twm-nav-btn-left">
+                                        <a class="twm-nav-sign-up"  href="{{path('app_login')}}"
+                                            role="button">
+                                            <i class="feather-log-in"></i> Se connecter
+                                        </a>
+                                    </div>
+                                    {% endif %}
+                                    <div class="twm-nav-btn-right">
+                                        <a href="dash-post-job.html" class="twm-nav-post-a-job">
+                                            <i class="feather-briefcase"></i> Pubier un job
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                           
+                    
+                    </div>
+                </div>
+            </div>
+        </header>
+        {% else %}
         <header class="site-header header-style-light mobile-sider-drawer-menu">
 
             <div class="sticky-header main-bar-wraper  navbar-expand-lg">
@@ -184,34 +267,13 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
-
-
                     </div>
-
-
-                </div>
-
-                <!-- SITE Search -->
-                <div id="search">
-                    <span class="close"></span>
-                    <form role="search" id="searchform" action="https://thewebmax.org/search" method="get"
-                        class="radius-xl">
-                        <input class="form-control" value="" name="q" type="search" placeholder="Type to search" />
-                        <span class="input-group-append">
-                            <button type="button" class="search-btn">
-                                <i class="fa fa-paper-plane"></i>
-                            </button>
-                        </span>
-                    </form>
                 </div>
             </div>
-
-
         </header>
-        <!-- HEADER END -->
+        {% endif %}
 
 
         <!-- CONTENT START -->

@@ -14,6 +14,8 @@ RUN apt-get update && apt-get install -y \
 
 # Vérifier si l'extension pdo_mysql est installée
 RUN php -m | grep pdo_mysql
+RUN docker-php-ext-install pdo_mysql
+
 
 # Installer Symfony CLI
 RUN curl -sS https://get.symfony.com/cli/installer | bash && \

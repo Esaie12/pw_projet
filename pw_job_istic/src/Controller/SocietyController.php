@@ -27,14 +27,18 @@ class SocietyController extends AbstractController
 
     #[Route('/society/dashboard', name: 'app_society_dash')]
     #[IsGranted('ROLE_SOCIETY')]
-    public function dashboard_society(): Response
+    public function dashboard_society(UserRepository $userRepository): Response
     {
         $user = $this->getUser();
         if($user->isActive() == false){
-           //return $this->render('society/dashboard.html.twig',[]);
            return $this->redirectToRoute('app_society_complete_profil');
         }
-        return $this->render('society/dashboard.html.twig',[]);
+        
+        $last_developers = $userRepository->findLastCreatedDevs(3);
+
+        return $this->render('society/dashboard.html.twig',[
+            'last_developers' => $last_developers,
+        ]);
     }
     
 

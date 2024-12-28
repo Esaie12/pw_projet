@@ -34,9 +34,11 @@ class SocietyController extends AbstractController
            return $this->redirectToRoute('app_society_complete_profil');
         }
         
+        $popular_developers = $userRepository->popularDevs();
         $last_developers = $userRepository->findLastCreatedDevs(3);
 
         return $this->render('society/dashboard.html.twig',[
+            'popular_developers' => $popular_developers,
             'last_developers' => $last_developers,
         ]);
     }

@@ -33,6 +33,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
+    /**les dev populaires */
+    
+    public function popularDevs(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.type_user = :type')
+            ->setParameter('type', 'dev')
+            ->getQuery()
+            ->getResult();
+    }
+
+
     /**
      * Récupère les 3 derniers utilisateurs créés
      */

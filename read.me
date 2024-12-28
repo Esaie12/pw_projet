@@ -1,13 +1,27 @@
 Comment cloner le projet :
+1- git clone
 
-1 - git clone
 
-Ouvre un terminal depuis le dossier où se trouve ton fichier docker-compose.yml et exécute :
+2- cd pw_job_istic
+3- docker-compose up -d
 
-docker-compose up -d
+4 - docker exec -it symfony_app php bin/console doctrine:migrations:migrate
 
-Exécute cette commande pour accéder au conteneur PHP : docker exec -it symfony_app bash
+----
+Comment pusher son commande
+- Etre sur sa branche
+- git add .
+- git commit -m "MESSAGE"
+- git push 
+- Demandez une pull request sur migrations
+- ATTENTION NE JAMAIS MERGER
+---------------
 
-cd pw_job_istic
+* Pour acceder à votre bdd :
+
+http://localhost:8081/index.php?route=/database/structure&db=adopte_dev
+
+
+* Tuto pour faire la connexion
 
 https://www.univ-orleans.fr/iut-orleans/informatique/intra/tuto/php/symfony-securitybundle-auth.html

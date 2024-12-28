@@ -24,7 +24,10 @@ class SocietyController extends AbstractController
     {
         $user = $this->getUser();
         if($user->isActive() == false){
-            return $this->render('society.complete-profil',[]);
+           //return $this->render('society/dashboard.html.twig',[]);
+
+            
+            return $this->render('society/complete-profil.html.twig',[]);
         }
         return $this->render('home.html.twig',[]);
     }

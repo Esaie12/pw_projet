@@ -45,7 +45,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?Society $society = null;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?Developer $developper = null;
+    private ?Developer $developer = null;
 
 
     public function getId(): ?int
@@ -167,17 +167,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getDeveloper(): ?Developer
     {
-        return $this->developper;
+        return $this->developer;
     }
 
-    public function setDeveloper(Developer $developper): static
+    public function setDeveloper(Developer $developer): static
     {
         // set the owning side of the relation if necessary
-        if ($developper->getUserId() !== $this) {
-            $developper->setUserId($this);
+        if ($developer->getUserId() !== $this) {
+            $developer->setUserId($this);
         }
 
-        $this->developper = $developper;
+        $this->developer = $developer;
 
         return $this;
     }

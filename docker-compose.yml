@@ -1,12 +1,12 @@
-version: '3.8'
+#version: '3.8'
 
 services:
   app:
     build: .  # Utilise le Dockerfile dans le même répertoire
     container_name: symfony_app
-    working_dir: /var/www
+    working_dir: /var/www/pw_job_istic
     volumes:
-      - .:/var/www
+      - ./pw_job_istic:/var/www/pw_job_istic
     depends_on:
       - db
 
@@ -28,8 +28,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: adopte_dev
-      MYSQL_USER: root
-      MYSQL_PASSWORD: 
+      #MYSQL_USER: root
+      #MYSQL_PASSWORD: 
     volumes:
       - db_data:/var/lib/mysql
 
@@ -41,8 +41,8 @@ services:
       - "8081:80"  # Accède à phpMyAdmin via http://localhost:8081
     environment:
       PMA_HOST: db  # Indique le nom du service de base de données
-      PMA_USER: user  # Utilisateur MySQL
-      PMA_PASSWORD: password  # Mot de passe MySQL
+      PMA_USER: root  # Utilisateur MySQL
+      PMA_PASSWORD: root  # Mot de passe MySQL
 
 volumes:
   db_data:

@@ -163,12 +163,21 @@
                             <div class="extra-cell">
                                 <div class="header-nav-btn-section">
                                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+                                    <div class="twm-nav-btn-left">
+                                        <a class="twm-nav-sign-up"  href="{{path('app_dev_dash')}}"
+                                            role="button">
+                                            <i class="fa fa-home"></i>
+                                        </a>
+                                    </div>
                                     <div class="twm-nav-btn-left">
                                         <a class="twm-nav-sign-up"  href="{{path('app_logout')}}"
                                             role="button">
                                             <i class="feather-log-in"></i>
                                         </a>
-                                    </div>
+                                    </div>  
+                                    
+                                    
                                     {% else %}
                                     <div class="twm-nav-btn-left">
                                         <a class="twm-nav-sign-up"  href="{{path('app_login')}}"
@@ -176,12 +185,14 @@
                                             <i class="feather-log-in"></i> Se connecter
                                         </a>
                                     </div>
-                                    {% endif %}
                                     <div class="twm-nav-btn-right">
                                         <a href="dash-post-job.html" class="twm-nav-post-a-job">
                                             <i class="feather-briefcase"></i> Pubier un job
                                         </a>
                                     </div>
+                                    {% endif %}
+
+                                    
                                 </div>
                             </div>
                         </div>                           

@@ -50,7 +50,7 @@ final class UserController extends AbstractController
             $entityManager->persist($developer);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_dev_complete_profil', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('user/new.html.twig', [
@@ -83,7 +83,7 @@ final class UserController extends AbstractController
             $entityManager->flush();
 
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_society_complete_profil', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('user/new_society.html.twig', [

@@ -81,27 +81,25 @@ class DeveloperController extends AbstractController
         }
 
         
-        return $this->render('developper/complete-profil.html.twig', [
+        return $this->render('developer/complete-profil.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
+    #[Route('/developer-list', name: 'list_developer')]
+    public function developer_list(DeveloperRepository  $developers): Response
+    {
+        return $this->render(
+            'developer/developer_list.html.twig', [
+            'developers' => $developers->findAll()
+        ]);
+    }
 
     #[Route('/developer/{id}', name: 'app_developer')]
     public function show_dev(Developer $developer): Response
     {
-        return $this->render('developer/index.html.twig', [
+        return $this->render('developer/show-dev.html.twig', [
             'developer' => $developer,
         ]);
     }
-
-
-    #[Route('/developer_list', name: 'list_developer')]
-    public function developer_list(DeveloperRepository  $developers): Response
-    {
-        return $this->render('developer/developer_list.html.twig', [
-                    'developers' => $developers->findAll()
-                ]);
-    }
-
 }

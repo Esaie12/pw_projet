@@ -1,11 +1,13 @@
 Comment cloner le projet :
 1- git clone
+2- docker-compose up -d
 
+3- cd pw_job_istic
 
-2- cd pw_job_istic
-3- docker-compose up -d
+conteneur PHP : docker exec -it symfony_app bash
 
 4 - docker exec -it symfony_app php bin/console doctrine:migrations:migrate
+
 
 ----
 Comment pusher son commande

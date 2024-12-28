@@ -11,7 +11,7 @@
         <div class="breadcrumbs"><a href="#">Home</a><a href="#">Dasboard</a><span>Profile</span></div>
     </div>
 
-    <form>
+    {{ form_start(form, { 'attr': { 'class': 'form-horizontal' } }) }}
         <div class="panel panel-default">
             <div class="panel-heading wt-panel-heading p-a20">
                 <h4 class="panel-tittle m-a0">Update Profile Image</h4>
@@ -25,7 +25,13 @@
                             <div class="upload-btn-wrapper">
                                 <div id="upload-image-grid"></div>
                                 <button class="site-button button-sm">Upload Photo</button>
-                                <input type="file" name="myfile" id="file-uploader" accept=".jpg, .jpeg, .png">
+                                {{ form_widget(form.avatar, {
+                                    'attr': {
+                                        'class': 'form-control',
+                                        'id': 'file-uploader',
+                                        'accept': '.jpg, .jpeg, .png'
+                                    }
+                                }) }}
                             </div>
                         </div>
                     </div>
@@ -46,9 +52,9 @@
 
                     <div class="col-xl-4 col-lg-6 col-md-12">
                         <div class="form-group">
-                            <label>Your Name</label>
+                            <label>Nom de la société</label>
                             <div class="ls-inputicon-box">
-                                <input class="form-control" name="company_name" type="text" placeholder="Devid Smith">
+                                {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Nom de la société'}}) }}
                                 <i class="fs-input-icon fa fa-user "></i>
                             </div>
                         </div>
@@ -58,30 +64,18 @@
                         <div class="form-group">
                             <label>Phone</label>
                             <div class="ls-inputicon-box">
-                                <input class="form-control" name="company_phone" type="text"
-                                    placeholder="(251) 1234-456-7890">
+                                {{ form_widget(form.telephone, {'attr': {'class': 'form-control', 'placeholder': '+33 XXXXXXXXX'}}) }}
                                 <i class="fs-input-icon fa fa-phone-alt"></i>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-xl-4 col-lg-6 col-md-12">
-                        <div class="form-group">
-                            <label>Email Address</label>
-                            <div class="ls-inputicon-box">
-                                <input class="form-control" name="company_Email" type="email"
-                                    placeholder="Devid@example.com">
-                                <i class="fs-input-icon fas fa-at"></i>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="col-xl-4 col-lg-6 col-md-12">
                         <div class="form-group">
                             <label>Website</label>
                             <div class="ls-inputicon-box">
-                                <input class="form-control" name="company_website" type="text"
-                                    placeholder="https://.../">
+                               {{ form_widget(form.website, {'attr': {'class': 'form-control', 'placeholder': 'Site web'}}) }}
                                 <i class="fs-input-icon fa fa-globe-americas"></i>
                             </div>
                         </div>
@@ -89,159 +83,63 @@
 
                     <div class="col-xl-4 col-lg-6 col-md-12">
                         <div class="form-group">
-                            <label>Job Title</label>
+                            <label>Localisation</label>
                             <div class="ls-inputicon-box">
-                                <input class="form-control" name="company_since" type="text" placeholder="Job Title">
+                                {{ form_widget(form.localisation, {'attr': {'class': 'form-control', 'placeholder': 'Nom de la société'}}) }}
                                 <i class="fs-input-icon fa fa-address-card"></i>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-xl-4 col-lg-6 col-md-12">
-                        <div class="form-group city-outer-bx has-feedback">
-                            <label>Job Type</label>
+                        <div class="form-group">
+                            <label>Siret</label>
                             <div class="ls-inputicon-box">
-                                <select class="wt-select-box selectpicker" name="Job type" data-live-search="true"
-                                    title="Job Type" id="city" data-bv-field="size">
-                                    <option class="bs-title-option" value="">Full Time</option>
-                                    <option class="" value="">Part time</option>
-                                    <option class="" value="">Freelance</option>
-                                </select>
-                                <i class="fs-input-icon fa fa-file-alt"></i>
+                                {{ form_widget(form.siret, {'attr': {'class': 'form-control', 'placeholder': 'Siret'}}) }}
+                                <i class="fs-input-icon fa fa-address-card"></i>
                             </div>
-
                         </div>
                     </div>
 
                     <div class="col-xl-4 col-lg-6 col-md-12">
                         <div class="form-group">
-                            <label>Qualification</label>
+                            <label>Année de création</label>
                             <div class="ls-inputicon-box">
-                                <input class="form-control" name="company_since" type="text"
-                                    placeholder="Qualification">
+                                {{ form_widget(form.creation_annee, {'attr': {'class': 'form-control', 'placeholder': 'Année de création'}}) }}
                                 <i class="fs-input-icon fa fa-user-graduate"></i>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-xl-4 col-lg-6 col-md-12">
-                        <div class="form-group">
-                            <label>Language</label>
-                            <div class="ls-inputicon-box">
-                                <input class="form-control" name="company_since" type="text"
-                                    placeholder="e.x English, Spanish">
-                                <i class="fs-input-icon fa fa-language"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-4 col-lg-6 col-md-12">
-                        <div class="form-group city-outer-bx has-feedback">
-                            <label>Job Category</label>
-                            <div class="ls-inputicon-box">
-                                <select class="wt-select-box selectpicker" name="Job type" data-live-search="true"
-                                    title="Job Category" id="j-category" data-bv-field="size">
-                                    <option class="bs-title-option" value="">IT & Software</option>
-                                    <option class="" value="">Accountant</option>
-                                    <option class="" value="">Bank Services</option>
-                                    <option class="" value="">Hospital</option>
-                                </select>
-                                <i class="fs-input-icon fa fa-border-all"></i>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-xl-3 col-lg-6 col-md-12">
-                        <div class="form-group city-outer-bx has-feedback">
-                            <label>Experience</label>
-                            <div class="ls-inputicon-box">
-                                <select class="wt-select-box selectpicker" name="Job type" data-live-search="true"
-                                    title="Experience" id="Experience" data-bv-field="size">
-                                    <option>Select Experience</option>
-                                    <option>Begginer</option>
-                                    <option>01 Years</option>
-                                    <option>02 Years</option>
-                                    <option>03 Years</option>
-                                    <option>04 Years</option>
-                                    <option>05 Years</option>
-                                </select>
-                                <i class="fs-input-icon fa fa-user-edit"></i>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-xl-3 col-lg-6 col-md-12">
-                        <div class="form-group city-outer-bx has-feedback">
-                            <label>Current Salary</label>
-                            <div class="ls-inputicon-box">
-                                <select class="wt-select-box selectpicker" name="Job type" data-live-search="true"
-                                    title="Current Salary" id="c_salary" data-bv-field="size">
-                                    <option>Select Current Salary</option>
-                                    <option>10-20 K</option>
-                                    <option>20-30 K</option>
-                                    <option>30-40 K</option>
-                                    <option>40-50 K</option>
-                                </select>
-                                <i class="fs-input-icon fa fa-dollar-sign"></i>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-xl-3 col-lg-6 col-md-12">
-                        <div class="form-group city-outer-bx has-feedback">
-                            <label>Expected Salary</label>
-                            <div class="ls-inputicon-box">
-                                <select class="wt-select-box selectpicker" name="Job type" data-live-search="true"
-                                    title="Expected Salary" id="e-salary" data-bv-field="size">
-                                    <option>Select Expected Salary</option>
-                                    <option>10-20 K</option>
-                                    <option>20-30 K</option>
-                                    <option>30-40 K</option>
-                                    <option>40-50 K</option>
-                                </select>
-                                <i class="fs-input-icon fa fa-dollar-sign"></i>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-xl-3 col-lg-12 col-md-12">
-                        <div class="form-group city-outer-bx has-feedback">
-                            <label>Age</label>
-                            <div class="ls-inputicon-box">
-                                <select class="wt-select-box selectpicker" name="Job type" data-live-search="true"
-                                    title="Expected Salary" id="Age" data-bv-field="size">
-                                    <option>Select Age</option>
-                                    <option>20 Years+</option>
-                                    <option>25+ Years</option>
-                                    <option>30+ Years</option>
-                                    <option>35+ Years</option>
-                                </select>
-                                <i class="fs-input-icon fa fa-child"></i>
-                            </div>
-
-                        </div>
-                    </div>
-
-
-
-
-
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Description</label>
-                            <textarea class="form-control"
-                                rows="3">Greetings! We are Galaxy Software Development Company. We hope you enjoy our services and quality.</textarea>
+                            {{ form_widget(form.about, {'attr': {'class': 'form-control', 'placeholder': 'Dites un peu sur vous'}}) }}
                         </div>
                     </div>
 
-
+                    <div class="col-lg-4 col-md-6">
+                                    <div class="form-group">
+                                        <label>Facebook</label>
+                                        <div class="ls-inputicon-box"> 
+                                            {{ form_widget(form.facebook, {'attr': {'class': 'form-control', 'placeholder': '"https://www.facebook.com/'}}) }}
+                                            <i class="fs-input-icon fab fa-facebook-f"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6">    
+                                    <div class="form-group">
+                                        <label>linkedin</label>
+                                        <div class="ls-inputicon-box"> 
+                                            {{ form_widget(form.linkedin, {'attr': {'class': 'form-control', 'placeholder': 'https://in.linkedin.com/'}}) }}
+                                            <i class="fs-input-icon fab fa-linkedin-in"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                     <div class="col-lg-12 col-md-12">
                         <div class="text-left">
-                            <button type="submit" class="site-button">Save Changes</button>
+                             {{ form_widget(form.submit, {'attr': {'class': 'site-button'}}) }}
                         </div>
                     </div>
 
@@ -251,7 +149,7 @@
             </div>
         </div>
 
-    </form>
+    {{ form_end(form) }}
 
 
 </div>

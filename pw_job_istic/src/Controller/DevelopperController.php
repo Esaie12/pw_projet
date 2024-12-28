@@ -29,7 +29,7 @@ class DevelopperController extends AbstractController
         if($user->isActive() == false){
             return $this->redirectToRoute('app_dev_complete_profil');
         }
-        return $this->render('home.html.twig',[]);
+        return $this->render('developer/dashboard.html.twig',[]);
     }
 
 

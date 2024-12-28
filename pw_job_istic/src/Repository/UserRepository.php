@@ -33,6 +33,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
+    /**
+     * Récupère les 3 derniers utilisateurs créés
+     */
+    public function findLastCreatedDevs(int $limit = 3): array
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.type_user = :type')
+            ->setParameter('type', 'dev')
+            ->orderBy('u.id', 'DESC') 
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return User[] Returns an array of User objects
     //     */

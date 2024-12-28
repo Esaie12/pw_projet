@@ -39,8 +39,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function findLastCreatedDevs(int $limit = 3): array
     {
         return $this->createQueryBuilder('u')
-            ->where('u.type_user', 'dev')
-            ->orderBy('u.createdAt', 'DESC') 
+            ->where('u.type_user = :type')
+            ->setParameter('type', 'dev')
+            ->orderBy('u.id', 'DESC') 
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();

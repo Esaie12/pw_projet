@@ -1,0 +1,200 @@
+{% extends 'template_society.html.twig' %}
+
+{% block title %}Hello SocietyController!{% endblock %}
+
+{% block body %}
+
+<div class="content-admin-main">
+
+    <div class="wt-admin-right-page-header clearfix">
+        <h2>Publier une fiche de post</h2>
+        <div class="breadcrumbs"><a href="#">Home</a><a href="#">Dasboard</a><span>Job</span></div>
+    </div>
+
+    
+    <div class="panel panel-default">
+        <div class="panel-heading wt-panel-heading p-a20">
+            <h4 class="panel-tittle m-a0"><i class="fa fa-suitcase"></i>Informations sur le poste</h4>
+        </div>
+        <div class="panel-body wt-panel-body p-a20 m-b30 ">
+            {{ form_start(form, { 'attr': { 'class': 'form-horizontal' } }) }}
+                <div class="row">
+                    <!--Job title-->
+                    <div class="col-xl-4 col-lg-6 col-md-12">
+                        <div class="form-group">
+                            <label>Job Title</label>
+                            <div class="ls-inputicon-box">
+                                 {{ form_widget(form.title, {'attr': {'class': 'form-control', 'placeholder': ""}}) }}
+                                <i class="fs-input-icon fa fa-address-card"></i>
+                            </div>
+                        </div>
+                    </div>
+
+ <div class="col-xl-4 col-lg-6 col-md-12">
+                    <div class="form-group">
+                        <label>{{ form_label(form.experienceLevel) }}</label>
+                        <div class="ls-inputicon-box">
+                            {{ form_widget(form.experienceLevel, {
+                                'attr': {
+                                    'class': 'wt-select-box selectpicker',
+                                    'data-live-search': 'true',
+                                    'id': 'experience-level-select',
+                                }
+                            }) }}
+                            <i class="fs-input-icon fa fa-graduation-cap"></i>
+                        </div>
+                        {{ form_errors(form.experienceLevel) }}
+                    </div>
+</div>
+
+                    <!--Job Type-->
+                    <div class="col-xl-4 col-lg-6 col-md-12">
+                        <div class="form-group">
+                            <label>{{ form_label(form.jobType) }}</label>
+                            <div class="ls-inputicon-box">
+                                {{ form_widget(form.jobType, {
+                                    'attr': {
+                                        'class': 'wt-select-box selectpicker',
+                                        'data-live-search': 'true',
+                                        'id': 's-category',
+                                    }
+                                }) }}
+                                <i class="fs-input-icon fa fa-file-alt"></i>
+                            </div>
+                            {{ form_errors(form.jobType) }}
+                        </div>
+                    </div>
+
+
+                    <!--Offered Salary-->
+                    <div class="col-xl-4 col-lg-6 col-md-12">
+                        <div class="form-group">
+                            <label>Offered Salary</label>
+                            <div class="ls-inputicon-box">
+                                 {{ form_widget(form.salary, {'attr': {'class': 'form-control', 'placeholder': ""}}) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+                    
+
+                    <!--Gender-->
+                    <div class="col-xl-4 col-lg-6 col-md-12">
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <div class="ls-inputicon-box">
+                                <select class="wt-select-box selectpicker" data-live-search="true" title="" id="gender"
+                                    data-bv-field="size">
+                                    <option class="bs-title-option" value="">Gender</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Other</option>
+                                </select>
+                                <i class="fs-input-icon fa fa-venus-mars"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-6 col-md-12">
+                        <div class="form-group">
+    <label>{{ form_label(form.technologies) }}</label>
+    <div class="ls-inputicon-box">
+        {{ form_widget(form.technologies, {
+            'attr': {
+                'class': 'wt-select-box selectpicker',
+                'data-live-search': 'true',
+                'id': 'technologies-select',
+            }
+        }) }}
+        <i class="fs-input-icon fa fa-code"></i>
+    </div>
+    {{ form_errors(form.technologies) }}
+</div>
+
+                    </div>
+                   
+
+
+                    <!--Location-->
+                    <div class="col-xl-4 col-lg-6 col-md-12">
+                        <div class="form-group">
+                            <label>Location</label>
+                            <div class="ls-inputicon-box">
+                                  {{ form_widget(form.location, {'attr': {'class': 'form-control', 'placeholder': ""}}) }}
+                                <i class="fs-input-icon fa fa-map-marker-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--Description-->
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Description</label>
+                              {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': ""}}) }}
+                        </div>
+                    </div>
+
+                    <!--Start Date-->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Start Date</label>
+                            <div class="ls-inputicon-box">
+                                {{ form_widget(form.publishedAt, {'attr': {'class': 'form-control', 'placeholder': ""}}) }}
+                                <i class="fs-input-icon far fa-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--End Date-->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Date d'expiration</label>
+                            <div class="ls-inputicon-box">
+                                <input class="form-control datepicker" data-provide="datepicker" name="company_since"
+                                    type="text" placeholder="mm/dd/yyyy">
+                                <i class="fs-input-icon far fa-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6 col-md-12">
+                                                <div class="form-group">
+                                                    <label>Image de couverture</label>
+                                                    <div class="ls-inputicon-box"> 
+                                                        {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
+                                                        <i class="fs-input-icon fa fa-image"></i>
+                                                    </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6 col-md-12">
+                                                <div class="form-group">
+                                                    <label>Fichier pdf</label>
+                                                    <div class="ls-inputicon-box"> 
+                                                        {{ form_widget(form.pdfFile, {'attr': {'class': 'form-control'}}) }}
+                                                        <i class="fs-input-icon fa fa-image"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                    
+                    <div class="col-lg-12 col-md-12">
+                        <div class="text-left">
+                             {{ form_widget(form.submit, {'attr': {'class': 'site-button'}}) }}
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

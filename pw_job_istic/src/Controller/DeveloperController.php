@@ -79,6 +79,21 @@ class DeveloperController extends AbstractController
                 }
             }
 
+             // Gestion de l'avatar (si le champ avatar existe dans le formulaire)
+             $avatarFile = $form->get('avatar')->getData();
+    
+             if ($avatarFile) {
+                 $newFilename = uniqid() . '.' . $avatarFile->guessExtension();
+     
+                 $avatarFile->move(
+                     $this->getParameter('avatars_directory'), // Configurez ce paramètre
+                     $newFilename
+                 );
+                 $developer->setAvatar($newFilename);
+             }
+     
+             $user->setIsActive(true);
+
             $entityManager->flush();
 
             $this->addFlash('success', 'Profil mis à jour avec succès.');

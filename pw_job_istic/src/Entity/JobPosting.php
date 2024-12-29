@@ -35,6 +35,9 @@ class JobPosting
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $publishedAt = null;
 
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $endAt = null;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
@@ -154,6 +157,18 @@ class JobPosting
     public function setPublishedAt(?\DateTimeInterface $publishedAt): static
     {
         $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    public function getEndAt(): ?\DateTimeInterface
+    {
+        return $this->endAt;
+    }
+
+    public function setEndAt(?\DateTimeInterface $endAt): static
+    {
+        $this->endAt = $endAt;
 
         return $this;
     }

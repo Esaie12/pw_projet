@@ -68,10 +68,9 @@
                                 <div class="twm-table-controls">
                                     <ul class="twm-DT-controls-icon list-unstyled">
                                         <li>
-                                            <button title="View profile" data-bs-toggle="tooltip"
-                                                data-bs-placement="top">
-                                                <span class="fa fa-eye"></span>
-                                            </button>
+                                            <a href="{{path('society_job_show', { id: job.id })}}" >
+                                                 <span class="fa fa-eye"></span>
+                                            </a>
                                         </li>
                                         <li>
                                             <a href="{{ path('job_posting_edit', { id: job.id }) }}" >

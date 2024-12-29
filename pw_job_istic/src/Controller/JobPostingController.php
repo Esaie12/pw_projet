@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\JobPosting;
+use App\Entity\Developer;
 use App\Form\JobPostingType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Knp\Component\Pager\PaginatorInterface;
 
 class JobPostingController extends AbstractController
 {
@@ -133,6 +135,51 @@ class JobPostingController extends AbstractController
 
         $this->addFlash('success', 'Fiche de poste supprimée avec succès.');
         return $this->redirectToRoute('job_posting_list');
+    }
+
+    #[Route('/society/job/{id}', name: 'society_job_show', requirements: ['id' => '\d+'])]
+    public function showJobPosting(int $id, EntityManagerInterface $entityManager, PaginatorInterface $paginator, Request $request): Response
+    {
+        // Récupérer le poste depuis la base de données
+        $jobPosting = $entityManager->getRepository(JobPosting::class)->find($id);
+
+        // Vérifier si le poste existe
+        if (!$jobPosting) {
+            throw $this->createNotFoundException('Le poste demandé n\'existe pas.');
+        }
+
+        // Construire une requête pour rechercher les candidats compatibles
+        $qb = $entityManager->getRepository(Developer::class)->createQueryBuilder('d');
+
+        // Filtrer par technologies associées au poste
+        $qb->join('d.langages', 'l')
+        ->andWhere('l.id IN (:technologyIds)')
+        ->setParameter('technologyIds', $jobPosting->getTechnologies()->map(fn($tech) => $tech->getId())->toArray());
+ 
+        // Filtrer par localisation
+        if ($jobPosting->getLocation()) {
+            /*$qb->andWhere('d.localisation = :location')
+            ->setParameter('location', $jobPosting->getLocation());*/
+        }
+
+        // Filtrer par niveau d'expérience
+       /* if ($jobPosting->getExperienceLevel()) {
+            $qb->andWhere('d.niveauExperience >= :experienceLevel')
+            ->setParameter('experienceLevel', $jobPosting->getExperienceLevel());
+        }*/
+
+        // Ajouter une pagination pour les candidats compatibles
+        $candidates = $paginator->paginate(
+            $qb->getQuery(), // Requête Doctrine
+            $request->query->getInt('page', 1), // Numéro de la page
+            10 // Nombre d'éléments par page
+        );
+
+        // Rendre la vue avec les détails du poste et les candidats compatibles
+        return $this->render('society/jobs/show_suggestion.html.twig', [
+            'job' => $jobPosting,
+            'candidates' => $candidates,
+        ]);
     }
 
 

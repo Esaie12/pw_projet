@@ -4,6 +4,10 @@ namespace App\Entity;
 
 use App\Repository\DeveloperRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use App\Entity\Langage;
+use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: DeveloperRepository::class)]
 class Developer
@@ -38,6 +42,15 @@ class Developer
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $avatar = null;
+
+    #[ORM\ManyToMany(targetEntity: Langage::class)]
+    #[ORM\JoinTable(name: 'developer_langages')]
+    private Collection $langages;
+
+    public function __construct()
+    {
+        $this->langages = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -134,6 +147,27 @@ class Developer
     public function setFirstname(?string $firstname): self
     {
         $this->firstname = $firstname;
+        return $this;
+    }
+
+    public function getLangages(): Collection
+    {
+        return $this->langages;
+    }
+
+    public function addLangage(Langage $langage): self
+    {
+        if (!$this->langages->contains($langage)) {
+            $this->langages->add($langage);
+        }
+
+        return $this;
+    }
+
+    public function removeLangage(Langage $langage): self
+    {
+        $this->langages->removeElement($langage);
+
         return $this;
     }
 }

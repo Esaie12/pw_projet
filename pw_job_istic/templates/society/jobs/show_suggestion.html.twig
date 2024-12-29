@@ -1,0 +1,107 @@
+{% extends 'template_society.html.twig' %}
+
+{% block title %}Hello SocietyController!{% endblock %}
+
+{% block body %}
+
+<div class="content-admin-main">
+
+    <div class="wt-admin-right-page-header clearfix">
+        <h2>{{ job.title }}</h2>
+        <div class="breadcrumbs"><a href="#">Home</a><a href="#">Dasboard</a><span>Job</span></div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading wt-panel-heading p-a20">
+            <h4 class="panel-tittle m-a0"><i class="fa fa-suitcase"></i>Informations sur le poste</h4>
+        </div>
+        <div class="panel-body wt-panel-body p-a20 m-b30 ">
+
+            <p>
+        <strong>Localisation :</strong> {{ job.location }}<br>
+        <strong>Date de publication :</strong> {{ job.publishedAt|date('d/m/Y') }}<br>
+        <strong>Type de Job :</strong> {{ job.jobType.name }}<br>
+        <strong>Salaire :</strong> {{ job.salary|number_format(2, ',', ' ') }} €<br>
+        <strong>Niveau d'expérience :</strong> {{ job.experienceLevel }}
+    </p>
+
+    <h3>Technologies requises :</h3>
+    <ul>
+        {% for tech in job.technologies %}
+            <li>{{ tech.name }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Description :</h3>
+    <p>{{ job.description|nl2br }}</p>
+
+    {% if job.image %}
+        <h3>Image :</h3>
+        <img src="{{ asset('uploads/' ~ job.image) }}" alt="Image du poste" class="img-fluid">
+    {% endif %}
+
+    {% if job.pdfFile %}
+        <h3>Fichier PDF :</h3>
+        <a href="{{ asset('uploads/' ~ job.pdfFile) }}" target="_blank">Télécharger le fichier</a>
+    {% endif %}
+
+
+        </div>
+    </div>
+
+    <div class="panel panel-default mt-4">
+
+        <div class="panel-heading wt-panel-heading p-a20 mt-4">
+            <h4 class="panel-tittle m-a0"><i class="fa fa-suitcase"></i>Candidats compatibles</h4>
+        </div>
+        <div class="panel-body wt-panel-body p-a20 m-b30 ">
+            {% if candidates.items is empty %}
+            <p>Aucun candidat compatible trouvé.</p>
+            {% else %}
+            <div class="twm-candidates-list-wrap">
+                <ul>
+                    {% for candidate in candidates %}
+                    <li>
+                        <div class="twm-candidates-list-style1 mb-5">
+                            <div class="twm-media">
+                                <div class="twm-media-pic">
+                                    <img src="images/candidates/pic1.jpg" alt="#">
+                                </div>
+                                <div class="twm-candidates-tag"><span>Featured</span></div>
+                            </div>
+                            <div class="twm-mid-content">
+                                <a href="candidate-detail.html" class="twm-job-title">
+                                    <h4>Wanda Montgomery </h4>
+                                </a>
+                                <p>Charted Accountant</p>
+
+                                <div class="twm-fot-content">
+                                    <div class="twm-left-info">
+                                        <p class="twm-candidate-address"><i class="feather-map-pin"></i>New York</p>
+                                        <div class="twm-jobs-vacancies">$20<span>/ Day</span></div>
+                                    </div>
+                                    <div class="twm-right-btn">
+                                        <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">View
+                                            Profile</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                     {% endfor %}
+                </ul>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    {{ knp_pagination_render(candidates) }}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

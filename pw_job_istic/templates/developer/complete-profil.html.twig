@@ -133,6 +133,23 @@
                                                 </div>
                                             </div>
 
+                                                <div class="col-xl-4 col-lg-6 col-md-12">
+                                                    <div class="form-group">
+                                                        <label>{{ form_label(form.langages) }}</label>
+                                                        <div class="ls-inputicon-box">
+                                                            {{ form_widget(form.langages, {
+                                                                'attr': {
+                                                                    'class': 'wt-select-box selectpicker',
+                                                                    'data-live-search': 'true',
+                                                                    'id': 'langages-select',
+                                                                }
+                                                            }) }}
+                                                            <i class="fs-input-icon fa fa-code"></i>
+                                                        </div>
+                                                        {{ form_errors(form.langages) }}
+                                                    </div>
+
+                                            </div>
                                             <div class="col-xl-6 col-lg-6 col-md-12">
                                                 <div class="form-group">
                                                     <label>Avatar</label>

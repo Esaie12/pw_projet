@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use App\Entity\Langage;
 use App\Entity\User;
+use App\Entity\Candidat;
 
 #[ORM\Entity(repositoryClass: DeveloperRepository::class)]
 class Developer
@@ -47,9 +48,18 @@ class Developer
     #[ORM\JoinTable(name: 'developer_langages')]
     private Collection $langages;
 
+    #[ORM\ManyToMany(targetEntity: JobPosting::class)]
+    #[ORM\JoinTable(name: 'developer_favorites')]
+    private Collection $favoriteJobs;
+
+    #[ORM\OneToMany(mappedBy: 'developer', targetEntity: Candidat::class, cascade: ['remove'])]
+    private Collection $candidatures;
+
     public function __construct()
     {
         $this->langages = new ArrayCollection();
+        $this->favoriteJobs = new ArrayCollection();
+        $this->candidatures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -170,4 +180,32 @@ class Developer
 
         return $this;
     }
+
+
+    public function getFavoriteJobs(): Collection
+    {
+        return $this->favoriteJobs;
+    }
+
+    public function addFavoriteJob(JobPosting $jobPosting): self
+    {
+        if (!$this->favoriteJobs->contains($jobPosting)) {
+            $this->favoriteJobs->add($jobPosting);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteJob(JobPosting $jobPosting): self
+    {
+        $this->favoriteJobs->removeElement($jobPosting);
+
+        return $this;
+    }
+
+    public function getCandidatures(): Collection
+    {
+        return $this->candidatures;
+    }
+
 }

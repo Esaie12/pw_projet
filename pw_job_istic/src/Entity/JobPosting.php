@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use App\Entity\Candidat;
 
 #[ORM\Entity(repositoryClass: JobPostingRepository::class)]
 class JobPosting
@@ -58,9 +59,13 @@ class JobPosting
     private Collection $technologies;
 
 
+    #[ORM\OneToMany(mappedBy: 'jobPosting', targetEntity: Candidat::class, cascade: ['remove'])]
+    private Collection $candidatures;
+
     public function __construct()
     {
         $this->technologies = new ArrayCollection();
+        $this->candidatures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -219,5 +224,11 @@ class JobPosting
         $this->society = $society;
 
         return $this;
+    }
+
+
+    public function getCandidatures(): Collection
+    {
+        return $this->candidatures;
     }
 }

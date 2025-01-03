@@ -2,13 +2,14 @@
 
 namespace App\Controller;
 
-
+use App\Entity\Candidat;
+use App\Entity\Status;
 use App\Entity\Society;
 use App\Repository\SocietyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-
+use Knp\Component\Pager\PaginatorInterface;
 
 use App\Form\SocietyCompleteProfilType;
 use Symfony\Component\HttpFoundation\Request;
@@ -95,5 +96,99 @@ class SocietyController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+
+    /** Les devs qui ont postulés à mes offres */
+
+    #[Route('/society/candidatures', name: 'society_candidatures_list')]
+    public function listCandidatures(EntityManagerInterface $entityManager, PaginatorInterface $paginator, Request $request): Response
+    {
+        $user = $this->getUser();
+        $society = $user->getSociety();
+
+        if (!$society) {
+            $this->addFlash('error', 'Vous devez être une société pour accéder à cette page.');
+            return $this->redirectToRoute('home');
+        }
+
+        $query = $entityManager->createQueryBuilder()
+            ->select('c')
+            ->from(Candidat::class, 'c')
+            ->join('c.jobPosting', 'j')
+            ->where('j.society = :society')
+            ->setParameter('society', $society)
+            ->orderBy('c.id', 'DESC')
+            ->getQuery();
+
+        $candidatures = $paginator->paginate($query,$request->query->getInt('page', 1), 10 );
+
+        return $this->render('society/candidatures_list.html.twig', [
+            'candidatures' => $candidatures,
+        ]);
+    }
+
+    #[Route('/society/candidature/{id}/accept', name: 'society_candidature_accept', methods: ['POST'])]
+    public function acceptCandidature(int $id, EntityManagerInterface $entityManager): Response
+    {
+        return $this->updateCandidatureStatus($id, 2, $entityManager);
+    }
+
+    #[Route('/society/candidature/{id}/reject', name: 'society_candidature_reject', methods: ['POST'])]
+    public function rejectCandidature(int $id, EntityManagerInterface $entityManager): Response
+    {
+        return $this->updateCandidatureStatus($id, 3, $entityManager);
+    }
+
+    private function updateCandidatureStatus(int $id, int $newStatus, EntityManagerInterface $entityManager): Response
+    {
+        $candidature = $entityManager->getRepository(Candidat::class)->find($id);
+
+        if (!$candidature) {
+            throw $this->createNotFoundException('Candidature introuvable.');
+        }
+
+        $user = $this->getUser();
+        $society = $user->getSociety();
+
+        if (!$society || $candidature->getJobPosting()->getSociety() !== $society) {
+            $this->addFlash('error', 'Vous ne pouvez pas modifier cette candidature.');
+            return $this->redirectToRoute('society_candidatures_list');
+        }
+
+        $status = $entityManager->getRepository(Status::class)->find( $newStatus );
+        if (!$status) {
+            throw new \Exception(sprintf('Le statut "%s" n\'existe pas.', $newStatus));
+        }
+
+        // Mettre à jour le statut de la candidature sélectionnée
+        $candidature->setStatus($status);
+        $entityManager->persist($candidature);
+
+        // Si la candidature est acceptée, rejeter toutes les autres candidatures pour le même job
+        if ($newStatus === 1) {
+            $rejectedStatus = $entityManager->getRepository(Status::class)->find(3);
+            if (!$rejectedStatus) {
+                throw new \Exception('Le statut "rejeté" n\'existe pas.');
+            }
+
+            $qb = $entityManager->createQueryBuilder()
+                ->update(Candidat::class, 'c')
+                ->set('c.status', ':rejectedStatus')
+                ->where('c.jobPosting = :job')
+                ->andWhere('c.id != :acceptedId')
+                ->setParameter('rejectedStatus', $rejectedStatus)
+                ->setParameter('job', $candidature->getJobPosting())
+                ->setParameter('acceptedId', $candidature->getId());
+
+            $qb->getQuery()->execute();
+        }
+
+        $entityManager->flush();
+
+        $this->addFlash('success', sprintf('La candidature a été %s avec succès.', $newStatus));
+        return $this->redirectToRoute('society_candidatures_list');
+    }
+
+
 
 }

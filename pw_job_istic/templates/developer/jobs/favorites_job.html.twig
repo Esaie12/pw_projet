@@ -1,0 +1,123 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Hello DeveloperController!{% endblock %}
+
+{% block body %}
+
+<!-- INNER PAGE BANNER -->
+<div class="wt-bnr-inr overlay-wraper bg-center" style="background-image:url(../images/banner/1.jpg);">
+    <div class="overlay-main site-bg-white opacity-01"></div>
+    <div class="container">
+        <div class="wt-bnr-inr-entry">
+            <div class="banner-title-outer">
+                <div class="banner-title-name">
+                    <h2 class="wt-title">Jobs Favoris</h2>
+                </div>
+            </div>
+            <!-- BREADCRUMB ROW -->
+
+            <div>
+                <ul class="wt-breadcrumb breadcrumb-style-2">
+                    <li><a href="index-2.html">Home</a></li>
+                    <li>Jobs Favoris</li>
+                </ul>
+            </div>
+
+            <!-- BREADCRUMB ROW END -->
+        </div>
+    </div>
+</div>
+<!-- INNER PAGE BANNER END -->
+
+
+<!-- OUR BLOG START -->
+<div class="section-full p-t120  p-b90 site-bg-white">
+
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xl-3 col-lg-4 col-md-12 rightSidebar m-b30">
+
+                {{include('includes/sidebars/developer.html.twig')}}
+
+            </div>
+
+            <div class="col-xl-9 col-lg-8 col-md-12 m-b30">
+                <div class="twm-right-section-panel candidate-save-job site-bg-gray">
+                    <!--Filter Short By-->
+                    <div class="product-filter-wrap d-flex justify-content-between align-items-center">
+                        <span class="woocommerce-result-count-left">Jobs Favoris</span>
+                    
+                        <form class="woocommerce-ordering twm-filter-select" method="get">
+                            <span class="woocommerce-result-count">Short By</span>
+                            <select class="wt-select-bar-2 selectpicker"  data-live-search="true" data-bv-field="size">
+                                <option>Most Recent</option>
+                                <option>Freelance</option>
+                                <option>Full Time</option>
+                                <option>Internship</option>
+                                <option>Part Time</option>
+                                <option>Temporary</option>
+                            </select>
+                            <select class="wt-select-bar-2 selectpicker"  data-live-search="true" data-bv-field="size">
+                                <option>Show 10</option>
+                                <option>Show 20</option>
+                                <option>Show 30</option>
+                                <option>Show 40</option>
+                                <option>Show 50</option>
+                                <option>Show 60</option>
+                            </select>
+                        </form>
+
+                    </div>
+
+                    <div class="twm-jobs-list-wrap">
+                        {% if jobs is empty %}
+                            <p>Aucun job dans vos favoris.</p>
+                        {% else %}
+
+                        <ul>
+                            {% for job in jobs %}
+                            <li>
+                                <div class="twm-jobs-list-style1 mb-5">
+                                    <div class="twm-media">
+                                        <img src="images/jobs-company/pic1.jpg" alt="#">
+                                    </div>
+                                    <div class="twm-mid-content">
+                                        <a href="job-detail.html" class="twm-job-title">
+                                            <h4>Senior Web Designer<span class="twm-job-post-duration">/ 1 days ago</span></h4>
+                                        </a>
+                                        <p class="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
+                                        <a href="https://themeforest.net/user/thewebmax/portfolio" class="twm-job-websites site-text-primary">https://thewebmax.com</a>
+                                    </div>
+                                    <div class="twm-right-content">
+                                        <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
+                                        <div class="twm-jobs-amount">$2500 <span>/ Month</span></div>
+                                        <a href="{{path('dev_job_details',{id:job.id})}}" class="twm-jobs-browse site-text-primary">Apply Job</a>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+
+                            
+                            
+                        </ul>
+
+                        {% endif %}
+                    </div>
+
+                    <div class="pagination-outer">
+                        <div class="pagination-style1">
+                            <div class="pagination">
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- OUR BLOG END -->
+{% endblock %}

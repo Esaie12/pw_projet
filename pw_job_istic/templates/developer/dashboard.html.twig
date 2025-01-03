@@ -90,284 +90,30 @@
                                         <h4 class="panel-tittle m-a0">Postes les plus populaires</h4>
                                     </div>
                                     <div class="panel-body wt-panel-body bg-white">
-                                        <div class="twm-dashboard-candidates-wrap">
-                                            <div class="row">
-
-                                                <div class="col-xl-12 col-lg-12 col-md-12">
-                                                    <div class="twm-dash-candidates-list">
+                                        <div class="twm-jobs-list-wrap">
+                                            <ul>
+                                                {% for job in last_jobs %}
+                                                <li>
+                                                    <div class="twm-jobs-list-style1 mb-5">
                                                         <div class="twm-media">
-                                                            <div class="twm-media-pic">
-                                                                <img src="../images/candidates/pic1.jpg" alt="#">
-                                                            </div>
-
+                                                            <img src="images/jobs-company/pic1.jpg" alt="#">
                                                         </div>
                                                         <div class="twm-mid-content">
-                                                            <a href="#" class="twm-job-title">
-                                                                <h4>Wanda Montgomery </h4>
+                                                            <a href="job-detail.html" class="twm-job-title">
+                                                                <h4>Senior Web Designer<span class="twm-job-post-duration">/ 1 days ago</span></h4>
                                                             </a>
-                                                            <p>Charted Accountant</p>
-
-                                                            <div class="twm-fot-content">
-                                                                <div class="twm-left-info">
-                                                                    <p class="twm-candidate-address"><i
-                                                                            class="feather-map-pin"></i>New York
-                                                                    </p>
-                                                                    <div class="twm-jobs-vacancies">$20<span>/
-                                                                            Day</span></div>
-                                                                </div>
-                                                                <div class="twm-right-btn">
-
-                                                                    <ul class="twm-controls-icon list-unstyled">
-                                                                        <li>
-                                                                            <button title="View profile"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top">
-                                                                                <span class="fa fa-eye"></span>
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <button title="Send message"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top">
-                                                                                <span
-                                                                                    class="far fa-envelope-open"></span>
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <button title="Delete"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top">
-                                                                                <span class="far fa-trash-alt"></span>
-                                                                            </button>
-                                                                        </li>
-                                                                    </ul>
-
-                                                                </div>
-                                                            </div>
+                                                            <p class="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
+                                                            <a href="https://themeforest.net/user/thewebmax/portfolio" class="twm-job-websites site-text-primary">https://thewebmax.com</a>
                                                         </div>
-
+                                                        <div class="twm-right-content">
+                                                            <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
+                                                            <div class="twm-jobs-amount">$2500 <span>/ Month</span></div>
+                                                            <a href="{{path('dev_job_details',{id:job.id})}}" class="twm-jobs-browse site-text-primary">Apply Job</a>
+                                                        </div>
                                                     </div>
-                                                </div>
-
-                                                <div class="col-xl-12 col-lg-12 col-md-12">
-                                                    <div class="twm-dash-candidates-list">
-                                                        <div class="twm-media">
-                                                            <div class="twm-media-pic">
-                                                                <img src="../images/candidates/pic2.jpg" alt="#">
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="twm-mid-content">
-                                                            <a href="#" class="twm-job-title">
-                                                                <h4>Peter Hawkins</h4>
-                                                            </a>
-                                                            <p>Medical Professed</p>
-
-                                                            <div class="twm-fot-content">
-                                                                <div class="twm-left-info">
-                                                                    <p class="twm-candidate-address"><i
-                                                                            class="feather-map-pin"></i>New York
-                                                                    </p>
-                                                                    <div class="twm-jobs-vacancies">$7<span>/
-                                                                            Hour</span></div>
-                                                                </div>
-                                                                <div class="twm-right-btn">
-
-                                                                    <ul class="twm-controls-icon list-unstyled">
-                                                                        <li>
-                                                                            <button title="View profile"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top">
-                                                                                <span class="fa fa-eye"></span>
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <button title="Send message"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top">
-                                                                                <span
-                                                                                    class="far fa-envelope-open"></span>
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <button title="Delete"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top">
-                                                                                <span class="far fa-trash-alt"></span>
-                                                                            </button>
-                                                                        </li>
-                                                                    </ul>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-xl-12 col-lg-12 col-md-12">
-                                                    <div class="twm-dash-candidates-list">
-                                                        <div class="twm-media">
-                                                            <div class="twm-media-pic">
-                                                                <img src="../images/candidates/pic3.jpg" alt="#">
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="twm-mid-content">
-                                                            <a href="#" class="twm-job-title">
-                                                                <h4>Ralph Johnson </h4>
-                                                            </a>
-                                                            <p>Bank Manger</p>
-
-                                                            <div class="twm-fot-content">
-                                                                <div class="twm-left-info">
-                                                                    <p class="twm-candidate-address"><i
-                                                                            class="feather-map-pin"></i>New York
-                                                                    </p>
-                                                                    <div class="twm-jobs-vacancies">$180<span>/
-                                                                            Day</span></div>
-                                                                </div>
-                                                                <div class="twm-right-btn">
-                                                                    <ul class="twm-controls-icon list-unstyled">
-                                                                        <li>
-                                                                            <button title="View profile"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top">
-                                                                                <span class="fa fa-eye"></span>
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <button title="Send message"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top">
-                                                                                <span
-                                                                                    class="far fa-envelope-open"></span>
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <button title="Delete"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top">
-                                                                                <span class="far fa-trash-alt"></span>
-                                                                            </button>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-xl-12 col-lg-12 col-md-12">
-                                                    <div class="twm-dash-candidates-list">
-                                                        <div class="twm-media">
-                                                            <div class="twm-media-pic">
-                                                                <img src="../images/candidates/pic4.jpg" alt="#">
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="twm-mid-content">
-                                                            <a href="#" class="twm-job-title">
-                                                                <h4>developer.id}} </h4>
-                                                            </a>
-                                                            <p>developer.localisation}}</p>
-
-                                                            <div class="twm-fot-content">
-                                                                <div class="twm-left-info">
-                                                                    <p class="twm-candidate-address"><i
-                                                                            class="feather-map-pin"></i>New York
-                                                                    </p>
-                                                                    <div class="twm-jobs-vacancies">$90<span>/
-                                                                            Week</span></div>
-                                                                </div>
-                                                                <div class="twm-right-btn">
-                                                                    <ul class="twm-controls-icon list-unstyled">
-                                                                        <li>
-                                                                            <button title="View profile"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top">
-                                                                                <span class="fa fa-eye"></span>
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <button title="Send message"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top">
-                                                                                <span
-                                                                                    class="far fa-envelope-open"></span>
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <button title="Delete"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top">
-                                                                                <span class="far fa-trash-alt"></span>
-                                                                            </button>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-xl-12 col-lg-12 col-md-12">
-                                                    <div class="twm-dash-candidates-list">
-                                                        <div class="twm-media">
-                                                            <div class="twm-media-pic">
-                                                                <img src="../images/candidates/pic6.jpg" alt="#">
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="twm-mid-content">
-                                                            <a href="#" class="twm-job-title">
-                                                                <h4>Christina Fischer </h4>
-                                                            </a>
-                                                            <p>Charity &amp; Voluntary</p>
-
-                                                            <div class="twm-fot-content">
-                                                                <div class="twm-left-info">
-                                                                    <p class="twm-candidate-address"><i
-                                                                            class="feather-map-pin"></i>New York
-                                                                    </p>
-                                                                    <div class="twm-jobs-vacancies">$19<span>/
-                                                                            Hour</span></div>
-                                                                </div>
-                                                                <div class="twm-right-btn">
-                                                                    <ul class="twm-controls-icon list-unstyled">
-                                                                        <li>
-                                                                            <button title="View profile"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top">
-                                                                                <span class="fa fa-eye"></span>
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <button title="Send message"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top">
-                                                                                <span
-                                                                                    class="far fa-envelope-open"></span>
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <button title="Delete"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top">
-                                                                                <span class="far fa-trash-alt"></span>
-                                                                            </button>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-                                            </div>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -379,66 +125,33 @@
                                         <h4 class="panel-tittle m-a0">3 dernières offres publiées.</h4>
                                     </div>
                                     <div class="panel-body wt-panel-body bg-white">
-                                        <div class="twm-dashboard-candidates-wrap">
-                                            <div class="row">
-                                                
-                                                <div class="col-xl-12 col-lg-12 col-md-12">
-                                                    <div class="twm-dash-candidates-list">
+                                        
+                                        <div class="twm-jobs-list-wrap">
+                                            <ul>
+                                                {% for job in last_jobs %}
+                                                <li>
+                                                    <div class="twm-jobs-list-style1 mb-5">
                                                         <div class="twm-media">
-                                                            <div class="twm-media-pic">
-                                                                <img src="../images/candidates/pic1.jpg" alt="#">
-                                                            </div>
-
+                                                            <img src="images/jobs-company/pic1.jpg" alt="#">
                                                         </div>
                                                         <div class="twm-mid-content">
-                                                            <a href="#" class="twm-job-title">
-                                                                <h4>Wanda Montgomery </h4>
+                                                            <a href="job-detail.html" class="twm-job-title">
+                                                                <h4>Senior Web Designer<span class="twm-job-post-duration">/ 1 days ago</span></h4>
                                                             </a>
-                                                            <p>Charted Accountant</p>
-
-                                                            <div class="twm-fot-content">
-                                                                <div class="twm-left-info">
-                                                                    <p class="twm-candidate-address"><i
-                                                                            class="feather-map-pin"></i>New York
-                                                                    </p>
-                                                                    <div class="twm-jobs-vacancies">$20<span>/
-                                                                            Day</span></div>
-                                                                </div>
-                                                                <div class="twm-right-btn">
-
-                                                                    <ul class="twm-controls-icon list-unstyled">
-                                                                        <li>
-                                                                            <button title="View profile"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top">
-                                                                                <span class="fa fa-eye"></span>
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <button title="Send message"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top">
-                                                                                <span
-                                                                                    class="far fa-envelope-open"></span>
-                                                                            </button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <button title="Delete"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top">
-                                                                                <span class="far fa-trash-alt"></span>
-                                                                            </button>
-                                                                        </li>
-                                                                    </ul>
-
-                                                                </div>
-                                                            </div>
+                                                            <p class="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
+                                                            <a href="https://themeforest.net/user/thewebmax/portfolio" class="twm-job-websites site-text-primary">https://thewebmax.com</a>
                                                         </div>
-
+                                                        <div class="twm-right-content">
+                                                            <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
+                                                            <div class="twm-jobs-amount">$2500 <span>/ Month</span></div>
+                                                            <a href="{{path('dev_job_details',{id:job.id})}}" class="twm-jobs-browse site-text-primary">Apply Job</a>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>

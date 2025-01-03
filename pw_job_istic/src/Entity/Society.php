@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\SocietyRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: SocietyRepository::class)]
 class Society
@@ -50,6 +52,9 @@ class Society
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $facebook = null;
 
+
+    #[ORM\OneToMany(mappedBy: 'society', targetEntity: JobPosting::class)]
+    private Collection $jobPostings;
 
     public function getId(): ?int
     {
@@ -198,6 +203,34 @@ class Society
     public function setFacebook(?string $facebook): static
     {
         $this->facebook = $facebook;
+
+        return $this;
+    }
+
+
+    public function getJobPostings(): Collection
+    {
+        return $this->jobPostings;
+    }
+
+    public function addJobPosting(JobPosting $jobPosting): self
+    {
+        if (!$this->jobPostings->contains($jobPosting)) {
+            $this->jobPostings[] = $jobPosting;
+            $jobPosting->setSociety($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJobPosting(JobPosting $jobPosting): self
+    {
+        if ($this->jobPostings->removeElement($jobPosting)) {
+            // Set the owning side to null (unless already changed)
+            if ($jobPosting->getSociety() === $this) {
+                $jobPosting->setSociety(null);
+            }
+        }
 
         return $this;
     }

@@ -11,12 +11,12 @@
         <li>
             <a href="javascript:;"><i class="fa fa-suitcase"></i><span class="admin-nav-text">Fiches de post</span></a>
             <ul class="sub-menu">
-                <li> <a href="dash-post-job.html"><span class="admin-nav-text">Publier un job</span></a></li>
-                <li> <a href="dash-manage-jobs.html"><span class="admin-nav-text">Gérer les jobs</span></a></li>
+                <li> <a href="{{path('society_job_posting_new')}}"><span class="admin-nav-text">Publier un job</span></a></li>
+                <li> <a href="{{path('society_job_posting_list')}}"><span class="admin-nav-text">Gérer les jobs</span></a></li>
             </ul>
         </li>
         <li>
-            <a href="dash-candidates.html"><i class="fa fa-user-friends"></i><span
+            <a href="{{path('society_candidatures_list')}}"><i class="fa fa-user-friends"></i><span
                     class="admin-nav-text">Candidats</span></a>
         </li>
         <li>

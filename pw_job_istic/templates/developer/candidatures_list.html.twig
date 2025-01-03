@@ -1,0 +1,83 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Hello DeveloperController!{% endblock %}
+
+{% block body %}
+
+<!-- INNER PAGE BANNER -->
+<div class="wt-bnr-inr overlay-wraper bg-center" style="background-image:url(../images/banner/1.jpg);">
+    <div class="overlay-main site-bg-white opacity-01"></div>
+    <div class="container">
+        <div class="wt-bnr-inr-entry">
+            <div class="banner-title-outer">
+                <div class="banner-title-name">
+                    <h2 class="wt-title">Mes candidatures</h2>
+                </div>
+            </div>
+            <!-- BREADCRUMB ROW -->
+
+            <div>
+                <ul class="wt-breadcrumb breadcrumb-style-2">
+                    <li><a href="index-2.html">Home</a></li>
+                    <li>Mes candidatures</li>
+                </ul>
+            </div>
+
+            <!-- BREADCRUMB ROW END -->
+        </div>
+    </div>
+</div>
+<!-- INNER PAGE BANNER END -->
+
+
+<!-- OUR BLOG START -->
+<div class="section-full p-t120  p-b90 site-bg-white">
+
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xl-3 col-lg-4 col-md-12 rightSidebar m-b30">
+
+                {{include('includes/sidebars/developer.html.twig')}}
+
+            </div>
+
+            <div class="col-xl-9 col-lg-8 col-md-12 m-b30">
+               
+
+               {% if candidatures is empty %}
+        <p>Aucune candidature reçue pour vos postes.</p>
+    {% else %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Titre du poste</th>
+                    <th>Date de candidature</th>
+                    <th>Statut</th>
+                    <th>Motivation</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for candidature in candidatures %}
+                    <tr>
+                        <td>{{ candidature.jobPosting.title }}</td>
+                        <td>{{ candidature.jobPosting.publishedAt |date('d/m/Y') }}</td>
+                        <td>
+                            <span style="color: {{ candidature.status.color }}">{{ candidature.status.name }}</span>
+                        </td>
+                        <td>{{ candidature.motivation|default('Non renseignée') }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+                
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- OUR BLOG END -->
+{% endblock %}

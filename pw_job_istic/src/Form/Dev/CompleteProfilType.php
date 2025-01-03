@@ -4,6 +4,7 @@ namespace App\Form\Dev;
 
 use App\Entity\Developer;
 use App\Entity\User;
+use App\Entity\Langage;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -78,6 +79,16 @@ class CompleteProfilType extends AbstractType
                 'class' => 'form-control',
             ],
             'placeholder' => 'Sélectionnez votre niveau d\'expérience*',
+        ])
+        ->add('langages', EntityType::class, [
+            'label' => 'Langages maîtrisés',
+            'class' => Langage::class, // Entité des langages
+            'choice_label' => 'name', // Affiche le champ `name` pour chaque langage
+            'multiple' => true, // Permet la sélection multiple
+            'expanded' => false, // Rendu sous forme de <select> multiple
+            'attr' => [
+                'class' => 'form-control', // Classe CSS pour le style
+            ],
         ])
         ->add('avatar', FileType::class, [
             'label' => false,

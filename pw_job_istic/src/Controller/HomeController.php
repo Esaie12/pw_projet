@@ -17,7 +17,7 @@ class HomeController extends AbstractController
         if($user){
             return $this->redirectDash();
         }
-        return $this->render('home.html.twig',[]);
+         return $this->render('home.html.twig',[]);
     }
 
 

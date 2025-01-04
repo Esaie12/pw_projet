@@ -18,6 +18,7 @@ use App\Entity\JobPosting;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Entity\Candidat;
 use App\Entity\Status;
+use App\Entity\JobView;
 
 class DeveloperController extends AbstractController
 {
@@ -162,13 +163,31 @@ class DeveloperController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+        // Vérifier si le développeur a déjà vu ce job
+        $existingView = $entityManager->getRepository(JobView::class)->findOneBy([
+            'job' => $job,
+            'developer' => $developer,
+        ]);
+        if (!$existingView) {
+            // Créer une nouvelle vue si elle n'existe pas
+            $jobView = new JobView();
+            $jobView->setJob($job);
+            $jobView->setDeveloper($developer);
+    
+            $entityManager->persist($jobView);
+            $entityManager->flush();
+        }
+
+
         $candidature = $entityManager->getRepository(Candidat::class)->findOneBy([
             'developer' => $developer,
             'jobPosting' => $job,
         ]);
 
+        $candidature_bool = $candidature ? true : false;
+        
         $form = null;
-        if (!$candidature) {
+        if ($candidature_bool === false) {
             $candidature = new Candidat();
             $form = $this->createForm(CandidatType::class, $candidature, [
                 'action' => $this->generateUrl('dev_job_apply', ['id' => $id]),
@@ -180,6 +199,7 @@ class DeveloperController extends AbstractController
             'job' => $job,
             'form' => $form ? $form->createView() : null,
             'candidature' => $candidature ? $candidature : null,
+            'candidature_bool'=> $candidature_bool
         ]);
     }
 

@@ -62,10 +62,14 @@ class JobPosting
     #[ORM\OneToMany(mappedBy: 'jobPosting', targetEntity: Candidat::class, cascade: ['remove'])]
     private Collection $candidatures;
 
+    #[ORM\OneToMany(mappedBy: 'job', targetEntity: JobView::class, cascade: ['remove'])]
+    private Collection $views;
+
     public function __construct()
     {
         $this->technologies = new ArrayCollection();
         $this->candidatures = new ArrayCollection();
+        $this->views = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -231,4 +235,11 @@ class JobPosting
     {
         return $this->candidatures;
     }
+
+    public function getViews(): Collection
+    {
+        return $this->views;
+    }
+
+    
 }

@@ -1,0 +1,42 @@
+{% extends 'template_society.html.twig' %}
+
+{% block title %}Hello SocietyController!{% endblock %}
+
+{% block body %}
+    <h1>Profil du Développeur</h1>
+
+    <div>
+        {% if app.user.society.isFavorite(developer) %}
+            <form action="{{ path('society_remove_favorite', { id: developer.id }) }}" method="post" style="display: inline;">
+                <button type="submit" class="btn btn-danger">Retirer des favoris</button>
+            </form>
+        {% else %}
+            <form action="{{ path('society_add_favorite', { id: developer.id }) }}" method="post" style="display: inline;">
+                <button type="submit" class="btn btn-success">Ajouter aux favoris</button>
+            </form>
+        {% endif %}
+    </div>
+    
+    <div class="container" >
+        <h2>{{ developer.firstname }} {{ developer.lastname }}</h2>
+        <p><strong>Email :</strong> {{ developer.user.email }}</p>
+        <p><strong>À propos :</strong> {{ developer.aboutMe }}</p>
+        <p><strong>Localisation :</strong> {{ developer.localisation }}</p>
+        <p><strong>Salaire Minimum :</strong> {{ developer.salary|number_format(2, ',', ' ') }} €</p>
+        <p><strong>Niveau d'Expérience :</strong> {{ developer.niveauExperience }}</p>
+        <p><strong>Langages maîtrisés :</strong></p>
+        <ul>
+            {% for langage in developer.langages %}
+                <li>{{ langage.name }}</li>
+            {% endfor %}
+        </ul>
+
+        {% if developer.avatar %}
+            <p><strong>Photo :</strong></p>
+            <img src="{{ asset('uploads/avatars/' ~ developer.avatar) }}" alt="Avatar" style="max-width: 200px;">
+        {% else %}
+            <p><strong>Photo :</strong> Non renseignée</p>
+        {% endif %}
+    </div>
+
+{% endblock %}

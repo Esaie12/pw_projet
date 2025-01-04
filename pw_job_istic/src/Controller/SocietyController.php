@@ -98,6 +98,15 @@ class SocietyController extends AbstractController
     }
 
 
+    /** Profil d'un dev */
+    #[Route('/society/developer/{id}', name: 'app_society_developer_show')]
+    public function show_dev(Developer $developer): Response
+    {
+        return $this->render('society/show-dev.html.twig', [
+            'developer' => $developer,
+        ]);
+    }
+
     /** Les devs qui ont postulés à mes offres */
 
     #[Route('/society/candidatures', name: 'society_candidatures_list')]
@@ -189,6 +198,73 @@ class SocietyController extends AbstractController
         return $this->redirectToRoute('society_candidatures_list');
     }
 
+
+    #[Route('/society/developer/{id}/add-favorite', name: 'society_add_favorite', methods: ['POST'])]
+    public function addFavoriteDeveloper(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $society = $user->getSociety();
+
+        if (!$society) {
+            $this->addFlash('error', 'Vous devez être une société pour effectuer cette action.');
+            return $this->redirectToRoute('home');
+        }
+
+        $developer = $entityManager->getRepository(Developer::class)->find($id);
+
+        if (!$developer) {
+            throw $this->createNotFoundException('Développeur introuvable.');
+        }
+
+        $society->addFavoriteDeveloper($developer);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Le développeur a été ajouté à vos favoris.');
+
+        return $this->redirectToRoute('app_society_developer_show',['id' => $id]); // Redirection à personnaliser
+    }
+
+    #[Route('/society/developer/{id}/remove-favorite', name: 'society_remove_favorite', methods: ['POST'])]
+    public function removeFavoriteDeveloper(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $society = $user->getSociety();
+
+        if (!$society) {
+            $this->addFlash('error', 'Vous devez être une société pour effectuer cette action.');
+            return $this->redirectToRoute('home');
+        }
+
+        $developer = $entityManager->getRepository(Developer::class)->find($id);
+
+        if (!$developer) {
+            throw $this->createNotFoundException('Développeur introuvable.');
+        }
+
+        $society->removeFavoriteDeveloper($developer);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Le développeur a été retiré de vos favoris.');
+         return $this->redirectToRoute('app_society_developer_show',['id' => $id]); // Redirection à personnaliser
+    }
+
+
+    #[Route('/society/dev-favorites', name: 'society_favorites_list')]
+    public function listFavoriteDevelopers(): Response
+    {
+        $user = $this->getUser();
+        $society = $user->getSociety();
+
+        if (!$society) {
+            throw $this->createAccessDeniedException('Vous devez être connecté en tant que société pour accéder à cette page.');
+        }
+
+        $favoriteDevelopers = $society->getFavoriteDevelopers();
+
+        return $this->render('society/favorites_list_dev.html.twig', [
+            'developers' => $favoriteDevelopers,
+        ]);
+    }
 
 
 }

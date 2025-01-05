@@ -42,8 +42,11 @@ class DeveloperController extends AbstractController
             ['publishedAt' => 'DESC'], // Trier par date de publication décroissante 3 // Limiter à 3 résultats
         );
 
+        $popularJobs = $entityManager->getRepository(JobPosting::class)->findMostPopularJobs(3);
+
         return $this->render('developer/dashboard.html.twig',[
             'last_jobs' => $latestJobs,
+            'popular_jobs'=> $popularJobs 
         ]);
     }
 

@@ -16,6 +16,18 @@ class JobPostingRepository extends ServiceEntityRepository
         parent::__construct($registry, JobPosting::class);
     }
 
+    public function findMostPopularJobs(int $limit = 3): array
+    {
+        return $this->createQueryBuilder('j')
+            ->select('j, COUNT(v.id) AS HIDDEN viewCount')
+            ->leftJoin('j.views', 'v')
+            ->groupBy('j.id')
+            ->orderBy('viewCount', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return JobPosting[] Returns an array of JobPosting objects
     //     */

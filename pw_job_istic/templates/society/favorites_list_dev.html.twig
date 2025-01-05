@@ -31,7 +31,7 @@
                         <td>{{ developer.user.email }}</td>
                         <td>{{ developer.localisation }}</td>
                         <td>
-                            <a href="{{ path('app_society_developer_show', { id: developer.id }) }}" class="btn btn-info btn-sm">Voir Profil</a>
+                            <a href="{{ path('app_society_developer', { id: developer.id }) }}" class="btn btn-info btn-sm">Voir Profil</a>
                             <form action="{{ path('society_remove_favorite', { id: developer.id }) }}" method="post" style="display: inline;">
                                 <button type="submit" class="btn btn-danger btn-sm">Retirer des favoris</button>
                             </form>

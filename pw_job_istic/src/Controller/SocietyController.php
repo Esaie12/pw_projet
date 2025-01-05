@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Candidat;
 use App\Entity\Status;
 use App\Entity\Society;
+use App\Entity\DeveloperView;
 use App\Repository\SocietyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -99,9 +100,29 @@ class SocietyController extends AbstractController
 
 
     /** Profil d'un dev */
-    #[Route('/society/developer/{id}', name: 'app_society_developer_show')]
-    public function show_dev(Developer $developer): Response
+    #[Route('/society/developer/{id}', name: 'app_society_developer')]
+    public function show_dev(Developer $developer, EntityManagerInterface $entityManager): Response
     {
+
+        $user = $this->getUser();
+        $society = $user->getSociety();
+
+        // Vérifiez si une vue existe déjà
+        $existingView = $entityManager->getRepository(DeveloperView::class)->findOneBy([
+            'developer' => $developer,
+            'society' => $society,
+        ]);
+
+        if (!$existingView) {
+            // Créez une nouvelle vue si elle n'existe pas
+            $view = new DeveloperView();
+            $view->setDeveloper($developer);
+            $view->setSociety($society);
+    
+            $entityManager->persist($view);
+            $entityManager->flush();
+        }
+
         return $this->render('society/show-dev.html.twig', [
             'developer' => $developer,
         ]);
@@ -221,7 +242,7 @@ class SocietyController extends AbstractController
 
         $this->addFlash('success', 'Le développeur a été ajouté à vos favoris.');
 
-        return $this->redirectToRoute('app_society_developer_show',['id' => $id]); // Redirection à personnaliser
+        return $this->redirectToRoute('app_society_developer',['id' => $id]); // Redirection à personnaliser
     }
 
     #[Route('/society/developer/{id}/remove-favorite', name: 'society_remove_favorite', methods: ['POST'])]
@@ -245,7 +266,7 @@ class SocietyController extends AbstractController
         $entityManager->flush();
 
         $this->addFlash('success', 'Le développeur a été retiré de vos favoris.');
-         return $this->redirectToRoute('app_society_developer_show',['id' => $id]); // Redirection à personnaliser
+         return $this->redirectToRoute('app_society_developer',['id' => $id]); // Redirection à personnaliser
     }
 
 

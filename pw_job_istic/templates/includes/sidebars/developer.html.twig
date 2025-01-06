@@ -1,8 +1,9 @@
+{% set active = active|default('') %}
 <div class="side-bar-st-1">
 
     <div class="twm-candidate-profile-pic">
 
-        <img src="../images/user-avtar/pic4.jpg" alt="">
+        <img src="{{ asset('uploads/avatars/' ~ app.user.developer.avatar) }}" alt="">
         <div class="upload-btn-wrapper">
 
             <div id="upload-image-grid"></div>
@@ -20,23 +21,42 @@
 
     <div class="twm-nav-list-1">
         <ul>
-            <li class="active">
-                <a href="{{path('app_dev_dash')}}"><i class="fa fa-tachometer-alt"></i>
-                    Dashboard</a>
-                    </li>
-            <li><a href="{{path('app_dev_complete_profil')}}"><i class="fa fa-user"></i>Mon Profil</a></li>
-             <li><a href="{{path('app_dev_matching')}}"><i class="fa fa-bell"></i> Matchings</a>
+            <li class="{% if active == 'dashboard' %}active{% endif %}">
+                <a href="{{path('app_dev_dash')}}"><i class="fa fa-tachometer-alt"></i>Dashboard</a>
             </li>
-            <li><a href="{{path('dev_all_jobs')}}"><i class="fa fa-suitcase"></i> Les
-                    Jobs</a></li>
-            <li><a href="candidate-my-resume.html"><i class="fa fa-receipt"></i> My Resume</a>
+
+            <li class="{% if active == 'profil' %}active{% endif %}">
+              <a href="{{path('app_dev_complete_profil')}}"><i class="fa fa-user"></i>Mon Profil</a>
             </li>
-            <li><a href="{{path('developer_favorites_jobs')}}"><i class="fa fa-file-download"></i> Jobs Favoris</a></li>
-            <li><a href="{{path('dev_candidatures_list')}}"><i class="fa fa-paperclip"></i>Mes Candidatures</a></li>
+
+            <li class="{% if active == 'matching' %}active{% endif %}">
+              <a href="{{path('app_dev_matching')}}"><i class="fa fa-bell"></i> Matchings</a>
+            </li>
+
+            <li  class="{% if active == 'job' %}active{% endif %}">
+              <a href="{{path('dev_all_jobs')}}"><i class="fa fa-suitcase"></i> Les Jobs</a>
+            </li>
+
+            <li  class="{% if active == 'resume' %}active{% endif %}">
+              <a href="candidate-my-resume.html"><i class="fa fa-receipt"></i> My Resume</a>
+            </li>
+
+            <li  class="{% if active == 'jobFav' %}active{% endif %}">
+              <a href="{{path('developer_favorites_jobs')}}"><i class="fa fa-file-download"></i> Jobs Favoris</a>
+            </li>
+
+            <li  class="{% if active == 'candidatures' %}active{% endif %}">
+               <a href="{{path('dev_candidatures_list')}}"><i class="fa fa-paperclip"></i>Mes Candidatures</a>
+            </li>
            
-            <li><a href="candidate-change-password.html"><i class="fa fa-fingerprint"></i>
-                    Change Passeord</a></li>
-            <li><a href="candidate-chat.html"><i class="fa fa-comments"></i>Chat</a></li>
+            <li class="{% if active == 'password' %}active{% endif %}">
+              <a href="candidate-change-password.html"><i class="fa fa-fingerprint"></i>Change Passeord</a>
+            </li>
+
+            <li class="{% if active == 'chat' %}active{% endif %}">
+              <a href="candidate-chat.html"><i class="fa fa-comments"></i>Chat</a>
+            </li>
+
         </ul>
     </div>
 

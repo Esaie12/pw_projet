@@ -32,10 +32,13 @@ class DeveloperController extends AbstractController
     #[IsGranted('ROLE_DEV')]
     public function dashboard_developper(EntityManagerInterface $entityManager): Response
     {
+
         $user = $this->getUser();
         if($user->isActive() == false){
             return $this->redirectToRoute('app_dev_complete_profil');
         }
+
+        $developer = $user->getDeveloper();
 
         $latestJobs = $entityManager->getRepository(JobPosting::class)->findBy(
             [], // Pas de critère spécifique
@@ -43,10 +46,17 @@ class DeveloperController extends AbstractController
         );
 
         $popularJobs = $entityManager->getRepository(JobPosting::class)->findMostPopularJobs(3);
-
+        
+        $candidatures = $entityManager->getRepository(Candidat::class)->findBy(
+            ['developer' => $developer],
+            ['id' => 'DESC']
+        );
         return $this->render('developer/dashboard.html.twig',[
             'last_jobs' => $latestJobs,
-            'popular_jobs'=> $popularJobs 
+            'popular_jobs'=> $popularJobs ,
+            'nbre_candidature' => count($candidatures),
+            'active_tab' => 'dashboard',
+            
         ]);
     }
 
@@ -107,6 +117,7 @@ class DeveloperController extends AbstractController
 
         return $this->render('developer/complete-profil.html.twig', [
             'form' => $form->createView(),
+            'active_tab' => 'profil',
         ]);
     }
 
@@ -145,6 +156,7 @@ class DeveloperController extends AbstractController
 
         return $this->render('developer/jobs/list.html.twig', [
             'jobs' => $jobs,
+            'active_tab' => 'job',
         ]);
     }
 
@@ -330,6 +342,8 @@ class DeveloperController extends AbstractController
 
         return $this->render('developer/jobs/matchings.html.twig', [
             'jobs' => $pagination,
+            'nbMatching' => count($pagination),
+            'active_tab' => 'matching',
         ]);
     }
 
@@ -409,6 +423,7 @@ class DeveloperController extends AbstractController
 
         return $this->render('developer/jobs/favorites_job.html.twig', [
             'jobs' => $favoriteJobs,
+            'active_tab' => 'jobFav',
         ]);
     }
 
@@ -436,6 +451,7 @@ class DeveloperController extends AbstractController
         // Rendre la vue avec les candidatures
         return $this->render('developer/candidatures_list.html.twig', [
             'candidatures' => $candidatures,
+            'active_tab' => 'candidatures',
         ]);
     }
 

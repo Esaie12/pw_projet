@@ -37,6 +37,8 @@ class HomeController extends AbstractController
     }
 
 
+
+
     #[Route('/redirect-after-login', name: 'app_redirect')]
     public function redirectDash(): Response
     {
@@ -52,7 +54,7 @@ class HomeController extends AbstractController
         }
     }
 
-    
+
     #[Route('/jobs', name: 'app_jobs')]
     public function appJobs(Request $request, JobPostingRepository $jobPostingRepository, PaginatorInterface $paginator,): Response
     {
@@ -89,10 +91,19 @@ class HomeController extends AbstractController
         ]);
     }
 
+
+    #[Route('/about_us', name: 'about_us')]
+    public function redirectAboutUs(): Response
+    {
+       
+        return $this->render('about_us.html.twig',[]);
+    }
+
+
     
 
     
     
 
 
-}
+

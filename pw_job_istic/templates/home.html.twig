@@ -13,51 +13,45 @@
                 <div class="twm-bnr-discription">Type your keyword, then click search to find your perfect job.</div>
 
                 <div class="twm-bnr-search-bar">
-                    <form>
+                    {{ form_start(filterForm, { 'attr': { 'class': 'form-horizontal' },  'action': path('app_jobs')  }) }}
                         <div class="row">
                             <!--Title-->
                             <div class="form-group col-xl-3 col-lg-6 col-md-6">
-                                <label>What</label>
-                                <select class="wt-search-bar-select selectpicker" data-live-search="true" title=""
-                                    id="j-Job_Title" data-bv-field="size">
-                                    <option disabled selected value="">Select Category</option>
-                                    <option selected>Job Title</option>
-                                    <option>Web Designer</option>
-                                    <option>Developer</option>
-                                    <option>Acountant</option>
-                                </select>
+                                <label>Titre</label>
+                                <div class="twm-inputicon-box">
+                                     {{ form_widget(filterForm.title, {'attr': {'class': 'form-control', 'placeholder': ""}}) }}
+                                    <i class="twm-input-icon fas fa-map-marker-alt"></i>
+                                </div>
                             </div>
 
                             <!--All Category-->
                             <div class="form-group col-xl-4 col-lg-6 col-md-6">
-                                <label>Type</label>
-                                <select class="wt-search-bar-select selectpicker" data-live-search="true" title=""
-                                    id="j-All_Category" data-bv-field="size">
-                                    <option disabled selected value="">Select Category</option>
-                                    <option selected>All Category</option>
-                                    <option>Web Designer</option>
-                                    <option>Developer</option>
-                                    <option>Acountant</option>
-                                </select>
+                                <label>Langages</label>
+                                {{ form_widget(filterForm.technologies, {
+                                    'attr': {
+                                        'class': 'wt-search-bar-select selectpicker',
+                                        'data-live-search': 'true',
+                                        'id': 'technologies-select',
+                                    }
+                                }) }}
                             </div>
 
                             <!--Location-->
                             <div class="form-group col-xl-3 col-lg-6 col-md-6">
-                                <label>Location</label>
+                                <label>Localisation</label>
                                 <div class="twm-inputicon-box">
-                                    <input name="username" type="text" required class="form-control"
-                                        placeholder="Location">
+                                     {{ form_widget(filterForm.location, {'attr': {'class': 'form-control', 'placeholder': ""}}) }}
                                     <i class="twm-input-icon fas fa-map-marker-alt"></i>
                                 </div>
                             </div>
 
                             <!--Find job btn-->
                             <div class="form-group col-xl-2 col-lg-6 col-md-6">
-                                <button type="button" class="site-button">Find Job</button>
+                                <button type="submit" class="site-button">Rechercher</button>
                             </div>
 
                         </div>
-                    </form>
+                    {{ form_end(filterForm) }}
                 </div>
 
                 <div class="twm-bnr-popular-search">

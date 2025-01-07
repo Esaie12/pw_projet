@@ -51,7 +51,11 @@ class SocietyController extends AbstractController
     public function complete_profil_society(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
-
+        if (!$user) {
+            $this->addFlash('error', 'Vous devez être connecté pour accéder à cette page.');
+            return $this->redirectToRoute('app_login');
+        }
+        
         // Vérifiez si l'utilisateur a un profil développeur
         $society = $user->getSociety();
 
@@ -63,7 +67,6 @@ class SocietyController extends AbstractController
             $entityManager->persist($society);
         }
 
-        
         // Créez le formulaire pour le développeur
         $form = $this->createForm(SocietyCompleteProfilType::class, $society);
         $form->handleRequest($request); // && $form->isValid()

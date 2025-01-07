@@ -132,7 +132,7 @@ class DeveloperController extends AbstractController
     {
         return $this->render(
             'developer/developer_list.html.twig', [
-            'developers' => $developers->findAll()
+            'developers' => $developers->findActiveDevelopers()
         ]);
     }
 

@@ -49,28 +49,49 @@
                {% if candidatures is empty %}
         <p>Aucune candidature reçue pour vos postes.</p>
     {% else %}
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Titre du poste</th>
-                    <th>Date de candidature</th>
-                    <th>Statut</th>
-                    <th>Motivation</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for candidature in candidatures %}
-                    <tr>
-                        <td>{{ candidature.jobPosting.title }}</td>
-                        <td>{{ candidature.jobPosting.publishedAt |date('d/m/Y') }}</td>
-                        <td>
-                            <span style="color: {{ candidature.status.color }}">{{ candidature.status.name }}</span>
-                        </td>
-                        <td>{{ candidature.motivation|default('Non renseignée') }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                            <!--IT Skills-->
+                                    <div class="panel panel-default mb-3">
+                                        <div class="panel-heading wt-panel-heading p-a20 panel-heading-with-btn ">
+                                            <h4 class="panel-tittle m-a0">Vos Candidatures</h4>
+                                        </div>
+                                        <div class="panel-body wt-panel-body p-a20 ">
+                                            <div class="twm-panel-inner">
+                                                <p>vos differentes candidatures sont mentionnees dans le tableau ci-dessous !</p>
+                                                <div class="table-responsive">
+                                                    <table class="table twm-table table-striped table-borderless">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Titre du poste</th>
+                                                            <th>Date de candidature</th>
+                                                            <th>Statut</th>
+                                                            <th>Motivation</th>
+                                                            <th>Voir</th>
+                                                        </tr>
+                                                    </thead>
+                                
+                                                    <tbody>
+                                                        {% for candidature in candidatures %}
+                                                            <!--1-->
+                                                            <tr>
+                                                                <td>{{ candidature.jobPosting.title }}</td>
+                                                                <td>{{ candidature.jobPosting.publishedAt |date('d/m/Y') }}</td>
+                                                                <td>{{ candidature.status.name }}</td>
+                                                                <td>{{ candidature.motivation|default('Non renseignée') }}</td>
+                                                                <td>
+                                                                    <a data-bs-toggle="modal" href="#IT_skills" role="button" title="Edit" class="site-text-primary">
+                                                                        <span class="fa fa-eye"></span>
+                                                                    </a>          
+                                                                </td>
+                                                            </tr>
+                                
+                                                        {% endfor %}  
+                                                    </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>       
+                                        </div>
+
+                                        <!--IT_skills -->
     {% endif %}
 
                 

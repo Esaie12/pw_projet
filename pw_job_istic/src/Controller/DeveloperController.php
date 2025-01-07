@@ -456,4 +456,23 @@ class DeveloperController extends AbstractController
     }
 
 
+    #[Route('/dev/my_resume', name: 'app_dev_resume')]
+    #[IsGranted('ROLE_DEV')]
+    public function resume_developper(EntityManagerInterface $entityManager): Response
+    {
+
+        $user = $this->getUser();
+        if($user->isActive() == false){
+            return $this->redirectToRoute('app_dev_complete_profil');
+        }
+
+        $developer = $user->getDeveloper();
+
+        return $this->render('developer/my_resume.html.twig',[
+            'dev' => $developer,
+            'active_tab' => 'resume',
+        ]);
+    }
+
+
 }

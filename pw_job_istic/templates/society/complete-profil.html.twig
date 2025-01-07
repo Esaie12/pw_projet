@@ -14,7 +14,7 @@
     {{ form_start(form, { 'attr': { 'class': 'form-horizontal' } }) }}
         <div class="panel panel-default">
             <div class="panel-heading wt-panel-heading p-a20">
-                <h4 class="panel-tittle m-a0">Update Profile Image</h4>
+                <h4 class="panel-tittle m-a0">Profile Image</h4>
             </div>
             <div class="panel-body wt-panel-body p-a20 m-b30 bg-white">
 
@@ -24,7 +24,7 @@
                             <img src="images/user-avtar/pic4.jpg" alt="">
                             <div class="upload-btn-wrapper">
                                 <div id="upload-image-grid"></div>
-                                <button class="site-button button-sm">Upload Photo</button>
+                                <button class="site-button button-sm">Choisir une photo</button>
                                 {{ form_widget(form.avatar, {
                                     'attr': {
                                         'class': 'form-control',
@@ -49,6 +49,16 @@
             <div class="panel-body wt-panel-body p-a20 m-b30 ">
 
                 <div class="row">
+
+                    <div class="row">  
+                                                {% if app.user.isActive() == false %}
+                                                <div class="col-lg-12">
+                                                    <div class="alert alert-danger text-center" role="alert">
+                                                        Votre compte est inactif, veuillez completer vos informations. Afin d'accéder aux fonctionnalités
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                    </div>
 
                     <div class="col-xl-4 col-lg-6 col-md-12">
                         <div class="form-group">

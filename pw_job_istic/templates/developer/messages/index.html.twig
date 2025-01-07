@@ -1,0 +1,21 @@
+fetch('/message/send', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        sender_type: 'developer',
+        sender_id: 1,
+        receiver_type: 'society',
+        receiver_id: 2,
+        content: 'Bonjour, voici un message'
+    })
+})
+    .then(response => response.json())
+    .then(data => console.log('Message envoyé :', data))
+    .catch(error => console.error('Erreur:', error));
+
+
+
+fetch('/messages/developer/1')
+    .then(response => response.json())
+    .then(messages => console.log('Messages reçus :', messages))
+    .catch(error => console.error('Erreur:', error));

@@ -27,6 +27,14 @@
                 </div>
                 <div class="twm-tabs-style-2">
 
+                    {% for type, messages in app.flashes %}
+                        <div class="alert alert-{{ type }}">
+                            {% for message in messages %}
+                                {{ message }}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+
                     <form class="tab-content" id="" method="POST" >
                         <input type="hidden" name="_csrf_token"  value="{{ csrf_token('authenticate') }}">
                         

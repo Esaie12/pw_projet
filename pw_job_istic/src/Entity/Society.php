@@ -56,6 +56,15 @@ class Society
     #[ORM\OneToMany(mappedBy: 'society', targetEntity: JobPosting::class)]
     private Collection $jobPostings;
 
+    #[ORM\ManyToMany(targetEntity: Developer::class)]
+    #[ORM\JoinTable(name: 'society_favorites')]
+    private Collection $favoriteDevelopers;
+
+    public function __construct()
+    {
+        $this->favoriteDevelopers = new ArrayCollection();
+    }
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -232,6 +241,30 @@ class Society
             }
         }
 
+        return $this;
+    }
+
+    public function isFavorite(Developer $developer): bool
+    {
+        return $this->favoriteDevelopers->contains($developer);
+    }
+
+    public function getFavoriteDevelopers(): Collection
+    {
+        return $this->favoriteDevelopers;
+    }
+
+    public function addFavoriteDeveloper(Developer $developer): self
+    {
+        if (!$this->favoriteDevelopers->contains($developer)) {
+            $this->favoriteDevelopers->add($developer);
+        }
+        return $this;
+    }
+
+    public function removeFavoriteDeveloper(Developer $developer): self
+    {
+        $this->favoriteDevelopers->removeElement($developer);
         return $this;
     }
 

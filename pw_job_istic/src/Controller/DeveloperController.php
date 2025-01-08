@@ -417,4 +417,37 @@ class DeveloperController extends AbstractController
     }
 
 
+    #[Route('/candidat_change_password', name: 'candidat_change_password', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager,  UserPasswordHasherInterface $passwordHasher): Response
+    {
+        
+       /* $user = new User();
+        //Les devs
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $hashedPassword = $passwordHasher->hashPassword($user, $user->getPassword());
+            $user->setPassword($hashedPassword);
+            $user->setRoles(['ROLE_DEV']);
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $developer = new Developer();
+            $developer->setUser($user);
+            $entityManager->persist($developer);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_dev_complete_profil', [], Response::HTTP_SEE_OTHER);
+        }*/
+
+        return $this->render('developer/jobs/candidate_change_password.html.twig', [
+           /*  'user' => $user,
+            'form' => $form
+            */
+        ]);
+    }
+
 }

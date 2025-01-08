@@ -68,26 +68,23 @@
                                                     class="twm-job-websites site-text-primary">https://thewebmax.com</a>
                                                 <div class="twm-jobs-amount">{{job.salary}}£ <span>/ Mois</span></div>
                                             </div>
-                                            <div class="twm-job-apllication-area"> fin de l'offre:
-                                                <span class="twm-job-apllication-date">{{ job.publishedAt|date('d/m/Y') }}</span>
-                                            </div>
+                                            
                                         </div>
 
-                                        <div class="twm-job-self-bottom">
-                                            {% if candidature is not empty %}
-                                            <p>
-                                                <strong>Statut :</strong>
-                                                <span style="color: {{candidature.status.color}} ">{{candidature.status.name}}</span>
-                                            </p> <br>
+                                       <div class="twm-job-self-bottom">
+
+                                            {% if candidature is not empty and candidature.status is not null %}
+                                                <p>
+                                                    <strong>Statut :</strong>
+                                                    <span style="color: {{ candidature.status.color }}">{{ candidature.status.name }}</span>
+                                                </p>
                                             {% else %}
-                                            <!-- Remetre ici le btn postuler -->
+                                                 
                                             {% endif %}
-
-                                            <a class="site-button" data-bs-toggle="modal" href="#apply_job_popup"
-                                                role="button">
-                                                Postuler à l'offre
-                                            </a>
-
+                                            
+                                                 <a class="site-button" data-bs-toggle="modal" href="#apply_job_popup" role="button">
+                                                         Postuler maintenant
+                                                 </a>
                                             {% if job in app.user.developer.favoriteJobs %}
                                                 <form action="{{ path('dev_job_favorite_remove', { id: job.id }) }}" method="post">
                                                     <button type="submit" class="site-button btn btn-danger">Retirer des favoris</button>
@@ -98,6 +95,10 @@
                                                 </form>
                                             {% endif %}
 
+                                            <div class="twm-job-apllication-area"> Fin de l'offre:
+                                                <span class="twm-job-apllication-date ">{{ job.publishedAt|date('d/m/Y') }}</span>
+                                            </div>
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -501,9 +502,9 @@
 <!-- OUR BLOG END -->
 
 
-{% if candidature %}
-{% else %}
+{% if candidature != null %}
 
+{% else %}
 <div class="modal fade" id="apply_job_popup" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

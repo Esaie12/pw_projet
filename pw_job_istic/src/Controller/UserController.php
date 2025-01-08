@@ -128,4 +128,65 @@ final class UserController extends AbstractController
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+ #[Route('/{id}', name: 'app_user_update', methods: ['GET', 'POST'])]
+    public function update(
+    Request $request, 
+    EntityManagerInterface $entityManager,  
+    UserPasswordHasherInterface $passwordHasher,
+    int $id // L'ID de l'utilisateur à modifier
+): Response
+{
+    // Récupérer l'utilisateur existant à partir de la base de données
+    $user = $entityManager->getRepository(User::class)->find($id);
+
+    if (!$user) {
+        // Si l'utilisateur n'existe pas, afficher une erreur
+        throw $this->createNotFoundException('Utilisateur non trouvé');
+    }
+
+    // Créer le formulaire pour modifier le mot de passe
+    $form = $this->createForm(UserType::class, $user);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+
+        // Assurez-vous que le mot de passe n'est pas vide
+        $newPassword = $user->getPassword();
+        if (empty($newPassword)) {
+            $this->addFlash('error', 'Le mot de passe ne peut pas être vide.');
+            return $this->redirectToRoute('app_user_update', ['id' => $user->getId()]);
+        }
+
+        // Hacher le nouveau mot de passe
+        $hashedPassword = $passwordHasher->hashPassword($user, $newPassword);
+        $user->setPassword($hashedPassword);
+
+        try {
+            // Persister et enregistrer l'utilisateur avec le mot de passe modifié
+            $entityManager->flush();
+
+            // Optionnel : ajouter un message flash pour informer l'utilisateur
+            $this->addFlash('success', 'Votre mot de passe a été mis à jour avec succès.');
+
+            // Rediriger vers une page de confirmation ou de profil
+            return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
+
+        } catch (\Exception $e) {
+            // Gérer l'exception si quelque chose échoue
+            $this->addFlash('error', 'Une erreur est survenue lors de la mise à jour de votre mot de passe.');
+        }
+    }
+
+    // Rendre le formulaire
+    return $this->render('user/update.html.twig', [
+        'form' => $form->createView(),
+    ]);
+}
+
+
+
+
+
 }

@@ -56,7 +56,6 @@ class DeveloperController extends AbstractController
             'popular_jobs'=> $popularJobs ,
             'nbre_candidature' => count($candidatures),
             'active_tab' => 'dashboard',
-            
         ]);
     }
 
@@ -66,6 +65,11 @@ class DeveloperController extends AbstractController
     public function complete_profil_developper(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
+        if (!$user) {
+            $this->addFlash('error', 'Vous devez être connecté pour accéder à cette page.');
+            return $this->redirectToRoute('app_login');
+        }
+
         $developer = $user->getDeveloper();
 
         if (!$developer) {
@@ -128,7 +132,7 @@ class DeveloperController extends AbstractController
     {
         return $this->render(
             'developer/developer_list.html.twig', [
-            'developers' => $developers->findAll()
+            'developers' => $developers->findActiveDevelopers()
         ]);
     }
 

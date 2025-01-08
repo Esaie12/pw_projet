@@ -16,6 +16,16 @@ class DeveloperRepository extends ServiceEntityRepository
         parent::__construct($registry, Developer::class);
     }
 
+    public function findActiveDevelopers(): array
+    {
+        return $this->createQueryBuilder('d')
+            ->join('d.user', 'u') // Assurez-vous que la relation User est correctement configurée
+            ->andWhere('u.isActive = :active')
+            ->setParameter('active', true)
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Developer[] Returns an array of Developer objects
 //     */

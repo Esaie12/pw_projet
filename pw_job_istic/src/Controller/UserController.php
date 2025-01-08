@@ -136,7 +136,7 @@ final class UserController extends AbstractController
     EntityManagerInterface $entityManager,  
     UserPasswordHasherInterface $passwordHasher,
     int $id // L'ID de l'utilisateur à modifier
-): Response
+    ): Response
 {
     // Récupérer l'utilisateur existant à partir de la base de données
     $user = $entityManager->getRepository(User::class)->find($id);
@@ -184,7 +184,6 @@ final class UserController extends AbstractController
         'form' => $form->createView(),
     ]);
 }
-
 
 
 

@@ -71,27 +71,27 @@
                                             
                                         </div>
 
-                                       <div class="twm-job-self-bottom">
-
-                                            {% if candidature is not empty and candidature.status is not null %}
-                                                <p>
-                                                    <strong>Statut :</strong>
-                                                    <span style="color: {{ candidature.status.color }}">{{ candidature.status.name }}</span>
-                                                </p>
+                                        <div class="twm-job-self-bottom">
+                                            {% if candidature_bool %}
+                                            <p>
+                                                <strong>Statut :</strong>
+                                                <span style="color: {{candidature.status.color}} ">{{candidature.status.name}}</span>
+                                            </p> <br>
                                             {% else %}
-                                                 
+                                            <!-- Remetre ici le btn postuler -->
+                                            <a class="site-button" data-bs-toggle="modal" href="#apply_job_popup"
+                                                role="button">
+                                                Postuler à l'offre
+                                            </a>
                                             {% endif %}
-                                            
-                                                 <a class="site-button" data-bs-toggle="modal" href="#apply_job_popup" role="button">
-                                                         Postuler maintenant
-                                                 </a>
+
                                             {% if job in app.user.developer.favoriteJobs %}
                                                 <form action="{{ path('dev_job_favorite_remove', { id: job.id }) }}" method="post">
-                                                    <button type="submit" class="site-button btn btn-danger">Retirer des favoris</button>
+                                                    <button type="submit" class="btn btn-danger">Retirer des favoris</button>
                                                 </form>
                                             {% else %}
                                                 <form action="{{ path('dev_job_favorite_add', { id: job.id }) }}" method="post">
-                                                    <button type="submit" class="site-button btn btn-primary">Ajouter aux favoris</button>
+                                                    <button type="submit" class="btn btn-primary">Ajouter aux favoris</button>
                                                 </form>
                                             {% endif %}
 
@@ -352,7 +352,7 @@
                                     </li>
                                     <li>
                                         <i class="fas fa-eye"></i>
-                                        <span class="twm-title">8160 Views</span>
+                                        <span class="twm-title">10 vues</span>
                                     </li>
                                     <li>
                                         <i class="fas fa-file-signature"></i>
@@ -502,9 +502,9 @@
 <!-- OUR BLOG END -->
 
 
-{% if candidature != null %}
 
-{% else %}
+{% if not candidature_bool %}
+
 <div class="modal fade" id="apply_job_popup" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

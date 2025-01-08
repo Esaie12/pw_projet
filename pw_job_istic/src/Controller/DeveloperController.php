@@ -18,6 +18,7 @@ use App\Entity\JobPosting;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Entity\Candidat;
 use App\Entity\Status;
+use App\Entity\JobView;
 
 class DeveloperController extends AbstractController
 {
@@ -31,18 +32,30 @@ class DeveloperController extends AbstractController
     #[IsGranted('ROLE_DEV')]
     public function dashboard_developper(EntityManagerInterface $entityManager): Response
     {
+
         $user = $this->getUser();
         if($user->isActive() == false){
             return $this->redirectToRoute('app_dev_complete_profil');
         }
+
+        $developer = $user->getDeveloper();
 
         $latestJobs = $entityManager->getRepository(JobPosting::class)->findBy(
             [], // Pas de critère spécifique
             ['publishedAt' => 'DESC'], // Trier par date de publication décroissante 3 // Limiter à 3 résultats
         );
 
+        $popularJobs = $entityManager->getRepository(JobPosting::class)->findMostPopularJobs(3);
+        
+        $candidatures = $entityManager->getRepository(Candidat::class)->findBy(
+            ['developer' => $developer],
+            ['id' => 'DESC']
+        );
         return $this->render('developer/dashboard.html.twig',[
             'last_jobs' => $latestJobs,
+            'popular_jobs'=> $popularJobs ,
+            'nbre_candidature' => count($candidatures),
+            'active_tab' => 'dashboard',
         ]);
     }
 
@@ -52,6 +65,11 @@ class DeveloperController extends AbstractController
     public function complete_profil_developper(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
+        if (!$user) {
+            $this->addFlash('error', 'Vous devez être connecté pour accéder à cette page.');
+            return $this->redirectToRoute('app_login');
+        }
+
         $developer = $user->getDeveloper();
 
         if (!$developer) {
@@ -103,6 +121,7 @@ class DeveloperController extends AbstractController
 
         return $this->render('developer/complete-profil.html.twig', [
             'form' => $form->createView(),
+            'active_tab' => 'profil',
         ]);
     }
 
@@ -113,7 +132,7 @@ class DeveloperController extends AbstractController
     {
         return $this->render(
             'developer/developer_list.html.twig', [
-            'developers' => $developers->findAll()
+            'developers' => $developers->findActiveDevelopers()
         ]);
     }
 
@@ -141,6 +160,7 @@ class DeveloperController extends AbstractController
 
         return $this->render('developer/jobs/list.html.twig', [
             'jobs' => $jobs,
+            'active_tab' => 'job',
         ]);
     }
 
@@ -162,13 +182,31 @@ class DeveloperController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+        // Vérifier si le développeur a déjà vu ce job
+        $existingView = $entityManager->getRepository(JobView::class)->findOneBy([
+            'job' => $job,
+            'developer' => $developer,
+        ]);
+        if (!$existingView) {
+            // Créer une nouvelle vue si elle n'existe pas
+            $jobView = new JobView();
+            $jobView->setJob($job);
+            $jobView->setDeveloper($developer);
+    
+            $entityManager->persist($jobView);
+            $entityManager->flush();
+        }
+
+
         $candidature = $entityManager->getRepository(Candidat::class)->findOneBy([
             'developer' => $developer,
             'jobPosting' => $job,
         ]);
 
+        $candidature_bool = $candidature ? true : false;
+        
         $form = null;
-        if (!$candidature) {
+        if ($candidature_bool === false) {
             $candidature = new Candidat();
             $form = $this->createForm(CandidatType::class, $candidature, [
                 'action' => $this->generateUrl('dev_job_apply', ['id' => $id]),
@@ -180,6 +218,7 @@ class DeveloperController extends AbstractController
             'job' => $job,
             'form' => $form ? $form->createView() : null,
             'candidature' => $candidature ? $candidature : null,
+            'candidature_bool'=> $candidature_bool
         ]);
     }
 
@@ -307,6 +346,8 @@ class DeveloperController extends AbstractController
 
         return $this->render('developer/jobs/matchings.html.twig', [
             'jobs' => $pagination,
+            'nbMatching' => count($pagination),
+            'active_tab' => 'matching',
         ]);
     }
 
@@ -386,6 +427,7 @@ class DeveloperController extends AbstractController
 
         return $this->render('developer/jobs/favorites_job.html.twig', [
             'jobs' => $favoriteJobs,
+            'active_tab' => 'jobFav',
         ]);
     }
 
@@ -413,6 +455,26 @@ class DeveloperController extends AbstractController
         // Rendre la vue avec les candidatures
         return $this->render('developer/candidatures_list.html.twig', [
             'candidatures' => $candidatures,
+            'active_tab' => 'candidatures',
+        ]);
+    }
+
+
+    #[Route('/dev/my_resume', name: 'app_dev_resume')]
+    #[IsGranted('ROLE_DEV')]
+    public function resume_developper(EntityManagerInterface $entityManager): Response
+    {
+
+        $user = $this->getUser();
+        if($user->isActive() == false){
+            return $this->redirectToRoute('app_dev_complete_profil');
+        }
+
+        $developer = $user->getDeveloper();
+
+        return $this->render('developer/my_resume.html.twig',[
+            'dev' => $developer,
+            'active_tab' => 'resume',
         ]);
     }
 

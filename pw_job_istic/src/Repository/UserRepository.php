@@ -40,6 +40,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $this->createQueryBuilder('u')
             ->where('u.type_user = :type')
             ->setParameter('type', 'dev')
+            ->andWhere('u.isActive = :active')
+            ->setParameter('active', true)
             ->getQuery()
             ->getResult();
     }
@@ -53,6 +55,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $this->createQueryBuilder('u')
             ->where('u.type_user = :type')
             ->setParameter('type', 'dev')
+            ->andWhere('u.isActive = :active')
+            ->setParameter('active', true)
             ->orderBy('u.id', 'DESC') 
             ->setMaxResults($limit)
             ->getQuery()

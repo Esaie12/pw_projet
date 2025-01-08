@@ -2,32 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\Developer;
+use App\Entity\DeveloperView;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Developer>
+ * @extends ServiceEntityRepository<DeveloperView>
  */
-class DeveloperRepository extends ServiceEntityRepository
+class DeveloperViewRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Developer::class);
-    }
-
-    public function findActiveDevelopers(): array
-    {
-        return $this->createQueryBuilder('d')
-            ->join('d.user', 'u') // Assurez-vous que la relation User est correctement configurée
-            ->andWhere('u.isActive = :active')
-            ->setParameter('active', true)
-            ->getQuery()
-            ->getResult();
+        parent::__construct($registry, DeveloperView::class);
     }
 
 //    /**
-//     * @return Developer[] Returns an array of Developer objects
+//     * @return DeveloperView[] Returns an array of DeveloperView objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -41,7 +31,7 @@ class DeveloperRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Developer
+//    public function findOneBySomeField($value): ?DeveloperView
 //    {
 //        return $this->createQueryBuilder('d')
 //            ->andWhere('d.exampleField = :val')

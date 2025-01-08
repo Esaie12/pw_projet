@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Candidat;
 use App\Entity\Status;
 use App\Entity\Society;
+use App\Entity\DeveloperView;
 use App\Repository\SocietyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,7 +51,11 @@ class SocietyController extends AbstractController
     public function complete_profil_society(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
-
+        if (!$user) {
+            $this->addFlash('error', 'Vous devez être connecté pour accéder à cette page.');
+            return $this->redirectToRoute('app_login');
+        }
+        
         // Vérifiez si l'utilisateur a un profil développeur
         $society = $user->getSociety();
 
@@ -62,7 +67,6 @@ class SocietyController extends AbstractController
             $entityManager->persist($society);
         }
 
-        
         // Créez le formulaire pour le développeur
         $form = $this->createForm(SocietyCompleteProfilType::class, $society);
         $form->handleRequest($request); // && $form->isValid()
@@ -97,6 +101,35 @@ class SocietyController extends AbstractController
         ]);
     }
 
+
+    /** Profil d'un dev */
+    #[Route('/society/developer/{id}', name: 'app_society_developer')]
+    public function show_dev(Developer $developer, EntityManagerInterface $entityManager): Response
+    {
+
+        $user = $this->getUser();
+        $society = $user->getSociety();
+
+        // Vérifiez si une vue existe déjà
+        $existingView = $entityManager->getRepository(DeveloperView::class)->findOneBy([
+            'developer' => $developer,
+            'society' => $society,
+        ]);
+
+        if (!$existingView) {
+            // Créez une nouvelle vue si elle n'existe pas
+            $view = new DeveloperView();
+            $view->setDeveloper($developer);
+            $view->setSociety($society);
+    
+            $entityManager->persist($view);
+            $entityManager->flush();
+        }
+
+        return $this->render('society/show-dev.html.twig', [
+            'developer' => $developer,
+        ]);
+    }
 
     /** Les devs qui ont postulés à mes offres */
 
@@ -189,6 +222,73 @@ class SocietyController extends AbstractController
         return $this->redirectToRoute('society_candidatures_list');
     }
 
+
+    #[Route('/society/developer/{id}/add-favorite', name: 'society_add_favorite', methods: ['POST'])]
+    public function addFavoriteDeveloper(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $society = $user->getSociety();
+
+        if (!$society) {
+            $this->addFlash('error', 'Vous devez être une société pour effectuer cette action.');
+            return $this->redirectToRoute('home');
+        }
+
+        $developer = $entityManager->getRepository(Developer::class)->find($id);
+
+        if (!$developer) {
+            throw $this->createNotFoundException('Développeur introuvable.');
+        }
+
+        $society->addFavoriteDeveloper($developer);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Le développeur a été ajouté à vos favoris.');
+
+        return $this->redirectToRoute('app_society_developer',['id' => $id]); // Redirection à personnaliser
+    }
+
+    #[Route('/society/developer/{id}/remove-favorite', name: 'society_remove_favorite', methods: ['POST'])]
+    public function removeFavoriteDeveloper(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $society = $user->getSociety();
+
+        if (!$society) {
+            $this->addFlash('error', 'Vous devez être une société pour effectuer cette action.');
+            return $this->redirectToRoute('home');
+        }
+
+        $developer = $entityManager->getRepository(Developer::class)->find($id);
+
+        if (!$developer) {
+            throw $this->createNotFoundException('Développeur introuvable.');
+        }
+
+        $society->removeFavoriteDeveloper($developer);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Le développeur a été retiré de vos favoris.');
+         return $this->redirectToRoute('app_society_developer',['id' => $id]); // Redirection à personnaliser
+    }
+
+
+    #[Route('/society/dev-favorites', name: 'society_favorites_list')]
+    public function listFavoriteDevelopers(): Response
+    {
+        $user = $this->getUser();
+        $society = $user->getSociety();
+
+        if (!$society) {
+            throw $this->createAccessDeniedException('Vous devez être connecté en tant que société pour accéder à cette page.');
+        }
+
+        $favoriteDevelopers = $society->getFavoriteDevelopers();
+
+        return $this->render('society/favorites_list_dev.html.twig', [
+            'developers' => $favoriteDevelopers,
+        ]);
+    }
 
 
 }

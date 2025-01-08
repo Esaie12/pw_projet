@@ -99,5 +99,13 @@ class HomeController extends AbstractController
         return $this->render('about_us.html.twig',[]);
     }
 
+
+    #[Route('/contact', name: 'contact')]
+    public function redirectContact(): Response
+    {
+       
+        return $this->render('contact.html.twig',[]);
+    }
+
 }
 

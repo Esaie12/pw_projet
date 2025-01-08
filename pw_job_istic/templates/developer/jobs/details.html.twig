@@ -68,9 +68,7 @@
                                                     class="twm-job-websites site-text-primary">https://thewebmax.com</a>
                                                 <div class="twm-jobs-amount">{{job.salary}}£ <span>/ Mois</span></div>
                                             </div>
-                                            <div class="twm-job-apllication-area"> fin de l'offre:
-                                                <span class="twm-job-apllication-date">{{ job.publishedAt|date('d/m/Y') }}</span>
-                                            </div>
+                                            
                                         </div>
 
                                         <div class="twm-job-self-bottom">
@@ -87,8 +85,6 @@
                                             </a>
                                             {% endif %}
 
-                                           
-
                                             {% if job in app.user.developer.favoriteJobs %}
                                                 <form action="{{ path('dev_job_favorite_remove', { id: job.id }) }}" method="post">
                                                     <button type="submit" class="btn btn-danger">Retirer des favoris</button>
@@ -99,6 +95,10 @@
                                                 </form>
                                             {% endif %}
 
+                                            <div class="twm-job-apllication-area"> Fin de l'offre:
+                                                <span class="twm-job-apllication-date ">{{ job.publishedAt|date('d/m/Y') }}</span>
+                                            </div>
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -502,7 +502,9 @@
 <!-- OUR BLOG END -->
 
 
+
 {% if not candidature_bool %}
+
 <div class="modal fade" id="apply_job_popup" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

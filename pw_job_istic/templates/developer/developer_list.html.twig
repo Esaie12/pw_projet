@@ -5,37 +5,20 @@
 
 {% block body %}
 
-<!-- INNER PAGE BANNER -->
-<div class="wt-bnr-inr overlay-wraper bg-center" style="background-image:url(images/banner/1.jpg);">
-    <div class="overlay-main site-bg-white opacity-01"></div>
-    <div class="container">
-        <div class="wt-bnr-inr-entry">
-            <div class="banner-title-outer">
-                <div class="banner-title-name">
-                    <h2 class="wt-title">Espace Talent</h2>
-                </div>
-            </div>
-            <!-- BREADCRUMB ROW -->
-
-            <div>
-                <ul class="wt-breadcrumb breadcrumb-style-2">
-                    <li><a href="index-2.html">Acceuil</a></li>
-                    <li>Liste des développeurs</li>
-                </ul>
-            </div>
-
-            <!-- BREADCRUMB ROW END -->
-        </div>
-    </div>
-</div>
-<!-- INNER PAGE BANNER END -->
-
 
 <!-- OUR BLOG START -->
 <div class="section-full p-t120  p-b90 site-bg-white">
 
 
     <div class="container">
+
+        <div class="bg-center" style="display: flex; justify-content: center;">
+            <ul class="wt-breadcrumb breadcrumb-style-2">
+                <li>Développeurs Inscrits</li>
+            </ul>
+        </div> <br/><br/><br/><br/>
+
+
         <div class="row">
 
             <div class="col-lg-4 col-md-12 rightSidebar">
@@ -47,7 +30,7 @@
                         <form>
 
                             <div class="form-group mb-4">
-                                <h4 class="section-head-small mb-4">Category</h4>
+                                <h4 class="section-head-small mb-4">Categorie</h4>
                                 <select class="wt-select-bar-large selectpicker" data-live-search="true"
                                     data-bv-field="size">
                                     <option selected>All Category</option>
@@ -58,7 +41,7 @@
                             </div>
 
                             <div class="form-group mb-4">
-                                <h4 class="section-head-small mb-4">Keyword</h4>
+                                <h4 class="section-head-small mb-4">mot-cle</h4>
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="Job Title or Keyword">
                                     <button class="btn" type="button"><i class="feather-search"></i></button>
@@ -66,7 +49,7 @@
                             </div>
 
                             <div class="form-group mb-4">
-                                <h4 class="section-head-small mb-4">Location</h4>
+                                <h4 class="section-head-small mb-4">Localisation</h4>
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="Search location">
                                     <button class="btn" type="button"><i class="feather-map-pin"></i></button>
@@ -74,7 +57,7 @@
                             </div>
 
                             <div class="twm-sidebar-ele-filter">
-                                <h4 class="section-head-small mb-4">Job Type</h4>
+                                <h4 class="section-head-small mb-4">Type de Job</h4>
                                 <ul>
                                     <li>
                                         <div class=" form-check">
@@ -243,27 +226,10 @@
             <div class="col-lg-8 col-md-12">
                 <!--Filter Short By-->
                 <div class="product-filter-wrap d-flex justify-content-between align-items-center m-b30">
-                    <span class="woocommerce-result-count-left">Showing 2,150 Candidates</span>
-
-                    <form class="woocommerce-ordering twm-filter-select" method="get">
-                        <span class="woocommerce-result-count">Short By</span>
-                        <select class="wt-select-bar-2 selectpicker" data-live-search="true" data-bv-field="size">
-                            <option>Most Recent</option>
-                            <option>Freelance</option>
-                            <option>Full Time</option>
-                            <option>Internship</option>
-                            <option>Part Time</option>
-                            <option>Temporary</option>
-                        </select>
-                        <select class="wt-select-bar-2 selectpicker" data-live-search="true" data-bv-field="size">
-                            <option>Show 10</option>
-                            <option>Show 20</option>
-                            <option>Show 30</option>
-                            <option>Show 40</option>
-                            <option>Show 50</option>
-                            <option>Show 60</option>
-                        </select>
-                    </form>
+                <span class="woocommerce-result-count-left">
+                   <span style="color: blue; font-weight: bold;">{{nbrDev}}</span> 
+                   Développeurs Inscrits
+                </span>
 
                 </div>
 
@@ -276,20 +242,19 @@
                             <div class="twm-candidates-list-style1 mb-5">
                                 <div class="twm-media">
                                     <div class="twm-media-pic">
-                                        <img src="images/candidates/pic1.jpg" alt="#">
+                                        <img src="{{ asset('uploads/avatars/' ~ developer.avatar) }}" alt="#">
                                     </div>
-                                    <div class="twm-candidates-tag"><span>Featured</span></div>
+                                    <div class="twm-candidates-tag"><span>{{ developer.profession}}</span></div>
                                 </div>
                                 <div class="twm-mid-content">
                                     <a href="candidate-detail.html" class="twm-job-title">
-                                        <h4>{{ developer.id }} </h4>
+                                        <h4>{{ developer.firstname}}  {{ developer.lastname}} </h4>
                                     </a>
-                                    <p>Charted Accountant</p>
 
                                     <div class="twm-fot-content">
                                         <div class="twm-left-info">
                                             <p class="twm-candidate-address"><i class="feather-map-pin"></i>{{developer.localisation}}</p>
-                                            <div class="twm-jobs-vacancies">€{{developer.salary}}<span>/ Day</span></div>
+                                            <div class="twm-jobs-vacancies">{{developer.salary}}€<span>/ Mois</span></div>
                                         </div>
                                         <div class="twm-right-btn">
                                             <a href="{{path('app_developer',{ 'id': developer.id })}}"

@@ -1,0 +1,109 @@
+{% extends 'template_society.html.twig' %}
+
+{% block title %} Messagerie !{% endblock %}
+
+{% block body %}
+<div class="content-admin-main">
+
+    <div class="wt-admin-dashboard-msg-2">
+        <!--Left Msg section-->
+        <div class="wt-dashboard-msg-user-list">
+            <div class="wt-dashboard-msg-search">
+                <div class="input-group">
+                    <input class="form-control" placeholder="Rechercher un message" type="text">
+                    <button class="btn" type="button"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+
+            <!-- user msg list start-->
+            <div id="msg-list-wrap" class="wt-dashboard-msg-search-list scrollbar-macosx">
+                {% for user in users %}
+                <div class="wt-dashboard-msg-search-list-wrap">
+                    <a href="{{ path('app_society_user', {id: user.id}) }}"
+                        class="msg-user-info clearfix">
+                        <div class="msg-user-timing">
+                            {% if user.typeUser == "society" %}
+                            Société
+                            {% else %}
+                            Développeur
+                            {% endif %}
+                        </div>
+                        <div class="msg-user-info-pic">
+                            {% if user.typeUser == "society" %}
+                            <img src="{{ asset('uploads/avatars/' ~ user.society.avatar) }}"
+                                alt="">
+                            {% else %}
+                            <img src="{{ asset('uploads/avatars/' ~ user.developer.avatar) }}"
+                                alt="">
+                            {% endif %}
+                        </div>
+                        <div class="msg-user-info-text">
+                            <div class="msg-user-name">
+                                {% if user.typeUser == "society" %}
+                                {{ user.society.name }}
+                                {% else %}
+                                {{ user.developer.firstname }} {{ user.developer.lastname }}
+                                {% endif %}
+                            </div>
+                            <div class="msg-user-discription">{{ user.email }}</div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- user msg list End-->
+
+        </div>
+
+        <!--Right Msg section-->
+        <div class="wt-dashboard-msg-box">
+
+            <div class="panel panel-default">
+                <div class="panel-heading wt-panel-heading p-a20">
+                    <h4 class="panel-tittle m-a0"><i class="far fa-envelope"></i>Mes discussions</h4>
+                </div>
+                <div class="panel-body wt-panel-body bg-white">
+                    {% for conversation in conversations %}
+                    <div class="dashboard-messages-box">
+                        <div class="dashboard-message-avtar">
+                            {% if conversation.user.typeUser == "society" %}
+                                <img src="{{ asset('uploads/avatars/' ~ conversation.user.society.avatar) }}" alt="">
+                            {% else %}
+                                <img src="{{ asset('uploads/avatars/' ~ conversation.user.developer.avatar) }}" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="dashboard-message-area">
+                            <h5>
+                                {% if conversation.user.typeUser == "society" %}
+                                    {{ conversation.user.society.name }}
+                                {% else %}
+                                    {{ conversation.user.developer.firstname }} {{ conversation.user.developer.lastname }}
+                                {% endif %} - <span>{{ conversation.lastMessage.createdAt|date('d/m/Y H:i') }}</span>
+                            </h5>
+                            <p>{{ conversation.lastMessage.content }}</p>
+
+                            <div class="dropdown">
+                                <a href="{{ path('app_society_user', {id: conversation.user.id}) }}" class="dropdown-toggle" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Repondre
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    {% if conversations is empty %}
+                        <p style="text-align:center ; color:red !important;" >Vous n'avez pas encore de conversations.</p>
+                    {% endif %}
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+{% endblock %}

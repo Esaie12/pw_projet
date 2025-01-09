@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -40,7 +38,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('css/flaticon.css')}}"> <!-- Flaticon -->
     <link rel="stylesheet" type="text/css" href="{{asset('css/swiper-bundle.min.css')}}"><!-- Swiper Slider -->
     <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}"><!-- MAIN STYLE SHEET -->
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" /> <!-- TOAST JS STYLE SHEET -->
     <!-- THEME COLOR CHANGE STYLE SHEET -->
     <link rel="stylesheet" class="skin" type="text/css" href="{{asset('css/skins-type/skin-6.css')}}">
     <!-- SIDE SWITCHER STYLE SHEET -->
@@ -68,24 +66,50 @@
         <!-- CONTENT START -->
         <div class="page-content">
 
+
+             <script>
+                    <script>
+                            toastr.options = {
+                            "closeButton": true,
+                            //"debug": false,
+                            "newestOnTop": true,
+                            "progressBar": true,
+                            "positionClass": "toast-top-right",
+                                      // "preventDuplicates": true,
+                             // "onclick": null,
+                            "showDuration": "300",
+                            /*"hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"*/
+                             };
+
+
+                            {% for type, messages in app.flashes %}
+                                {% for message in messages %}
+                                    toastr.{{ type }}("{{ message|e('js') }}");
+                                {% endfor %}
+                            {% endfor %}
+                      </script>
+                  </script>
         
-            <!-- Login Section Start -->
-            <div class="section-full site-bg-white">
-                
-                <div class="container-fluid">
-                    {% block body %}  {% endblock %}
-                </div>
-            </div>   
-            <!-- Login Section End -->
-          
-            
-     
+                <!-- Login Section Start -->
+                <div class="section-full site-bg-white">
+                    
+                    <div class="container-fluid">
+                        {% block body %}  {% endblock %}
+                    </div>
+                </div>   
         </div>
+ </div>
+          
+            <!-- Login Section End -->   
+	
         <!-- CONTENT END -->
-
-       
-
- 	</div>
+ 
 
 
 <!-- JAVASCRIPT  FILES ========================================= --> 
@@ -112,7 +136,8 @@
 <script  src="{{asset('js/swiper-bundle.min.js')}}"></script><!-- Swiper JS -->
 <script  src="{{asset('js/custom.js')}}"></script><!-- CUSTOM FUCTIONS  -->
 <script  src="{{asset('js/switcher.js')}}"></script><!-- SHORTCODE FUCTIONS  -->
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 
 </body>

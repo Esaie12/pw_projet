@@ -20,6 +20,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use App\Entity\Candidat;
 use App\Entity\Status;
 use App\Entity\JobView;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class DeveloperController extends AbstractController
@@ -521,7 +522,8 @@ class DeveloperController extends AbstractController
         }
         return $this->render('developer/jobs/candidate_change_password.html.twig', [
            /*  'user' => $user,*/
-            'form' => $form
+            'form' => $form,
+            'active_tab' => 'password',
             
         ]);
     }

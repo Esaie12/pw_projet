@@ -368,19 +368,19 @@ class DeveloperController extends AbstractController
         // Filtrer par technologies
         if (!empty($criteria['technologies'])) {
             $qb->join('j.technologies', 't')
-            ->andWhere('t.name IN (:technologies)')
+            ->orWhere('t.name IN (:technologies)')
             ->setParameter('technologies', $criteria['technologies']);
         }
 
         // Filtrer par localisation
         if (!empty($criteria['location'])) {
-            $qb->andWhere('j.location = :location')
+            $qb->orWhere('j.location = :location')
             ->setParameter('location', $criteria['location']);
         }
 
         // Filtrer par niveau d'expérience
         if (!empty($criteria['salaryRange'])) {
-            $qb->andWhere('j.salary BETWEEN :minSalary AND :maxSalary')
+            $qb->orWhere('j.salary BETWEEN :minSalary AND :maxSalary')
             ->setParameter('minSalary', $criteria['salaryRangeMin'])
             ->setParameter('maxSalary', $criteria['salaryRangeMax']);
         }

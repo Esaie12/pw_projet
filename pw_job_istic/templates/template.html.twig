@@ -120,8 +120,8 @@
                 
                         <div class="logo-header">
                             <div class="logo-header-inner logo-header-one">
-                                <a href="index-2.html">
-                                <img src="{{asset('images/logo-dark.png')}}" alt="">
+                                <a href="#">
+                                <img src="{{asset('images/logo-transparent-png.png')}}" alt="">
                                 </a>
                             </div>
                         </div>  
@@ -150,8 +150,8 @@
                                 <li class="has-child">
                                     <a href="javascript:;">Notre site</a>
                                     <ul class="sub-menu">
-                                        <li><a href="about-1.html">A propos de nous</a></li>
-                                        <li><a href="pricing.html">Contact</a></li>
+                                        <li><a href="{{path('about_us')}}">A propos de nous</a></li>
+                                        <li><a href="{{path('contact')}}">Contact</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -211,9 +211,9 @@
 
                         <div class="logo-header">
                             <div class="logo-header-inner logo-header-one">
-                                <a href="index-2.html">
-                                    <img src="images/logo-light-3.png" alt="" class="default-scroll-show">
-                                    <img src="images/logo-dark.png" alt="" class="on-scroll-show">
+                                <a href="#">
+                                    <img src="images/logo-transparent-png.png" alt="" class="default-scroll-show">
+                                    <img src="images/logo-transparent-png.png" alt="" class="on-scroll-show">
                                 </a>
                             </div>
                         </div>
@@ -244,8 +244,8 @@
                                 <li class="has-child">
                                     <a href="javascript:;">Notre site</a>
                                     <ul class="sub-menu">
-                                        <li><a href="about-1.html">A propos de nous</a></li>
-                                        <li><a href="pricing.html">Contact</a></li>
+                                        <li><a href="{{path('about_us')}}">A propos de nous</a></li>
+                                        <li><a href="{{path('contact')}}">Contact</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -303,8 +303,7 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class="ftr-nw-title">
-                                Join our email subscription now to get updates
-                                on new jobs and notifications.
+                               Inscrivez-vous dès maintenant à notre abonnement par e-mail.
                             </div>
                         </div>
                         <div class="col-md-7">
@@ -329,7 +328,6 @@
                                 <div class="logo-footer clearfix">
                                     <a href="index-2.html"><img src="images/logo-light.png" alt=""></a>
                                 </div>
-                                <p>Many desktop publishing packages and web page editors now.</p>
                                 <ul class="ftr-list">
                                     <li>
                                         <p><span>Address :</span>65 Sunset CA 90026, USA </p>
@@ -350,38 +348,35 @@
 
                                 <div class="col-lg-3 col-md-6 col-sm-6">
                                     <div class="widget widget_services ftr-list-center">
-                                        <h3 class="widget-title">For Candidate</h3>
+                                        <h3 class="widget-title">Developpeurs</h3>
                                         <ul>
-                                            <li><a href="dashboard.html">User Dashboard</a></li>
-                                            <li><a href="dash-resume-alert.html">Alert resume</a></li>
-                                            <li><a href="candidate-grid.html">Candidates</a></li>
-                                            <li><a href="blog-list.html">Blog List</a></li>
-                                            <li><a href="blog-single.html">Blog single</a></li>
+                                            <li><a href="dashboard.html">Tableau de bord</a></li>
+                                            <li><a href="dash-resume-alert.html">Alerte CV</a></li>
+                                            <li><a href="candidate-grid.html">Candidats</a></li>
+                                            <li><a href="blog-list.html">Liste des blogs</a></li>
                                         </ul>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-3 col-md-6 col-sm-6">
                                     <div class="widget widget_services ftr-list-center">
-                                        <h3 class="widget-title">For Employers</h3>
+                                        <h3 class="widget-title">Entreprises</h3>
                                         <ul>
-                                            <li><a href="dash-post-job.html">Post Jobs</a></li>
-                                            <li><a href="blog-grid.html">Blog Grid</a></li>
-                                            <li><a href="contact.html">Contact</a></li>
-                                            <li><a href="job-list.html">Jobs Listing</a></li>
-                                            <li><a href="job-detail.html">Jobs details</a></li>
+                                            <li><a href="dash-post-job.html">Publier un job</a></li>
+                                            <li><a href="blog-grid.html">Grille de blog</a></li>
+                                            <li><a href="{{path('contact')}}">Contact</a></li>
+                                            <li><a href="job-list.html">Jobs</a></li>
                                         </ul>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-3 col-md-6 col-sm-6">
                                     <div class="widget widget_services ftr-list-center">
-                                        <h3 class="widget-title">Helpful Resources</h3>
+                                        <h3 class="widget-title">Ressources</h3>
                                         <ul>
                                             <li><a href="faq.html">FAQs</a></li>
-                                            <li><a href="employer-detail.html">Employer detail</a></li>
-                                            <li><a href="dash-my-profile.html">Profile</a></li>
-                                            <li><a href="error-404.html">404 Page</a></li>
+                                            <li><a href="employer-detail.html">Coordonnées Entreprises</a></li>
+                                            <li><a href="dash-my-profile.html">Profil</a></li>
                                             <li><a href="pricing.html">Pricing</a></li>
                                         </ul>
                                     </div>
@@ -389,13 +384,13 @@
 
                                 <div class="col-lg-3 col-md-6 col-sm-6">
                                     <div class="widget widget_services ftr-list-center">
-                                        <h3 class="widget-title">Quick Links</h3>
+                                        <h3 class="widget-title">Liens</h3>
                                         <ul>
-                                            <li><a href="index-2.html">Home</a></li>
-                                            <li><a href="{{path('about_us')}}">About us</a></li>
-                                            <li><a href="dash-bookmark.html">Bookmark</a></li>
+                                            <li><a href="index-2.html">Acceuil</a></li>
+                                            <li><a href="{{path('about_us')}}">A propos de nous</a></li>
+                                            <li><a href="dash-bookmark.html">Signet</a></li>
                                             <li><a href="job-grid.html">Jobs</a></li>
-                                            <li><a href="employer-list.html">Employer</a></li>
+                                            <li><a href="employer-list.html">Entreprises</a></li>
                                         </ul>
                                     </div>
                                 </div>

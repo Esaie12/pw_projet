@@ -27,6 +27,9 @@ class Developer
     #[ORM\Column(nullable: true)]
     private ?string $aboutMe = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?string $profession = null;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $localisation = null;
 
@@ -139,6 +142,18 @@ class Developer
     public function setAboutMe(?string $aboutMe): self
     {
         $this->aboutMe = $aboutMe;
+        return $this;
+    }
+
+
+    public function getProfession(): ?string
+    {
+        return $this->profession;
+    }
+
+    public function setProfession(?string $profession): self
+    {
+        $this->profession = $profession;
         return $this;
     }
 

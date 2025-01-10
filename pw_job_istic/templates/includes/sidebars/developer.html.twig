@@ -10,7 +10,6 @@
             <button class="site-button button-sm">Upload Photo</button>
             <input type="file" name="myfile" id="file-uploader" accept=".jpg, .jpeg, .png">
         </div>
-
     </div>
     <div class="twm-mid-content text-center">
         <a href="candidate-detail.html" class="twm-job-title">
@@ -54,7 +53,7 @@
             </li>
 
             <li class="{% if active == 'chat' %}active{% endif %}">
-              <a href="candidate-chat.html"><i class="fa fa-comments"></i>Chat</a>
+              <a href="{{path('app_dev_message')}}"><i class="fa fa-comments"></i>Messagerie</a>
             </li>
         </ul>
     </div>

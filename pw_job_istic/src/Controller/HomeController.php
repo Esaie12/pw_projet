@@ -88,6 +88,7 @@ class HomeController extends AbstractController
             'jobs' => $pagination, // Résultats des jobs
             'criteria' => $criteria, // Pour afficher les critères éventuellement
             'filterForm' => $form->createView(),
+            'nbOffre' => count($pagination),
         ]);
     }
 
@@ -97,6 +98,14 @@ class HomeController extends AbstractController
     {
        
         return $this->render('about_us.html.twig',[]);
+    }
+
+
+    #[Route('/contact', name: 'contact')]
+    public function redirectContact(): Response
+    {
+       
+        return $this->render('contact.html.twig',[]);
     }
 
 }

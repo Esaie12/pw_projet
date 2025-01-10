@@ -38,7 +38,7 @@ Retrouver ici le projet *AdoupteUnDev* , Il s'agit d'une application web permett
 
 ### 2. *Étapes d'installation*
 
-- Clonez ce dépôt sur votre machine locale :  git clone git@github.com:Esaie12/pw_projet.git
+- Clonez ce dépôt sur votre machine locale :  git clone [git@github.com:Esaie12/pw_projet.git](https://github.com/Esaie12/pw_projet)
 - Lancer docker bash : docker exec -it symfony_app bash
 - Installer les dépendances : composer install
 - Créer les tables dans la basse de donnnée : php bin/console doctrine:migrations:migrate

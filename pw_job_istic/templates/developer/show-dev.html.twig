@@ -5,33 +5,6 @@
 
 {% block body %}
 
-<!-- INNER PAGE BANNER -->
-<div class="wt-bnr-inr overlay-wraper bg-center" style="background-image:url({{asset('images/banner/1.jpg')}});">
-    <div class="overlay-main site-bg-white opacity-01"></div>
-    <div class="container">
-        <div class="wt-bnr-inr-entry">
-            <div class="banner-title-outer">
-                <div class="banner-title-name">
-                    <h2 class="wt-title">Consulter Profil</h2>
-                </div>
-            </div>
-            <!-- BREADCRUMB ROW -->
-
-            <div>
-                <ul class="wt-breadcrumb breadcrumb-style-2">
-                    <li><a href="index-2.html">Home</a></li>
-                    <li>{{developer.firstname}} {{developer.lastname}}</li>
-                </ul>
-            </div>
-
-            <!-- BREADCRUMB ROW END -->
-        </div>
-    </div>
-</div>
-<!-- INNER PAGE BANNER END -->
-
-
-
 <!-- OUR BLOG START -->
 <div class="section-full  p-t120 p-b90 bg-white">
     <div class="container">
@@ -48,15 +21,15 @@
                             <div class="overlay-main site-bg-primary opacity-01"></div>
                             <div class="twm-candi-self-info">
                                 <div class="twm-candi-self-top">
-                                    <div class="twm-candi-fee">$20 / Day</div>
-                                    <div class="twm-media">
-                                        <img src="images/candidates/pic2.jpg" alt="#">
+                                    <div class="twm-media"style="width:300px;height:300px;">
+                                    
+                                        <img src="{{ asset('uploads/avatars/' ~ developer.avatar) }}" alt="#">
                                     </div>
                                     <div class="twm-mid-content">
 
-                                        <h4 class="twm-job-title">Wanda Montgomery </h4>
+                                        <h4 class="twm-job-title">{{developer.firstname}} {{developer.lastname}}</h4>
 
-                                        <p>Senior UI / UX Designer and Developer at Google INC</p>
+                                        <p>{{developer.profession}}</p>
                                         <p class="twm-candidate-address"><i class="feather-map-pin"></i>{{developer.localisation}}
                                         </p>
 
@@ -64,7 +37,13 @@
                                 </div>
                                 <div class="twm-candi-self-bottom">
                                     <a href="javascript:;" class="site-button outline-white">Noter le profil</a>
-                                    <a href="javascript:;" class="site-button secondry">Download CV</a>
+                                    <a href="#" class="site-button secondry">Voir CV</a>
+
+    {# {% if job.pdfFile %}
+        <h3>Fichier PDF :</h3>
+        <a href="{{ asset('uploads/avatars/' ~ job.pdfFile) }}" target="_blank">Télécharger le fichier</a>
+    {% endif %} #}
+
                                 </div>
                              </div>
                             </div>

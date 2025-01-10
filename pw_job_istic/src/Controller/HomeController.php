@@ -88,6 +88,7 @@ class HomeController extends AbstractController
             'jobs' => $pagination, // Résultats des jobs
             'criteria' => $criteria, // Pour afficher les critères éventuellement
             'filterForm' => $form->createView(),
+            'nbOffre' => count($pagination),
         ]);
     }
 

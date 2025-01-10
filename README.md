@@ -1,12 +1,11 @@
 # AdopteUnDev
 
 ## Développeurs ( Etudiant )
-. BIGNON Martial Freddy
-. KOULIBALY Karidja
-. KOCORA Roxanne
-. OMIYALE Esaie A.
-
-
+- BIGNON Martial Freddy
+- KOULIBALY Karidja
+-  KOCORA Roxanne
+-  OMIYALE Esaie A.
+  
 Retrouver ici le projet *AdoupteUnDev* , Il s'agit d'une application web permettant aux développeurs et aux entreprises de créer des profils ou des fiches de postes et de les faire correspondre, à la manière d'un site de rencontre. L'objectif est d'optimiser la mise en relation entre développeurs et recruteurs via des fonctionnalités conviviales et innovantes.
 
 

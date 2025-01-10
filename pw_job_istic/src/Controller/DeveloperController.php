@@ -19,6 +19,7 @@ use App\Entity\Rating;
 use App\Entity\Society;
 use App\Entity\Developer;
 use App\Entity\JobPosting;
+use App\Entity\Notification;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Entity\Candidat;
 use App\Entity\Status;

@@ -22,12 +22,12 @@
                 <!--Filter Short By-->
                 <div class="twm-right-section-panel site-bg-gray">
                     <div class="wt-admin-right-page-header">
-                        <h5>Hi, {{ app.user.developer.lastname }} </h5>
+                        <h5>Bienvenue, {{ app.user.developer.lastname }} </h5>
                     </div>
 
                     <div class="twm-dash-b-blocks mb-5">
                         <div class="row">
-                            <div class="col-xl-6 col-lg-6 col-md-12 mb-3">
+                            <div class="col-xl-4 col-lg-4 col-md-12 mb-3">
                                 <div class="panel panel-default">
                                     <div class="panel-body wt-panel-body dashboard-card-2 block-gradient">
                                         <div class="wt-card-wrap-2">
@@ -36,13 +36,26 @@
                                            {{nbre_candidature}}                                      
                                             </div>
                                             <div class="wt-card-bottom-2 ">
-                                                <h4 class="m-b0">Jobs postes</h4>
+                                                <h4 class="m-b0">Candidature envoy°</h4>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-6 col-lg-6 col-md-12 mb-3">
+                             <div class="col-xl-4 col-lg-4 col-md-12 mb-3">
+                                <div class="panel panel-default">
+                                    <div class="panel-body wt-panel-body dashboard-card-2 block-gradient-2">
+                                        <div class="wt-card-wrap-2">
+                                            <div class="wt-card-icon-2"><i class="fa fa-eye"></i></div>
+                                            <div class="wt-card-right wt-total-listing-review counter ">{{ app.user.developer.getViewsCount() }}</div>
+                                            <div class="wt-card-bottom-2">
+                                                <h4 class="m-b0">Vue de profil</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-12 mb-3">
                                 <div class="panel panel-default">
                                     <div class="panel-body wt-panel-body dashboard-card-2 block-gradient-3">
                                         <div class="wt-card-wrap-2">
@@ -74,14 +87,17 @@
                                                             <img src="{{ asset('uploads/avatars/' ~ job.image) }}" alt="#">
                                                         </div>
                                                         <div class="twm-mid-content">
+                                                            
                                                             <a href="job-detail.html" class="twm-job-title">
                                                                 <h4> {{ job.title}} <span class="twm-job-post-duration">  {{ job.publishedAt|date('d/m/Y') }}</span></h4>
                                                             </a>
                                                             <p class="twm-job-address">{{ job.location }}</p>
                                                             <a href="https://themeforest.net/user/thewebmax/portfolio" class="twm-job-websites site-text-primary">{{ job.society.website}}</a>
+                                                            <p style="margin-top:5px" class="twm-candidate-address">Vu par <i class="fa fa-eye"></i>{{ job.getViewsCount() }}</p>
+                                                            
                                                         </div>
                                                         <div class="twm-right-content">
-                                                            <div class="twm-jobs-category green"><span class="twm-bg-green">Nouveau</span></div>
+                                                            <div class="twm-jobs-category green"><span class="twm-bg-green">Populaire</span></div>
                                                             <div class="twm-jobs-amount">${{ job.salary}} <span> /Mois </span></div>
                                                             <a href="{{path('dev_job_details',{id:job.id})}}" class="twm-jobs-browse site-text-primary">Postuler</a>
                                                         </div>
@@ -117,6 +133,7 @@
                                                             </a>
                                                             <p class="twm-job-address"> {{ job.location }} </p>
                                                             <a href="https://themeforest.net/user/thewebmax/portfolio" class="twm-job-websites site-text-primary">{{ job.society.website}}</a>
+                                                             <p style="margin-top:5px" class="twm-candidate-address">Vu par <i class="fa fa-eye"></i>{{ job.getViewsCount() }}</p>
                                                         </div>
                                                         <div class="twm-right-content">
                                                             <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>

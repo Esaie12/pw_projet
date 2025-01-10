@@ -115,10 +115,12 @@
                                         <p class="twm-job-address">{{ job.location }}</p>
                                         <a href="https://themeforest.net/user/thewebmax/portfolio"
                                             class="twm-job-websites site-text-primary">{{ job.society.website}}</a>
+                                            <p style="margin-top:5px" class="twm-candidate-address">Vu par <i class="fa fa-eye"></i>{{ job.getViewsCount() }}</p>
                                     </div>
                                     <div class="twm-right-content">
                                         <div class="twm-jobs-category green"><span class="twm-bg-green">Nouveau</span></div>
-                                        <div class="twm-jobs-amount">{{ job.salary}} $ <span>/ Mois</span></div>
+                                        <div class="twm-jobs-amount">{{ job.salary}} $ <span>/ Mois</span>
+                                    </div>
                                         {% if is_granted('ROLE_DEV') %}
                                         <a href="{{path('dev_job_details',{id:job.id})}}" class="twm-jobs-browse site-text-primary">Voir Job</a>
                                         {% else %}

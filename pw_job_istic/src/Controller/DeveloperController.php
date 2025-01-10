@@ -356,7 +356,8 @@ class DeveloperController extends AbstractController
         // Récupérer les critères du développeur
         $criteria = [
             'technologies' => $developer->getLangages()->map(fn($langage) => $langage->getName())->toArray(),
-            'salaryRange' => $developer->getSalary(),
+            'salaryRangeMin' => 0,
+            'salaryRangeMax' => $developer->getSalary(),
             'location' => $developer->getLocalisation(),
             'experienceLevel' => 5, // $developer->getExperienceLevel(),
         ];
@@ -365,7 +366,7 @@ class DeveloperController extends AbstractController
         $qb = $entityManager->getRepository(JobPosting::class)->createQueryBuilder('j');
 
         // Filtrer par technologies
-        /*if (!empty($criteria['technologies'])) {
+        if (!empty($criteria['technologies'])) {
             $qb->join('j.technologies', 't')
             ->andWhere('t.name IN (:technologies)')
             ->setParameter('technologies', $criteria['technologies']);
@@ -378,16 +379,11 @@ class DeveloperController extends AbstractController
         }
 
         // Filtrer par niveau d'expérience
-        if (!empty($criteria['experienceLevel'])) {
-            $qb->andWhere('j.experienceLevel = :experienceLevel')
-            ->setParameter('experienceLevel', $criteria['experienceLevel']);
-        }
-
         if (!empty($criteria['salaryRange'])) {
             $qb->andWhere('j.salary BETWEEN :minSalary AND :maxSalary')
-            ->setParameter('minSalary', $criteria['salaryRange']['min'])
-            ->setParameter('maxSalary', $criteria['salaryRange']['max']);
-        }*/
+            ->setParameter('minSalary', $criteria['salaryRangeMin'])
+            ->setParameter('maxSalary', $criteria['salaryRangeMax']);
+        }
 
         // Trier par date de publication
         $qb->orderBy('j.publishedAt', 'DESC');

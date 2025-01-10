@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use App\Form\Dev\CompleteProfilType;
 use App\Form\RatingType;
 use App\Form\CandidatType;
+use App\Form\Dev\ModifyPassword;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserRepository;
@@ -22,6 +23,8 @@ use Knp\Component\Pager\PaginatorInterface;
 use App\Entity\Candidat;
 use App\Entity\Status;
 use App\Entity\JobView;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class DeveloperController extends AbstractController
 {
@@ -212,6 +215,7 @@ class DeveloperController extends AbstractController
         return $this->render('developer/jobs/list.html.twig', [
             'jobs' => $jobs,
             'active_tab' => 'job',
+            'nbJobs' => $jobs->getTotalItemCount(),
         ]);
     }
 
@@ -397,7 +401,7 @@ class DeveloperController extends AbstractController
 
         return $this->render('developer/jobs/matchings.html.twig', [
             'jobs' => $pagination,
-            'nbMatching' => count($pagination),
+            'nbMatching' => $pagination->getTotalItemCount(),
             'active_tab' => 'matching',
         ]);
     }
@@ -511,55 +515,68 @@ class DeveloperController extends AbstractController
     }
 
 
-    #[Route('/dev/my_resume', name: 'app_dev_resume')]
-    #[IsGranted('ROLE_DEV')]
-    public function resume_developper(EntityManagerInterface $entityManager): Response
-    {
+    // #[Route('/dev/my_resume', name: 'app_dev_resume')]
+    // #[IsGranted('ROLE_DEV')]
+    // public function resume_developper(EntityManagerInterface $entityManager): Response
+    // {
 
-        $user = $this->getUser();
-        if($user->isActive() == false){
-            return $this->redirectToRoute('app_dev_complete_profil');
-        }
+    //     $user = $this->getUser();
+    //     if($user->isActive() == false){
+    //         return $this->redirectToRoute('app_dev_complete_profil');
+    //     }
 
-        $developer = $user->getDeveloper();
+    //     $developer = $user->getDeveloper();
 
-        return $this->render('developer/my_resume.html.twig',[
-            'dev' => $developer,
-            'active_tab' => 'resume',
-        ]);
-    }
+    //     return $this->render('developer/my_resume.html.twig',[
+    //         'dev' => $developer,
+    //         'active_tab' => 'resume',
+    //     ]);
+    // }
 
 
     #[Route('/candidat_change_password', name: 'candidat_change_password', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,  UserPasswordHasherInterface $passwordHasher): Response
+    public function modify(Request $request, EntityManagerInterface $entityManager,  UserPasswordHasherInterface $passwordHasher): Response
     {
         
-       /* $user = new User();
-        //Les devs
-        $form = $this->createForm(UserType::class, $user);
+        $user = $this->getUser();
+        $form = $this->createForm(ModifyPassword::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+         if ($form->isSubmitted() && $form->isValid()) {
+        
+            $oldPassword = $form->get('password')->getData();
+            $newPassword = $form->get('newPassword')->getData();
+            $confirmPassword = $form->get('confirmPassword')->getData();
 
-            $hashedPassword = $passwordHasher->hashPassword($user, $user->getPassword());
-            $user->setPassword($hashedPassword);
-            $user->setRoles(['ROLE_DEV']);
+            // Vérifier si le mot de passe actuel est correct
+            if (!$passwordHasher->isPasswordValid($user, $oldPassword)) {
+                $form->get('password')->addError(new FormError('Ancien mot de passe incorrect.'));
+            }
 
-            $entityManager->persist($user);
-            $entityManager->flush();
+            // Vérifier si le nouveau mot de passe et la confirmation correspondent
+            if ($newPassword !== $confirmPassword) {
+                $form->get('confirmPassword')->addError(new FormError('Les mots de passe ne correspondent pas.'));
+            }
 
-            $developer = new Developer();
-            $developer->setUser($user);
-            $entityManager->persist($developer);
-            $entityManager->flush();
+            // Si tout est valide, mettre à jour le mot de passe
+            if ($form->isValid()) {
+             
+                $encodedPassword = $passwordHasher->hashPassword($user, $newPassword);
+                $user->setPassword($encodedPassword);
+                // Sauvegarder les modifications dans la base de données
+                $entityManager->persist($user);
+                $entityManager->flush();
+                $this->addFlash('success', 'Votre mot de passe a été modifié avec succès.');
 
-            return $this->redirectToRoute('app_dev_complete_profil', [], Response::HTTP_SEE_OTHER);
-        }*/
-
+                // Rediriger vers une page de profil ou une autre page
+                return $this->redirectToRoute('app_dev_dash', [], Response::HTTP_SEE_OTHER); 
+            }
+        }
         return $this->render('developer/jobs/candidate_change_password.html.twig', [
-           /*  'user' => $user,
-            'form' => $form
-            */
+           /*  'user' => $user,*/
+            'form' => $form,
+            'active_tab' => 'password',
+            
         ]);
     }
 

@@ -39,7 +39,7 @@ class MessageController extends AbstractController
         return $this->render('developer/messages/index.html.twig', [
             'users' => $users,
             'conversations' => $conversationData,
-            'active_tab'=> 'messagerie'
+            'active_tab'=> 'chat'
         ]);
     }
 

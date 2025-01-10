@@ -36,10 +36,6 @@
               <a href="{{path('dev_all_jobs')}}"><i class="fa fa-suitcase"></i> Les Jobs</a>
             </li>
 
-            <li  class="{% if active == 'resume' %}active{% endif %}">
-              <a href="{{path('app_dev_resume')}}"><i class="fa fa-receipt"></i> My Resume</a>
-            </li>
-
             <li  class="{% if active == 'jobFav' %}active{% endif %}">
               <a href="{{path('developer_favorites_jobs')}}"><i class="fa fa-file-download"></i> Jobs Favoris</a>
             </li>
@@ -49,7 +45,7 @@
             </li>
            
             <li class="{% if active == 'password' %}active{% endif %}">
-              <a href="candidate-change-password.html"><i class="fa fa-fingerprint"></i>Change Passeord</a>
+              <a href="{{path('candidat_change_password')}}"><i class="fa fa-fingerprint"></i>Modifier le mot de passe</a>
             </li>
 
             <li class="{% if active == 'chat' %}active{% endif %}">

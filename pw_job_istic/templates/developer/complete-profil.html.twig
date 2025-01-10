@@ -4,35 +4,9 @@
 {% block body %}
  <div class="page-content">
 
-            <!-- INNER PAGE BANNER -->
-            <div class="wt-bnr-inr overlay-wraper bg-center" style="background-image:url({{asset('images/banner/1.jpg')}});">
-                <div class="overlay-main site-bg-white opacity-01"></div>
-                <div class="container">
-                    <div class="wt-bnr-inr-entry">
-                        <div class="banner-title-outer">
-                            <div class="banner-title-name">
-                                <h2 class="wt-title">Candidate Profile</h2>
-                            </div>
-                        </div>
-                        <!-- BREADCRUMB ROW -->                            
-                        
-                            <div>
-                                <ul class="wt-breadcrumb breadcrumb-style-2">
-                                    <li><a href="index-2.html">Home</a></li>
-                                    <li>Candidate Profile</li>
-                                </ul>
-                            </div>
-                        
-                        <!-- BREADCRUMB ROW END -->                        
-                    </div>
-                </div>
-            </div>
-            <!-- INNER PAGE BANNER END -->
-
 
             <!-- OUR BLOG START -->
-            <div class="section-full p-t120  p-b90 site-bg-white">
-                
+           <br/><br/> <div class="section-full p-t120  p-b90 site-bg-white">
 
                 <div class="container">
                     <div class="row">
@@ -102,12 +76,12 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-xl-6 col-lg-6 col-md-12">
+                                            <div class="col-xl-4 col-lg-6 col-md-12">
                                                 <div class="form-group">
-                                                    <label>À propos de vous</label>
-                                                    <div class="ls-inputicon-box"> 
-                                                        {{ form_widget(form.aboutMe, {'attr': {'class': 'form-control', 'placeholder': 'Décrivez-vous'}}) }}
-                                                        <i class="fs-input-icon fas fa-info-circle"></i>
+                                                    <label>Phone</label>
+                                                    <div class="ls-inputicon-box">
+                                                        {{ form_widget(form.telephone, {'attr': {'class': 'form-control', 'placeholder': '+33 XXXXXXXXX'}}) }}
+                                                        <i class="fs-input-icon fa fa-phone-alt"></i>
                                                     </div>
                                                 </div>
                                             </div>
@@ -169,6 +143,16 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-xl-6 col-lg-6 col-md-12">
+                                                <div class="form-group">
+                                                    <label>À propos de vous</label>
+                                                    <div class="ls-inputicon-box"> 
+                                                        {{ form_widget(form.aboutMe, {'attr': {'class': 'form-control', 'placeholder': 'Décrivez-vous'}}) }}
+                                                        <i class="fs-input-icon fas fa-info-circle"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
                                             <div class="col-lg-12 col-md-12">                                   
                                                 <div class="text-left">
                                                     {{ form_widget(form.submit, {'attr': {'class': 'site-button'}}) }}

@@ -59,6 +59,15 @@ class CompleteProfilType extends AbstractType
             ],
         ])
 
+        ->add('telephone', TextType::class, [
+            'label' => 'Téléphone',
+            'required' => true,
+            'attr' => [
+                'class' => 'form-control',
+                'placeholder' => '(251) 1234-456-7890',
+            ],
+        ])
+
         ->add('localisation', TextType::class, [
             'label' => false,
             'attr' => [
@@ -67,6 +76,7 @@ class CompleteProfilType extends AbstractType
                 'required' => true,
             ],
         ])
+        
         ->add('salary', NumberType::class, [
             'label' => false,
             'attr' => [

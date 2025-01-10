@@ -84,11 +84,13 @@ class HomeController extends AbstractController
             ]
         );
 
+        //dd($pagination);
+
         return $this->render('all_jobs.html.twig', [
             'jobs' => $pagination, // Résultats des jobs
             'criteria' => $criteria, // Pour afficher les critères éventuellement
             'filterForm' => $form->createView(),
-            'nbOffre' => count($pagination),
+            'nbOffre' => $pagination->getTotalItemCount(),
         ]);
     }
 

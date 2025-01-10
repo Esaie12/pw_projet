@@ -163,6 +163,7 @@ class DeveloperController extends AbstractController
         return $this->render('developer/jobs/list.html.twig', [
             'jobs' => $jobs,
             'active_tab' => 'job',
+            'nbJobs' => $jobs->getTotalItemCount(),
         ]);
     }
 
@@ -348,7 +349,7 @@ class DeveloperController extends AbstractController
 
         return $this->render('developer/jobs/matchings.html.twig', [
             'jobs' => $pagination,
-            'nbMatching' => count($pagination),
+            'nbMatching' => $pagination->getTotalItemCount(),
             'active_tab' => 'matching',
         ]);
     }
@@ -462,23 +463,23 @@ class DeveloperController extends AbstractController
     }
 
 
-    #[Route('/dev/my_resume', name: 'app_dev_resume')]
-    #[IsGranted('ROLE_DEV')]
-    public function resume_developper(EntityManagerInterface $entityManager): Response
-    {
+    // #[Route('/dev/my_resume', name: 'app_dev_resume')]
+    // #[IsGranted('ROLE_DEV')]
+    // public function resume_developper(EntityManagerInterface $entityManager): Response
+    // {
 
-        $user = $this->getUser();
-        if($user->isActive() == false){
-            return $this->redirectToRoute('app_dev_complete_profil');
-        }
+    //     $user = $this->getUser();
+    //     if($user->isActive() == false){
+    //         return $this->redirectToRoute('app_dev_complete_profil');
+    //     }
 
-        $developer = $user->getDeveloper();
+    //     $developer = $user->getDeveloper();
 
-        return $this->render('developer/my_resume.html.twig',[
-            'dev' => $developer,
-            'active_tab' => 'resume',
-        ]);
-    }
+    //     return $this->render('developer/my_resume.html.twig',[
+    //         'dev' => $developer,
+    //         'active_tab' => 'resume',
+    //     ]);
+    // }
 
 
     #[Route('/candidat_change_password', name: 'candidat_change_password', methods: ['GET', 'POST'])]

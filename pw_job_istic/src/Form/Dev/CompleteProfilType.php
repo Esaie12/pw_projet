@@ -49,6 +49,16 @@ class CompleteProfilType extends AbstractType
                 'required' => true,
             ],
         ])
+
+        ->add('profession', TextType::class, [
+            'label' => false,
+            'attr' => [
+                'class' => 'form-control',
+                'placeholder' => 'Profession*',
+                'required' => true,
+            ],
+        ])
+
         ->add('localisation', TextType::class, [
             'label' => false,
             'attr' => [

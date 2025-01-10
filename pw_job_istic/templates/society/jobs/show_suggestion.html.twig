@@ -37,12 +37,12 @@
 
     {% if job.image %}
         <h3>Image :</h3>
-        <img src="{{ asset('uploads/' ~ job.image) }}" alt="Image du poste" class="img-fluid">
+        <img src="{{ asset('uploads/avatars/' ~ job.image) }}" alt="Image du poste" class="img-fluid">
     {% endif %}
 
     {% if job.pdfFile %}
         <h3>Fichier PDF :</h3>
-        <a href="{{ asset('uploads/' ~ job.pdfFile) }}" target="_blank">Télécharger le fichier</a>
+        <a href="{{ asset('uploads/avatars/' ~ job.pdfFile) }}" target="_blank">Télécharger le fichier</a>
     {% endif %}
 
 

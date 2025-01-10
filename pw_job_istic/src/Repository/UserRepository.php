@@ -63,6 +63,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult();
     }
 
+    public function findActiveUsersExcludingCurrent(int $currentUserId): array
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.isActive = :active') // Filtre utilisateurs actifs
+            ->andWhere('u.id != :currentId') // Exclure l'utilisateur connecté
+            ->setParameter('active', true)
+            ->setParameter('currentId', $currentUserId)
+            ->orderBy('u.id', 'ASC') // Facultatif : trier par nom
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return User[] Returns an array of User objects
     //     */

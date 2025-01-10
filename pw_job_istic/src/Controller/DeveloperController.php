@@ -130,9 +130,11 @@ class DeveloperController extends AbstractController
     #[Route('/developer-list', name: 'list_developer')]
     public function developer_list(DeveloperRepository  $developers): Response
     {
+        $developers = $developers->findActiveDevelopers();
         return $this->render(
             'developer/developer_list.html.twig', [
-            'developers' => $developers->findActiveDevelopers()
+            'developers' => $developers,
+            'nbrDev' => count($developers),
         ]);
     }
 

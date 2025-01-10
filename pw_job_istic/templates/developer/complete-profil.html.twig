@@ -94,6 +94,16 @@
                                             
                                             <div class="col-xl-6 col-lg-6 col-md-12">
                                                 <div class="form-group">
+                                                    <label>Profession</label>
+                                                    <div class="ls-inputicon-box"> 
+                                                        {{ form_widget(form.profession, {'attr': {'class': 'form-control', 'placeholder': 'Developper, Designer'}}) }}
+                                                        <i class="fs-input-icon fa fa-user "></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-6 col-lg-6 col-md-12">
+                                                <div class="form-group">
                                                     <label>À propos de vous</label>
                                                     <div class="ls-inputicon-box"> 
                                                         {{ form_widget(form.aboutMe, {'attr': {'class': 'form-control', 'placeholder': 'Décrivez-vous'}}) }}

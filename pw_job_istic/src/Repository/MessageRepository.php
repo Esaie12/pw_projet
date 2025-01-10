@@ -16,6 +16,54 @@ class MessageRepository extends ServiceEntityRepository
         parent::__construct($registry, Message::class);
     }
 
+    public function findLastMessageByUser(int $userId): ?Message
+    {
+        return $this->createQueryBuilder('m')
+            ->where('m.senderId = :userId')
+            ->setParameter('userId', $userId)
+            ->orderBy('m.createdAt', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findConversationBetweenUsers(int $userId1, int $userId2): array
+    {
+        return $this->createQueryBuilder('m')
+            ->where('(m.senderId = :user1 AND m.receiverId = :user2) OR (m.senderId = :user2 AND m.receiverId = :user1)')
+            ->setParameter('user1', $userId1)
+            ->setParameter('user2', $userId2)
+            //->orderBy('m.createdAt', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    public function findConversationsWithLastMessage(int $userId): array
+    {
+        $subQuery = $this->createQueryBuilder('m')
+            ->select('IDENTITY(m.senderId) AS senderId', 'MAX(m.createdAt) AS lastMessageDate')
+            ->where('m.receiverId = :userId')
+            ->setParameter('userId', $userId)
+            ->groupBy('m.senderId')
+            ->getDQL();
+
+        return $this->getEntityManager()->createQuery("
+            SELECT m
+            FROM App\Entity\Message m
+            WHERE m.createdAt = (
+                SELECT MAX(sub.createdAt)
+                FROM App\Entity\Message sub
+                WHERE sub.senderId = m.senderId 
+                AND sub.receiverId = :userId
+                OR  sub.senderId = :userId
+            )
+            ORDER BY m.createdAt DESC
+        ")->setParameter('userId', $userId)
+        ->getResult();
+    }
+
+
 //    /**
 //     * @return Message[] Returns an array of Message objects
 //     */

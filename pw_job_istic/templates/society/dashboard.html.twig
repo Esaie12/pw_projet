@@ -69,14 +69,14 @@
                                 <div class="twm-dash-candidates-list">
                                     <div class="twm-media">
                                         <div class="twm-media-pic">
-                                            <img src="../images/candidates/pic1.jpg" alt="#">
+                                            <img src="{{ asset('uploads/avatars/' ~ dev.developer.avatar) }}" alt="#">
                                         </div>
                                     </div>
                                     <div class="twm-mid-content">
                                         <a href="{{ path('app_society_developer', { id: dev.developer.id }) }}" class="twm-job-title">
                                             <h4>{{dev.developer.lastname}} {{dev.developer.firstname}} </h4>
                                         </a>
-                                        <p>Charted Accountant</p>
+                                        <p>{{dev.developer.profession}}</p>
 
                                         <div class="twm-fot-content">
                                             <div class="twm-left-info">
@@ -84,7 +84,7 @@
                                                 
                                                 <p class="twm-candidate-address"><i class="feather-map-pin"></i>{{dev.developer.localisation}}</p>
                                                 <div class="twm-jobs-vacancies">
-                                                    €{{dev.developer.salary}}<span>/ Day</span></div>
+                                                    {{dev.developer.salary}} €<span>/ Mois</span></div>
                                             </div>
                                             <div class="twm-right-btn">
 
@@ -135,14 +135,14 @@
                                 <div class="twm-dash-candidates-list">
                                     <div class="twm-media">
                                         <div class="twm-media-pic">
-                                            <img src="../images/candidates/pic1.jpg" alt="#">
+                                            <img src="{{ asset('uploads/avatars/' ~ dev.developer.avatar) }}" alt="#">
                                         </div>
                                     </div>
                                     <div class="twm-mid-content">
                                         <a href="{{ path('app_society_developer', { id: dev.developer.id }) }}" class="twm-job-title">
                                             <h4>{{dev.developer.lastname}} {{dev.developer.firstname}} </h4>
                                         </a>
-                                        <p>Charted Accountant</p>
+                                        <p>{{dev.developer.profession}}</p>
 
                                         <div class="twm-fot-content">
                                             <div class="twm-left-info">
@@ -150,7 +150,7 @@
                                                  <p class="twm-candidate-address">Profil vu par <i class="fa fa-eye"></i>{{dev.developer.getViewsCount() }}</p>
                                                 <p class="twm-candidate-address"><i class="feather-map-pin"></i>{{dev.developer.localisation}}</p>
                                                 <div class="twm-jobs-vacancies">
-                                                    €{{dev.developer.salary}}<span>/ Day</span></div>
+                                                    {{dev.developer.salary}} €<span>/ Mois</span></div>
                                             </div>
                                             <div class="twm-right-btn">
 

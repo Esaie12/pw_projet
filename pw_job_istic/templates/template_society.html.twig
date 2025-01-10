@@ -281,7 +281,7 @@
                                                                 id="ID-ACCOUNT_dropdown" data-bs-toggle="dropdown">
                                                                 <div class="user-name text-black">
                                                                     <span>
-                                                                        <img src="../images/user-avtar/pic4.jpg" alt="">
+                                                                        <img src="{{ asset('uploads/avatars/' ~ app.user.society.avatar) }}" alt="">
                                                                     </span>{{app.user.society.name }}
                                                                 </div>
                                                             </a>
@@ -321,8 +321,8 @@
 
                         <!-- Sidebar Holder -->
                         <nav id="sidebar-admin-wraper">
-                            <div class="page-logo">
-                                <a href="{{path('app_society_dash')}}"><img src="../images/logo-dark.png" alt=""></a>
+                            <div class="page-logo" style="text-align: center;">
+                                <a href="{{path('app_society_dash')}}"><img src={{asset('images/logo-transparent-png.png')}} alt=""></a>
                             </div>
 
                             {{ include('includes/sidebars/society.html.twig') }}

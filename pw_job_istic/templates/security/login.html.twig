@@ -27,13 +27,6 @@
                 </div>
                 <div class="twm-tabs-style-2">
 
-                    {% for type, messages in app.flashes %}
-                        <div class="alert alert-{{ type }}">
-                            {% for message in messages %}
-                                {{ message }}
-                            {% endfor %}
-                        </div>
-                    {% endfor %}
 
                     <form class="tab-content" id="" method="POST" >
                         <input type="hidden" name="_csrf_token"  value="{{ csrf_token('authenticate') }}">
@@ -48,7 +41,7 @@
 
                                     {% if app.user %}
                                         <div class="mb-3">
-                                            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                                            Connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Deconnexion</a>
                                         </div>
                                     {% endif %}
                                 </div>
@@ -71,9 +64,8 @@
                                         <div class="form-group mb-3">
                                             <div class="form-check">
                                                 <input type="checkbox" class="form-check-input" id="Password4">
-                                                <label class="form-check-label rem-forgot" for="Password4">Remember me
-                                                    <a href="javascript:;" class="site-text-primary">Forgot
-                                                        Password</a></label>
+                                                <label class="form-check-label rem-forgot" for="Password4">Se souvenir de moi
+                                                <a href="javascript:;" class="site-text-primary">Mot de passe oublié</a></label>
                                             </div>
                                         </div>
                                     </div>

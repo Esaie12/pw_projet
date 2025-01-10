@@ -18,6 +18,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserRepository;
 use App\Entity\User;
 use App\Entity\Developer;
+use App\Form\Dev\ModifyPassword;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SocietyController extends AbstractController
 {
@@ -289,6 +292,53 @@ class SocietyController extends AbstractController
             'developers' => $favoriteDevelopers,
         ]);
     }
+
+    #[Route('/company_change_password', name: 'company_change_password', methods: ['GET', 'POST'])]
+    public function modify(Request $request, EntityManagerInterface $entityManager,  UserPasswordHasherInterface $passwordHasher): Response
+    {
+        
+        $user = $this->getUser();
+        $form = $this->createForm(ModifyPassword::class, $user);
+        $form->handleRequest($request);
+
+         if ($form->isSubmitted() && $form->isValid()) {
+        
+            $oldPassword = $form->get('password')->getData();
+            $newPassword = $form->get('newPassword')->getData();
+            $confirmPassword = $form->get('confirmPassword')->getData();
+
+            // Vérifier si le mot de passe actuel est correct
+            if (!$passwordHasher->isPasswordValid($user, $oldPassword)) {
+                $form->get('password')->addError(new FormError('Ancien mot de passe incorrect.'));
+            }
+
+            // Vérifier si le nouveau mot de passe et la confirmation correspondent
+            if ($newPassword !== $confirmPassword) {
+                $form->get('confirmPassword')->addError(new FormError('Les mots de passe ne correspondent pas.'));
+            }
+
+            // Si tout est valide, mettre à jour le mot de passe
+            if ($form->isValid()) {
+             
+                $encodedPassword = $passwordHasher->hashPassword($user, $newPassword);
+                $user->setPassword($encodedPassword);
+                // Sauvegarder les modifications dans la base de données
+                $entityManager->persist($user);
+                $entityManager->flush();
+                $this->addFlash('success', 'Votre mot de passe a été modifié avec succès.');
+
+                // Rediriger vers une page de profil ou une autre page
+                return $this->redirectToRoute('app_society_dash', [], Response::HTTP_SEE_OTHER); 
+            }
+        }
+        return $this->render('society/employer-change-password.html.twig', [
+           /*  'user' => $user,*/
+            'form' => $form,
+            'active_tab' => 'password',
+            
+        ]);
+    }
+
 
 
 }

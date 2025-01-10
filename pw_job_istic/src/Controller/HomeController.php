@@ -13,12 +13,14 @@ use App\Form\JobFilterWelcomeType;
 use App\Repository\JobPostingRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Form\JobFilterJobPageType;
+use App\Repository\UserRepository;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
-    public function index(): Response
+    #[Route('/', name: 'app_home')] 
+    public function index(UserRepository $userRepository): Response
     {
+
         $user = $this->getUser();
         if($user){
             return $this->redirectDash();
@@ -30,9 +32,10 @@ class HomeController extends AbstractController
                 'action' => $this->generateUrl('app_jobs'), 
             ]
         );
-
+        $developers = $userRepository->findLastCreatedDevs(4);
         return $this->render('home.html.twig',[
             'filterForm' => $form->createView(),
+            'developers'=>$developers,
         ]);
     }
 
@@ -91,6 +94,7 @@ class HomeController extends AbstractController
             'criteria' => $criteria, // Pour afficher les critères éventuellement
             'filterForm' => $form->createView(),
             'nbOffre' => $pagination->getTotalItemCount(),
+
         ]);
     }
 
@@ -100,14 +104,6 @@ class HomeController extends AbstractController
     {
        
         return $this->render('about_us.html.twig',[]);
-    }
-
-
-    #[Route('/contact', name: 'contact')]
-    public function redirectContact(): Response
-    {
-       
-        return $this->render('contact.html.twig',[]);
     }
 
 }

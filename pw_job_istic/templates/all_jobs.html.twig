@@ -13,10 +13,9 @@
 
                 <div class="bg-center" style="display: flex; justify-content: center;">
                     <ul class="wt-breadcrumb breadcrumb-style-2">
-                        <li><a href="index-2.html">Nos differentes</a></li>
-                        <li>Offres</li>
+                        <li>Nos Offres</li>
                     </ul>
-                </div>
+                </div><br/><br/><br/>
 
         <div class="container">
             <div class="row">
@@ -94,27 +93,10 @@
                 <div class="col-lg-8 col-md-12">
                     <!--Filter Short By-->
                     <div class="product-filter-wrap d-flex justify-content-between align-items-center m-b30">
-                        <span class="woocommerce-result-count-left">Showing 2,150 jobs</span>
-
-                        <form class="woocommerce-ordering twm-filter-select" method="get">
-                            <span class="woocommerce-result-count">Short By</span>
-                            <select class="wt-select-bar-2 selectpicker" data-live-search="true" data-bv-field="size">
-                                <option>Most Recent</option>
-                                <option>Freelance</option>
-                                <option>Full Time</option>
-                                <option>Internship</option>
-                                <option>Part Time</option>
-                                <option>Temporary</option>
-                            </select>
-                            <select class="wt-select-bar-2 selectpicker" data-live-search="true" data-bv-field="size">
-                                <option>Show 10</option>
-                                <option>Show 20</option>
-                                <option>Show 30</option>
-                                <option>Show 40</option>
-                                <option>Show 50</option>
-                                <option>Show 60</option>
-                            </select>
-                        </form>
+                        <span class="woocommerce-result-count-left">
+                        <span style="color: blue; font-weight: bold;">{{nbOffre}}</span>
+                        Offres Postees
+                        </span>
 
                     </div>
 
@@ -124,20 +106,19 @@
                             <li>
                                 <div class="twm-jobs-list-style1 mb-5">
                                     <div class="twm-media">
-                                        <img src="images/jobs-company/pic1.jpg" alt="#">
+                                        <img src="{{ asset('uploads/avatars/' ~ job.image) }}" alt="#">
                                     </div>
                                     <div class="twm-mid-content">
                                         <a href="job-detail.html" class="twm-job-title">
-                                            <h4>Senior Web Designer<span class="twm-job-post-duration">/ 1 days
-                                                    ago</span></h4>
+                                            <h4>{{job.title}}<span class="twm-job-post-duration">/ publie le {{ job.publishedAt|date('d-m-Y') }}</span></h4>
                                         </a>
-                                        <p class="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
+                                        <p class="twm-job-address">{{ job.location }}</p>
                                         <a href="https://themeforest.net/user/thewebmax/portfolio"
-                                            class="twm-job-websites site-text-primary">https://thewebmax.com</a>
+                                            class="twm-job-websites site-text-primary">{{ job.society.website}}</a>
                                     </div>
                                     <div class="twm-right-content">
-                                        <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
-                                        <div class="twm-jobs-amount">$2500 <span>/ Month</span></div>
+                                        <div class="twm-jobs-category green"><span class="twm-bg-green">Nouveau</span></div>
+                                        <div class="twm-jobs-amount">{{ job.salary}} $ <span>/ Mois</span></div>
                                         {% if is_granted('ROLE_DEV') %}
                                         <a href="{{path('dev_job_details',{id:job.id})}}" class="twm-jobs-browse site-text-primary">Voir Job</a>
                                         {% else %}

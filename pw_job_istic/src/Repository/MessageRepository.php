@@ -48,7 +48,7 @@ class MessageRepository extends ServiceEntityRepository
             ->groupBy('m.senderId')
             ->getDQL();
 
-        return $this->getEntityManager()->createQuery("
+        $conversations =  $this->getEntityManager()->createQuery("
             SELECT m
             FROM App\Entity\Message m
             WHERE m.senderId = m.senderId 
@@ -57,6 +57,24 @@ class MessageRepository extends ServiceEntityRepository
             ORDER BY m.createdAt DESC
         ")->setParameter('userId', $userId)
         ->getResult();
+
+        $uniqueConversations = [];
+        $seenUsers = []; // Tableau pour garder une trace des utilisateurs déjà inclus
+
+
+        foreach ($conversations as $message) {
+            $partnerId = ($message->getSenderId() === $userId)
+                ? $message->getReceiverId()
+                : $message->getSenderId();
+        
+            if (!in_array($partnerId, $seenUsers)) {
+                $seenUsers[] = $partnerId; // Ajout de l'utilisateur à la liste des "vus"
+                $uniqueConversations[] = $message; // Ajout du message correspondant
+            }
+        }
+
+        return $uniqueConversations;
+
     }
 
 

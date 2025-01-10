@@ -6,12 +6,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Form\Dev\CompleteProfilType;
+use App\Form\RatingType;
 use App\Form\CandidatType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserRepository;
 use App\Repository\DeveloperRepository;
+use App\Repository\RatingRepository;
 use App\Entity\User;
+use App\Entity\Rating;
 use App\Entity\Society;
 use App\Entity\Developer;
 use App\Entity\JobPosting;
@@ -30,7 +33,7 @@ class DeveloperController extends AbstractController
 
     #[Route('/dev/dashboard', name: 'app_dev_dash')]
     #[IsGranted('ROLE_DEV')]
-    public function dashboard_developper(EntityManagerInterface $entityManager): Response
+    public function dashboard_developper(EntityManagerInterface $entityManager, RatingRepository $ratingRepository): Response
     {
 
         $user = $this->getUser();
@@ -42,7 +45,7 @@ class DeveloperController extends AbstractController
 
         $latestJobs = $entityManager->getRepository(JobPosting::class)->findBy(
             [], // Pas de critère spécifique
-            ['publishedAt' => 'DESC'], // Trier par date de publication décroissante 3 // Limiter à 3 résultats
+            ['publishedAt' => 'DESC'], 3
         );
 
         $popularJobs = $entityManager->getRepository(JobPosting::class)->findMostPopularJobs(3);
@@ -51,11 +54,15 @@ class DeveloperController extends AbstractController
             ['developer' => $developer],
             ['id' => 'DESC']
         );
+
+        $averageRating = $ratingRepository->getAverageRatingForDeveloper($user->getId());
+
         return $this->render('developer/dashboard.html.twig',[
             'last_jobs' => $latestJobs,
             'popular_jobs'=> $popularJobs ,
             'nbre_candidature' => count($candidatures),
             'active_tab' => 'dashboard',
+            'ma_note' => $averageRating,
         ]);
     }
 
@@ -139,10 +146,52 @@ class DeveloperController extends AbstractController
     }
 
     #[Route('/developer/{id}', name: 'app_developer')]
-    public function show_dev(Developer $developer): Response
+    public function show_dev(Developer $developer, Request $request, EntityManagerInterface $entityManager): Response
     {
+
+        $form = null;
+
+        if ($this->getUser()) {
+
+            $user = $this->getUser();
+           //$developer = $user->getDeveloper();
+            
+            $existingRating = $entityManager->getRepository(Rating::class)->findOneBy([
+                'ratedDev' => $developer->getUser(), // L'utilisateur associé au développeur
+                'ratedBy' => $this->getUser(), // L'utilisateur connecté
+            ]);
+
+            if ($existingRating){
+                return $this->render('developer/show-dev.html.twig', [
+                    'developer' => $developer,
+                    'form' =>  null,
+                    'existingRating' => $existingRating,
+                ]);
+            }else{
+                $rating = new Rating();
+                $rating->setRatedDev( $developer->getUser() );
+                $rating->setRatedBy($this->getUser());
+                $rating->setCreatedAt(new \DateTime());
+
+                $form = $this->createForm(RatingType::class, $rating);
+                $form->handleRequest($request);
+        
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $entityManager->persist($rating);
+                    $entityManager->flush();
+        
+                    $this->addFlash('success', 'Votre note a été enregistrée.');
+        
+                    return $this->redirectToRoute('app_developer', ['id' => $developer->getId()]);
+                }
+            }
+            
+        }
+
         return $this->render('developer/show-dev.html.twig', [
             'developer' => $developer,
+            'form' => $form ? $form->createView() : null,
+            'existingRating' => null
         ]);
     }
 

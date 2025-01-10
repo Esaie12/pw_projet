@@ -1,6 +1,6 @@
 {% extends 'template_society.html.twig' %}
 
-{% block title %}Hello SocietyController!{% endblock %}
+{% block title %} Dashboard Société !{% endblock %}
 
 {% block body %}
 <script>
@@ -8,63 +8,43 @@
 </script>
 <div class="content-admin-main">
 
-    <div class="wt-admin-right-page-header clearfix">
-        <div class="breadcrumbs"><a href="#">Home</a><span>Dashboard</span></div>
-        
-    </div>
-
     <div class="twm-dash-b-blocks mb-5">
         <div class="row">
-            <div class="col-xl-3 col-lg-6 col-md-12 mb-3">
+            <div class="col-xl-4 col-lg-4 col-md-12 mb-3">
                 <div class="panel panel-default">
                     <div class="panel-body wt-panel-body gradi-1 dashboard-card ">
                         <div class="wt-card-wrap">
                             <div class="wt-card-icon"><i class="far fa-address-book"></i>
                             </div>
-                            <div class="wt-card-right wt-total-active-listing counter ">25
+                            <div class="wt-card-right wt-total-active-listing counter ">{{post}}
                             </div>
                             <div class="wt-card-bottom ">
-                                <h4 class="m-b0">Posted Jobs</h4>
+                                <h4 class="m-b0">Jobs publiés</h4>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-lg-6 col-md-12 mb-3">
+            <div class="col-xl-4 col-lg-4 col-md-12 mb-3">
                 <div class="panel panel-default">
                     <div class="panel-body wt-panel-body gradi-2 dashboard-card ">
                         <div class="wt-card-wrap">
                             <div class="wt-card-icon"><i class="far fa-file-alt"></i></div>
-                            <div class="wt-card-right  wt-total-listing-view counter ">435
+                            <div class="wt-card-right  wt-total-listing-view counter ">{{candidature}}
                             </div>
                             <div class="wt-card-bottom">
-                                <h4 class="m-b0">Total Applications</h4>
+                                <h4 class="m-b0">Candidatures reçues</h4>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-lg-6 col-md-12 mb-3">
-                <div class="panel panel-default">
-                    <div class="panel-body wt-panel-body gradi-3 dashboard-card ">
-                        <div class="wt-card-wrap">
-                            <div class="wt-card-icon"><i class="far fa-envelope"></i></div>
-                            <div class="wt-card-right wt-total-listing-review counter ">28
-                            </div>
-                            <div class="wt-card-bottom">
-                                <h4 class="m-b0">Messages</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-6 col-md-12 mb-3">
+            <div class="col-xl-4 col-lg-4 col-md-12 mb-3">
                 <div class="panel panel-default">
                     <div class="panel-body wt-panel-body gradi-4 dashboard-card ">
                         <div class="wt-card-wrap">
                             <div class="wt-card-icon"><i class="far fa-bell"></i></div>
-                            <div class="wt-card-right wt-total-listing-bookmarked counter ">
-                                18</div>
+                            <div class="wt-card-right wt-total-listing-bookmarked counter ">{{notification}}</div>
                             <div class="wt-card-bottom">
                                 <h4 class="m-b0">Notifications</h4>
                             </div>
@@ -100,6 +80,8 @@
 
                                         <div class="twm-fot-content">
                                             <div class="twm-left-info">
+                                                 <p class="twm-candidate-address">Profil vu par <i class="fa fa-eye"></i>{{dev.developer.getViewsCount() }}</p>
+                                                
                                                 <p class="twm-candidate-address"><i class="feather-map-pin"></i>{{dev.developer.localisation}}</p>
                                                 <div class="twm-jobs-vacancies">
                                                     €{{dev.developer.salary}}<span>/ Day</span></div>
@@ -108,21 +90,19 @@
 
                                                 <ul class="twm-controls-icon list-unstyled">
                                                     <li>
-                                                        <button title="View profile" data-bs-toggle="tooltip"
+                                                        <button title="Envoyer un message" data-bs-toggle="tooltip"
                                                             data-bs-placement="top">
-                                                            <span class="fa fa-eye"></span>
+                                                            <a  href="{{ path('app_society_developer', { id: dev.developer.id }) }}" title="Voir profil" data-bs-toggle="tooltip" >
+                                                                <span class="fa fa-eye"></span>
+                                                            </a>
                                                         </button>
                                                     </li>
                                                     <li>
-                                                        <button title="Send message" data-bs-toggle="tooltip"
+                                                        <button title="Envoyer un message" data-bs-toggle="tooltip"
                                                             data-bs-placement="top">
-                                                            <span class="far fa-envelope-open"></span>
-                                                        </button>
-                                                    </li>
-                                                    <li>
-                                                        <button title="Delete" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top">
-                                                            <span class="far fa-trash-alt"></span>
+                                                            <a  href="{{ path('app_society_user', {id: dev.developer.user.id}) }}" title="Envoyer un messsage" data-bs-toggle="tooltip" >
+                                                                <span class="far fa-envelope-open"></span>
+                                                            </a>
                                                         </button>
                                                     </li>
                                                 </ul>
@@ -166,6 +146,8 @@
 
                                         <div class="twm-fot-content">
                                             <div class="twm-left-info">
+                                                
+                                                 <p class="twm-candidate-address">Profil vu par <i class="fa fa-eye"></i>{{dev.developer.getViewsCount() }}</p>
                                                 <p class="twm-candidate-address"><i class="feather-map-pin"></i>{{dev.developer.localisation}}</p>
                                                 <div class="twm-jobs-vacancies">
                                                     €{{dev.developer.salary}}<span>/ Day</span></div>
@@ -174,21 +156,19 @@
 
                                                 <ul class="twm-controls-icon list-unstyled">
                                                     <li>
-                                                        <button title="View profile" data-bs-toggle="tooltip"
+                                                        <button title="Envoyer un message" data-bs-toggle="tooltip"
                                                             data-bs-placement="top">
-                                                            <span class="fa fa-eye"></span>
+                                                            <a  href="{{ path('app_society_developer', { id: dev.developer.id }) }}" title="Voir profil" data-bs-toggle="tooltip" >
+                                                                <span class="fa fa-eye"></span>
+                                                            </a>
                                                         </button>
                                                     </li>
                                                     <li>
-                                                        <button title="Send message" data-bs-toggle="tooltip"
+                                                        <button title="Envoyer un message" data-bs-toggle="tooltip"
                                                             data-bs-placement="top">
-                                                            <span class="far fa-envelope-open"></span>
-                                                        </button>
-                                                    </li>
-                                                    <li>
-                                                        <button title="Delete" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top">
-                                                            <span class="far fa-trash-alt"></span>
+                                                            <a  href="{{ path('app_society_user', {id: dev.developer.user.id}) }}" title="Envoyer un messsage" data-bs-toggle="tooltip" >
+                                                                <span class="far fa-envelope-open"></span>
+                                                            </a>
                                                         </button>
                                                     </li>
                                                 </ul>

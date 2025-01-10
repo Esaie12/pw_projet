@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserRepository;
 use App\Entity\User;
+use App\Entity\JobPosting;
 use App\Entity\Developer;
 use App\Form\Dev\ModifyPassword;
 use Symfony\Component\Form\FormError;
@@ -32,7 +33,7 @@ class SocietyController extends AbstractController
 
     #[Route('/society/dashboard', name: 'app_society_dash')]
     #[IsGranted('ROLE_SOCIETY')]
-    public function dashboard_society(UserRepository $userRepository): Response
+    public function dashboard_society(UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
         if($user->isActive() == false){
@@ -42,9 +43,26 @@ class SocietyController extends AbstractController
         $popular_developers = $userRepository->popularDevs();
         $last_developers = $userRepository->findLastCreatedDevs(3);
 
+        $society = $user->getSociety();
+        $jobPostings = $entityManager->getRepository(JobPosting::class)->findBy(['society' => $society]);
+
+        $query = $entityManager->createQueryBuilder()
+            ->select('c')
+            ->from(Candidat::class, 'c')
+            ->join('c.jobPosting', 'j')
+            ->where('j.society = :society')
+            ->setParameter('society', $society)
+            ->orderBy('c.id', 'DESC')
+            ->getQuery();
+
+        $candidatures = $query->getResult();
+
         return $this->render('society/dashboard.html.twig',[
             'popular_developers' => $popular_developers,
             'last_developers' => $last_developers,
+            'post'=> count($jobPostings),
+            'candidature'=> count($candidatures),
+            'notification'=> 0,
         ]);
     }
     

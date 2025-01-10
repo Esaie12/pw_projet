@@ -20,11 +20,11 @@
                 <table id="jobs_bookmark_table" class="table table-bordered twm-bookmark-list-wrap">
                     <thead>
                         <tr>
-                            <th>Job Title</th>
-                            <th>Category</th>
-                            <th>Job Types</th>
+                            <th>Titre du poste</th>
+                            <th>catégorie</th>
+                            <th>Type d’emploi</th>
                             <th>Applications</th>
-                            <th>Created & Expired</th>
+                            <th>Date de création & expiration</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -41,10 +41,9 @@
                                     </div>
                                     <div class="twm-mid-content">
                                         <a href="#" class="twm-job-title">
-                                            <h4>Senior Web Designer</h4>
+                                            <h4>{{job.title}}</h4>
                                             <p class="twm-bookmark-address">
-                                                <i class="feather-map-pin"></i>1363-1385 Sunset Blvd Los Angeles, CA
-                                                90026, USA
+                                                <i class="feather-map-pin"></i>{{job.location}}
                                             </p>
                                         </a>
 
@@ -58,12 +57,9 @@
                             </td>
                             <td><a href="javascript:;" class="site-text-primary">03 Candidats</a></td>
                             <td>
-                                <div>08/06/2023</div>
-                                <div>28/06/2023</div>
-
-                                job.publishedAt|date('d/m/Y')
+                                <div>{{job.publishedAt|date('d/m/Y')}}</div>
+                                
                             </td>
-
                             <td>
                                 <div class="twm-table-controls">
                                     <ul class="twm-DT-controls-icon list-unstyled">
@@ -88,16 +84,7 @@
                         </tr>
                         {% endfor %}
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>Job Title</th>
-                            <th>Category</th>
-                            <th>Job Types</th>
-                            <th>Applications</th>
-                            <th>Created & Expired</th>
-                            <th>Action</th>
-                        </tr>
-                    </tfoot>
+                    
                 </table>
             </div>
         </div>

@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Knp\Component\Pager\PaginatorInterface;
-
+use App\Entity\Notification;
 use App\Form\SocietyCompleteProfilType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
@@ -143,7 +143,16 @@ class SocietyController extends AbstractController
             $view->setDeveloper($developer);
             $view->setSociety($society);
     
+            // Créez une notification pour le développeur
+            $notification = new Notification();
+            $notification->setReceiver($developer->getUser()); // Récupérer l'utilisateur lié au développeur
+            $notification->setMessage(sprintf(
+                'Votre profil a été consulté par %s.',
+                $society->getName() // Supposons que la société a une méthode `getName()`
+            ));
+
             $entityManager->persist($view);
+            $entityManager->persist($notification);
             $entityManager->flush();
         }
 

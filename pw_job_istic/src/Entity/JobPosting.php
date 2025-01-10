@@ -241,5 +241,9 @@ class JobPosting
         return $this->views;
     }
 
+    public function getViewsCount(): int
+    {
+        return $this->views->count();
+    }
     
 }

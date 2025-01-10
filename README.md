@@ -1,7 +1,7 @@
 # AdopteUnDev
 
 ## Développeurs ( Etudiant )
-- BIGNON Martial Freddy
+- BOGNON Martial Freddy
 - KOULIBALY Karidja
 -  KOCORA Roxanne
 -  OMIYALE Esaie A.

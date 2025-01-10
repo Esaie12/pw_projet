@@ -368,7 +368,7 @@ class DeveloperController extends AbstractController
         // Filtrer par technologies
         if (!empty($criteria['technologies'])) {
             $qb->join('j.technologies', 't')
-            ->orWhere('t.name IN (:technologies)')
+            ->andWhere('t.name IN (:technologies)')
             ->setParameter('technologies', $criteria['technologies']);
         }
 

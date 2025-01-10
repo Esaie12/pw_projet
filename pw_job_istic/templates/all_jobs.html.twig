@@ -123,7 +123,7 @@
                                     </div>
                                     <div class="twm-right-content">
                                         <div class="twm-jobs-category green"><span class="twm-bg-green">Nouveau</span></div>
-                                        <div class="twm-jobs-amount">{{ job.salary}} $ <span>/ Mois</span>
+                                        <div class="twm-jobs-amount">{{ job.salary}} €<span>/ Mois</span>
                                     </div>
                                         {% if is_granted('ROLE_DEV') %}
                                         <a href="{{path('dev_job_details',{id:job.id})}}" class="twm-jobs-browse site-text-primary">Voir Job</a>

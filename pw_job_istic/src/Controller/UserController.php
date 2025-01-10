@@ -134,12 +134,12 @@ final class UserController extends AbstractController
     public function update(
     Request $request, 
     EntityManagerInterface $entityManager,  
-        UserPasswordHasherInterface $passwordHasher,
-        int $id // L'ID de l'utilisateur à modifier
+    UserPasswordHasherInterface $passwordHasher,
+    int $id // L'ID de l'utilisateur à modifier
     ): Response
-    {
-        // Récupérer l'utilisateur existant à partir de la base de données
-        $user = $entityManager->getRepository(User::class)->find($id);
+{
+    // Récupérer l'utilisateur existant à partir de la base de données
+    $user = $entityManager->getRepository(User::class)->find($id);
 
         if (!$user) {
             // Si l'utilisateur n'existe pas, afficher une erreur
@@ -184,7 +184,6 @@ final class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
 
 
 

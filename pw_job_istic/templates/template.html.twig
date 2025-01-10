@@ -56,7 +56,7 @@
         href="{{ asset('css/skins-type/skin-6.css') }}">
     <!-- SIDE SWITCHER STYLE SHEET -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/switcher.css') }}">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     {% block stylesheets %}
     {% endblock %}
 
@@ -289,7 +289,8 @@
 
         <!-- CONTENT START -->
         <main>
-            {% block body %} {% endblock %}
+            {% block body %}
+             {% endblock %}
         </main>
         <!-- CONTENT END -->
 
@@ -463,8 +464,23 @@
     <script src="{{ asset('js/swiper-bundle.min.js') }}"></script><!-- Swiper JS -->
     <script src="{{ asset('js/custom.js') }}"></script><!-- CUSTOM FUCTIONS  -->
     <script src="{{ asset('js/switcher.js') }}"></script><!-- SHORTCODE FUCTIONS  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-
+  <script>
+                      toastr.options = {
+                        "closeButton": true,
+                        "progressBar": true,
+                        "positionClass": "toast-top-right", // Position: en haut à droite
+                        "timeOut": "5000", // Délai avant disparition (en ms)
+                         "extendedTimeOut": "1000" // Temps additionnel après interaction
+                                };
+                            {% for type, messages in app.flashes %}
+                                {% for message in messages %}
+                                    toastr.{{ type }}("{{ message|e('js') }}");
+                                {% endfor %}
+                            {% endfor %}
+                     </script>
 </body>
 
 

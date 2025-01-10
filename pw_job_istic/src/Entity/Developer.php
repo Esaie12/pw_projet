@@ -27,6 +27,9 @@ class Developer
     #[ORM\Column(nullable: true)]
     private ?string $aboutMe = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $telephone = null;
+
     #[ORM\Column(nullable: true)]
     private ?string $profession = null;
 
@@ -157,6 +160,18 @@ class Developer
         return $this;
     }
 
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): static
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+    
     public function getLastname(): ?string
     {
         return $this->lastname;

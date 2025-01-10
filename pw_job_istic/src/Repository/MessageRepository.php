@@ -51,13 +51,9 @@ class MessageRepository extends ServiceEntityRepository
         return $this->getEntityManager()->createQuery("
             SELECT m
             FROM App\Entity\Message m
-            WHERE m.createdAt = (
-                SELECT MAX(sub.createdAt)
-                FROM App\Entity\Message sub
-                WHERE sub.senderId = m.senderId 
-                AND sub.receiverId = :userId
-                OR  sub.senderId = :userId
-            )
+            WHERE m.senderId = m.senderId 
+                AND m.receiverId = :userId
+                OR  m.senderId = :userId
             ORDER BY m.createdAt DESC
         ")->setParameter('userId', $userId)
         ->getResult();

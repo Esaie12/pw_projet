@@ -11,12 +11,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Knp\Component\Pager\PaginatorInterface;
-
+use App\Entity\Notification;
 use App\Form\SocietyCompleteProfilType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserRepository;
 use App\Entity\User;
+use App\Entity\JobPosting;
 use App\Entity\Developer;
 use App\Form\Dev\ModifyPassword;
 use Symfony\Component\Form\FormError;
@@ -32,7 +33,7 @@ class SocietyController extends AbstractController
 
     #[Route('/society/dashboard', name: 'app_society_dash')]
     #[IsGranted('ROLE_SOCIETY')]
-    public function dashboard_society(UserRepository $userRepository): Response
+    public function dashboard_society(UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
         if($user->isActive() == false){
@@ -42,9 +43,26 @@ class SocietyController extends AbstractController
         $popular_developers = $userRepository->popularDevs();
         $last_developers = $userRepository->findLastCreatedDevs(3);
 
+        $society = $user->getSociety();
+        $jobPostings = $entityManager->getRepository(JobPosting::class)->findBy(['society' => $society]);
+
+        $query = $entityManager->createQueryBuilder()
+            ->select('c')
+            ->from(Candidat::class, 'c')
+            ->join('c.jobPosting', 'j')
+            ->where('j.society = :society')
+            ->setParameter('society', $society)
+            ->orderBy('c.id', 'DESC')
+            ->getQuery();
+
+        $candidatures = $query->getResult();
+
         return $this->render('society/dashboard.html.twig',[
             'popular_developers' => $popular_developers,
             'last_developers' => $last_developers,
+            'post'=> count($jobPostings),
+            'candidature'=> count($candidatures),
+            'notification'=> 0,
         ]);
     }
     
@@ -125,7 +143,16 @@ class SocietyController extends AbstractController
             $view->setDeveloper($developer);
             $view->setSociety($society);
     
+            // Créez une notification pour le développeur
+            $notification = new Notification();
+            $notification->setReceiver($developer->getUser()); // Récupérer l'utilisateur lié au développeur
+            $notification->setMessage(sprintf(
+                'Votre profil a été consulté par %s.',
+                $society->getName() // Supposons que la société a une méthode `getName()`
+            ));
+
             $entityManager->persist($view);
+            $entityManager->persist($notification);
             $entityManager->flush();
         }
 

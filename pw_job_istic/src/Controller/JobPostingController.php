@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Entity\Notification;
 
 class JobPostingController extends AbstractController
 {

@@ -26,6 +26,17 @@ class DeveloperRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getViewsCountForAllDevelopers(): array
+    {
+        return $this->createQueryBuilder('d')
+            ->select('d.id, d.name, COUNT(v.id) AS viewsCount')
+            ->leftJoin('d.views', 'v')
+            ->groupBy('d.id')
+            ->orderBy('viewsCount', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Developer[] Returns an array of Developer objects
 //     */

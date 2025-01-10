@@ -16,9 +16,10 @@
             </form>
         {% endif %}
     </div>
-    
+
     <div class="container" >
         <h2>{{ developer.firstname }} {{ developer.lastname }}</h2>
+        <p><strong>Nombre de vue :</strong> {{ developer.getViewsCount()  }}</p>
         <p><strong>Email :</strong> {{ developer.user.email }}</p>
         <p><strong>À propos :</strong> {{ developer.aboutMe }}</p>
         <p><strong>Localisation :</strong> {{ developer.localisation }}</p>

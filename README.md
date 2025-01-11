@@ -2,7 +2,7 @@
 
 ## Développeurs ( Etudiant )
 - BOGNON Martial Freddy
-- KOULIBALY Karidja
+- COULIBALY Karidja
 -  KOCORA Roxane
 -  OMIYALE Esaie A.
   
